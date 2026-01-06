@@ -216,7 +216,7 @@
                     <div class="soc-header">
                         <div class="status-indicator">
                             <span class="status-dot"></span>
-                            <span class="status-text blink-text">SYSTEM ONLINE</span>
+                            <span class="status-text">SYSTEM ONLINE</span>
                             <span class="status-ping">PING: 12ms</span>
                         </div>
                         <div class="soc-server-id">SERVER: HK-01-NODE</div>
@@ -257,41 +257,10 @@
                             </div>
                         </div>
 
-                        <!-- Center Panel: Map & Main Metrics -->
+                        <!-- Center Panel: 3D Globe -->
                         <div class="soc-panel center">
-                            <div class="holo-map-container">
-                                <div class="holo-map">
-                                    <!-- Simple wireframe globe SVG representation -->
-                                    <svg viewBox="0 0 200 200" class="globe-svg">
-                                        <circle cx="100" cy="100" r="90" fill="none" class="globe-wire" />
-                                        <ellipse cx="100" cy="100" rx="90" ry="30" fill="none" class="globe-wire" />
-                                        <ellipse cx="100" cy="100" rx="90" ry="30" transform="rotate(60 100 100)" fill="none" class="globe-wire" />
-                                        <ellipse cx="100" cy="100" rx="90" ry="30" transform="rotate(120 100 100)" fill="none" class="globe-wire" />
-                                        <path d="M100 10 L100 190" class="globe-wire" />
-                                        <path d="M10 100 L190 100" class="globe-wire" />
-                                        
-                                        <!-- Animated markers -->
-                                        <circle cx="140" cy="70" r="3" class="map-dot d1" />
-                                        <circle cx="60" cy="130" r="3" class="map-dot d2" />
-                                        <circle cx="160" cy="110" r="3" class="map-dot d3" />
-                                    </svg>
-                                    <div class="map-scan-ring"></div>
-                                </div>
-                                <div class="main-alert">
-                                    <span class="alert-icon">⚠️</span>
-                                    <span class="alert-msg">DETECTED: SQL INJECTION ATTEMPT</span>
-                                </div>
-                            </div>
-                            
-                            <div class="main-stats">
-                                <div class="stat-block">
-                                    <span class="stat-label">THREAT LEVEL</span>
-                                    <span class="stat-val critical">HIGH</span>
-                                </div>
-                                <div class="stat-block">
-                                    <span class="stat-label">BLOCKS / 24H</span>
-                                    <span class="stat-val">84,291</span>
-                                </div>
+                            <div class="globe-3d-container">
+                                <Waf3DVisualizer />
                             </div>
                         </div>
 
@@ -628,6 +597,7 @@ import ParticleBackground from '../Components/ParticleBackground.vue';
 import FeatureCard from '../Components/FeatureCard.vue';
 import AnimatedCounter from '../Components/AnimatedCounter.vue';
 import FeatureModal from '../Components/FeatureModal.vue';
+import Waf3DVisualizer from '../Components/Waf3DVisualizer.vue';
 
 const isLoading = ref(true);
 const modalOpen = ref(false);
@@ -2122,6 +2092,13 @@ onUnmounted(() => {
     overflow: hidden;
 }
 
+.soc-3d-wrapper {
+    max-width: 1200px;
+    margin: 2rem auto 0;
+    border-radius: 1rem;
+    overflow: hidden;
+}
+
 .soc-bg-grid {
     position: absolute;
     top: 0;
@@ -2360,7 +2337,22 @@ onUnmounted(() => {
 
 /* Holo Map */
 .soc-panel.center {
-    justify-content: space-between;
+    justify-content: center;
+    align-items: stretch;
+}
+
+.globe-3d-container {
+    width: 100%;
+    height: 400px;
+    min-height: 400px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid rgba(0, 212, 255, 0.2);
+}
+
+.globe-3d-container .waf-3d-container {
+    height: 100% !important;
+    min-height: 100% !important;
 }
 
 .holo-map-container {
