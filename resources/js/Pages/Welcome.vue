@@ -198,6 +198,7 @@
         
         <!-- SOC Command Center Section -->
         <section class="soc-section">
+            <div class="soc-bg-grid"></div>
             <h2 class="section-title text-gradient scroll-animate">👁️ SOC 戰情中心</h2>
             <p class="section-subtitle scroll-animate">
                 專業級資安監控儀表板，全螢幕 3D 威脅視覺化
@@ -205,28 +206,138 @@
             
             <div class="soc-dashboard scroll-animate">
                 <div class="soc-screen">
+                    <!-- Decor Elements -->
+                    <div class="screen-overlay"></div>
+                    <div class="corner-decor top-left"></div>
+                    <div class="corner-decor top-right"></div>
+                    <div class="corner-decor bottom-left"></div>
+                    <div class="corner-decor bottom-right"></div>
+                    
                     <div class="soc-header">
-                        <span class="status-dot"></span>
-                        <span class="status-text">SYSTEM ONLINE</span>
+                        <div class="status-indicator">
+                            <span class="status-dot"></span>
+                            <span class="status-text blink-text">SYSTEM ONLINE</span>
+                            <span class="status-ping">PING: 12ms</span>
+                        </div>
+                        <div class="soc-server-id">SERVER: HK-01-NODE</div>
                     </div>
-                    <div class="soc-content">
-                        <div class="soc-globe"></div>
-                        <div class="soc-metrics">
-                            <div class="metric-box">
-                                <span class="metric-label">THREAT LEVEL</span>
-                                <span class="metric-val critical">HIGH</span>
+
+                    <div class="soc-layout">
+                        <!-- Left Panel: Radar & Resources -->
+                        <div class="soc-panel left">
+                            <div class="panel-box radar-container">
+                                <h3>THREAT RADAR</h3>
+                                <div class="radar-display">
+                                    <div class="radar-circle c1"></div>
+                                    <div class="radar-circle c2"></div>
+                                    <div class="radar-circle c3"></div>
+                                    <div class="radar-sweep"></div>
+                                    <div class="radar-blip b1"></div>
+                                    <div class="radar-blip b2"></div>
+                                </div>
                             </div>
-                            <div class="metric-box">
-                                <span class="metric-label">ACTIVE BLOCKS</span>
-                                <span class="metric-val">1,249</span>
+                            
+                            <div class="panel-box resources">
+                                <h3>SYSTEM RESOURCES</h3>
+                                <div class="res-row">
+                                    <span>CPU</span>
+                                    <div class="res-bar"><div class="res-fill cpu-fill"></div></div>
+                                    <span class="res-val">42%</span>
+                                </div>
+                                <div class="res-row">
+                                    <span>RAM</span>
+                                    <div class="res-bar"><div class="res-fill ram-fill"></div></div>
+                                    <span class="res-val">68%</span>
+                                </div>
+                                <div class="res-row">
+                                    <span>NET</span>
+                                    <div class="res-bar"><div class="res-fill net-fill"></div></div>
+                                    <span class="res-val">85%</span>
+                                </div>
                             </div>
-                            <div class="metric-box">
-                                <span class="metric-label">AI CONFIDENCE</span>
-                                <span class="metric-val">99.9%</span>
+                        </div>
+
+                        <!-- Center Panel: Map & Main Metrics -->
+                        <div class="soc-panel center">
+                            <div class="holo-map-container">
+                                <div class="holo-map">
+                                    <!-- Simple wireframe globe SVG representation -->
+                                    <svg viewBox="0 0 200 200" class="globe-svg">
+                                        <circle cx="100" cy="100" r="90" fill="none" class="globe-wire" />
+                                        <ellipse cx="100" cy="100" rx="90" ry="30" fill="none" class="globe-wire" />
+                                        <ellipse cx="100" cy="100" rx="90" ry="30" transform="rotate(60 100 100)" fill="none" class="globe-wire" />
+                                        <ellipse cx="100" cy="100" rx="90" ry="30" transform="rotate(120 100 100)" fill="none" class="globe-wire" />
+                                        <path d="M100 10 L100 190" class="globe-wire" />
+                                        <path d="M10 100 L190 100" class="globe-wire" />
+                                        
+                                        <!-- Animated markers -->
+                                        <circle cx="140" cy="70" r="3" class="map-dot d1" />
+                                        <circle cx="60" cy="130" r="3" class="map-dot d2" />
+                                        <circle cx="160" cy="110" r="3" class="map-dot d3" />
+                                    </svg>
+                                    <div class="map-scan-ring"></div>
+                                </div>
+                                <div class="main-alert">
+                                    <span class="alert-icon">⚠️</span>
+                                    <span class="alert-msg">DETECTED: SQL INJECTION ATTEMPT</span>
+                                </div>
+                            </div>
+                            
+                            <div class="main-stats">
+                                <div class="stat-block">
+                                    <span class="stat-label">THREAT LEVEL</span>
+                                    <span class="stat-val critical">HIGH</span>
+                                </div>
+                                <div class="stat-block">
+                                    <span class="stat-label">BLOCKS / 24H</span>
+                                    <span class="stat-val">84,291</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Panel: Live Logs -->
+                        <div class="soc-panel right">
+                            <div class="panel-box log-container">
+                                <h3>LIVE ATTACK FEED</h3>
+                                <div class="log-list">
+                                    <div class="log-item critical">
+                                        <span class="log-time">10:42:05</span>
+                                        <span class="log-ip">192.168.1.45</span>
+                                        <span class="log-type">SQLI</span>
+                                    </div>
+                                    <div class="log-item warning">
+                                        <span class="log-time">10:41:58</span>
+                                        <span class="log-ip">10.0.5.122</span>
+                                        <span class="log-type">XSS</span>
+                                    </div>
+                                    <div class="log-item info">
+                                        <span class="log-time">10:41:42</span>
+                                        <span class="log-ip">172.16.8.99</span>
+                                        <span class="log-type">CRAWL</span>
+                                    </div>
+                                    <div class="log-item critical">
+                                        <span class="log-time">10:41:15</span>
+                                        <span class="log-ip">45.33.22.11</span>
+                                        <span class="log-type">DDOS</span>
+                                    </div>
+                                    <div class="log-item info">
+                                        <span class="log-time">10:40:55</span>
+                                        <span class="log-ip">192.168.0.1</span>
+                                        <span class="log-type">SCAN</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="panel-box ai-status">
+                                <h3>AI SENTINEL</h3>
+                                <div class="ai-core">
+                                    <div class="core-ring"></div>
+                                    <div class="core-center">99%</div>
+                                </div>
+                                <span class="ai-state">ACTIVE ANALYSIS</span>
                             </div>
                         </div>
                     </div>
-                    <div class="scanline"></div>
                 </div>
             </div>
         </section>
