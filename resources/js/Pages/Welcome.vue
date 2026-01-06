@@ -1,0 +1,2358 @@
+<template>
+    <div class="app-wrapper">
+        <!-- Login Button (Fixed Top Right) -->
+        <a href="https://security-one-waf.vito1317.com" class="login-btn" target="_blank" rel="noopener noreferrer">
+            <span class="login-icon">🔐</span>
+            <span class="login-text">登入</span>
+        </a>
+        
+        <!-- Loading Screen -->
+        <LoadingScreen v-if="isLoading" @complete="onLoadingComplete" />
+        
+        <!-- Grid Background -->
+        <div class="grid-background"></div>
+        <div class="hex-pattern"></div>
+        
+        <!-- Particle Background -->
+        <ParticleBackground />
+        
+        <!-- Hero Section (Fixed Parallax) -->
+        <div class="hero-wrapper">
+            <section class="hero hero-fixed" ref="heroRef" :style="heroStyle">
+                <span class="hero-badge animate-pulse-border">
+                    🛡️ AI-Powered Web Application Firewall
+                </span>
+                <h1 class="hero-title text-gradient">
+                    <span class="title-brand">Security One</span> <span class="title-product">WAF</span>
+                </h1>
+                <p class="hero-subtitle">
+                    智能 Web 應用程式防火牆，結合 AI 威脅偵測與 CVE 資料庫即時更新，為您的網站提供最先進的自動化防護
+                </p>
+                <div class="hero-cta">
+                    <a href="mailto:sales@security-one.com?subject=Security One WAF 諮詢" class="btn btn-primary animate-glow">
+                        <span>🚀</span> 聯絡我們
+                    </a>
+                </div>
+                
+                <!-- Scroll Indicator -->
+                <div class="scroll-indicator" :style="{ opacity: 1 - scrollProgress }">
+                    <span>向下滾動</span>
+                    <div class="scroll-arrow">↓</div>
+                </div>
+            </section>
+        </div>
+        
+        <!-- Features Section -->
+        <section id="features" class="features">
+            <h2 class="section-title text-gradient scroll-animate">核心功能</h2>
+            <p class="section-subtitle scroll-animate">
+                完整的 WAF 解決方案，從防護到監控一應俱全
+            </p>
+            
+            <div class="features-grid">
+                <FeatureCard
+                    v-for="(feature, index) in features"
+                    :key="index"
+                    :icon="feature.icon"
+                    :title="feature.title"
+                    :description="feature.description"
+                    :delay="index * 0.1"
+                    @click="openModal(feature)"
+                />
+            </div>
+        </section>
+        
+        <!-- Stats Section -->
+        <section class="stats">
+            <div class="stats-grid">
+                <div class="stat-item scroll-animate animate-hover-scale" v-for="(stat, index) in stats" :key="index">
+                    <AnimatedCounter :target="stat.value" :suffix="stat.suffix" />
+                    <p class="stat-label">{{ stat.label }}</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Product Showcase (Fixed Scroll Slideshow) -->
+        <section class="product-showcase">
+            <!-- Spacer for scroll distance -->
+            <div class="showcase-spacer"></div>
+            
+            <!-- Fixed Container -->
+            <div class="showcase-fixed-container" :style="{ opacity: showcaseVisible ? 1 : 0 }">
+                <!-- Slide 1: Attack Map -->
+                <div class="showcase-slide" :class="{ active: currentSlide === 0 }">
+                    <h2 class="section-title text-gradient">🌍 即時攻擊地圖</h2>
+                    <p class="section-subtitle">全球攻擊來源視覺化，即時掌握威脅動態</p>
+                    
+                    <div class="showcase-image-wrapper">
+                        <img src="/images/attackmap.png" alt="Attack Map" />
+                        <div class="image-glow blue"></div>
+                    </div>
+                    
+                    <div class="showcase-tags">
+                        <span class="tag"><span class="dot red"></span>即時攻擊軌跡</span>
+                        <span class="tag"><span class="dot blue"></span>地理位置追蹤</span>
+                        <span class="tag"><span class="dot green"></span>攻擊類型統計</span>
+                    </div>
+                </div>
+                
+                <!-- Slide 2: Attack Log -->
+                <div class="showcase-slide" :class="{ active: currentSlide === 1 }">
+                    <h2 class="section-title text-gradient">📋 攻擊日誌分析</h2>
+                    <p class="section-subtitle">詳細記錄每次攻擊，完整追蹤安全事件</p>
+                    
+                    <div class="showcase-image-wrapper">
+                        <img src="/images/attacklog.png" alt="Attack Log" />
+                        <div class="image-glow purple"></div>
+                    </div>
+                    
+                    <div class="showcase-tags">
+                        <span class="tag"><span class="dot orange"></span>攻擊類型分類</span>
+                        <span class="tag"><span class="dot cyan"></span>請求詳細資訊</span>
+                        <span class="tag"><span class="dot pink"></span>一鍵封鎖 IP</span>
+                    </div>
+                </div>
+                
+                <!-- Slide Indicators -->
+                <div class="slide-indicators">
+                    <span class="indicator" :class="{ active: currentSlide === 0 }"></span>
+                    <span class="indicator" :class="{ active: currentSlide === 1 }"></span>
+                </div>
+                
+                <!-- Slide Progress -->
+                <div class="slide-progress">
+                    <div class="progress-bar" :style="{ width: slideProgress + '%' }"></div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- AI Features Highlight Section -->
+        <section id="ai-features" class="ai-section">
+            <h2 class="section-title text-gradient scroll-animate">🤖 AI 智能防禦</h2>
+            <p class="section-subtitle scroll-animate">
+                突破傳統規則限制，使用 AI 即時分析與偵測進階威脅
+            </p>
+            
+            <div class="ai-features-grid">
+                <div class="ai-feature-card scroll-animate" 
+                     v-for="(feature, index) in aiFeatures" 
+                     :key="index"
+                     @click="openModal(feature)">
+                    <div class="ai-feature-icon animate-float">{{ feature.icon }}</div>
+                    <h3 class="ai-feature-title">{{ feature.title }}</h3>
+                    <p class="ai-feature-desc">{{ feature.description }}</p>
+                    <ul class="ai-feature-list">
+                        <li v-for="(item, i) in feature.highlights.slice(0, 3)" :key="i">{{ item }}</li>
+                    </ul>
+                    <span class="view-more">查看詳情 →</span>
+                </div>
+            </div>
+        </section>
+        
+        <!-- CVE Database Section -->
+        <section class="cve-section">
+            <h2 class="section-title text-gradient scroll-animate">📡 CVE 資料庫即時更新</h2>
+            <p class="section-subtitle scroll-animate">
+                自動同步 NVD 漏洞資料庫，AI 智能生成防護規則
+            </p>
+            
+            <div class="cve-flow scroll-animate">
+                <div class="cve-step animate-hover-lift" v-for="(step, index) in cveSteps" :key="index">
+                    <div class="cve-step-icon">{{ step.icon }}</div>
+                    <div class="cve-step-content">
+                        <h4>{{ step.title }}</h4>
+                        <p>{{ step.description }}</p>
+                    </div>
+                    <div v-if="index < cveSteps.length - 1" class="cve-arrow">→</div>
+                </div>
+            </div>
+            
+            <div class="cve-info-box scroll-animate">
+                <h4>🔍 支援的情報來源</h4>
+                <div class="cve-sources">
+                    <span class="cve-source animate-pop" v-for="(source, i) in cveSources" :key="i" :style="{ animationDelay: i * 0.1 + 's' }">
+                        {{ source }}
+                    </span>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Attack Demo Section -->
+        <section class="demo-section">
+            <h2 class="section-title text-gradient scroll-animate">攻擊偵測流程</h2>
+            <p class="section-subtitle scroll-animate">
+                從攻擊發生到封鎖只需毫秒級反應
+            </p>
+            
+            <div class="demo-timeline scroll-animate">
+                <div class="timeline-item" v-for="(step, index) in attackFlow" :key="index">
+                    <div class="timeline-time">{{ step.time }}</div>
+                    <div class="timeline-dot" :class="step.type"></div>
+                    <div class="timeline-content">
+                        <h4>{{ step.title }}</h4>
+                        <p>{{ step.desc }}</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- SOC Command Center Section -->
+        <section class="soc-section">
+            <h2 class="section-title text-gradient scroll-animate">👁️ SOC 戰情中心</h2>
+            <p class="section-subtitle scroll-animate">
+                專業級資安監控儀表板，全螢幕 3D 威脅視覺化
+            </p>
+            
+            <div class="soc-dashboard scroll-animate">
+                <div class="soc-screen">
+                    <div class="soc-header">
+                        <span class="status-dot"></span>
+                        <span class="status-text">SYSTEM ONLINE</span>
+                    </div>
+                    <div class="soc-content">
+                        <div class="soc-globe"></div>
+                        <div class="soc-metrics">
+                            <div class="metric-box">
+                                <span class="metric-label">THREAT LEVEL</span>
+                                <span class="metric-val critical">HIGH</span>
+                            </div>
+                            <div class="metric-box">
+                                <span class="metric-label">ACTIVE BLOCKS</span>
+                                <span class="metric-val">1,249</span>
+                            </div>
+                            <div class="metric-box">
+                                <span class="metric-label">AI CONFIDENCE</span>
+                                <span class="metric-val">99.9%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="scanline"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Passkey Authentication Section -->
+        <section class="passkey-section">
+            <div class="passkey-container">
+                <div class="passkey-text scroll-animate">
+                    <h2 class="section-title text-gradient">🔐 零信任身份驗證</h2>
+                    <p class="section-lead">無需修改後端程式碼，立即為您的網站啟用生物辨識登入</p>
+                    <ul class="passkey-features">
+                        <li>👆 支援 TouchID / FaceID</li>
+                        <li>🔑 FIDO2 / WebAuthn 標準</li>
+                        <li>🛡️ 站點級別存取控制</li>
+                        <li>⚡ 毫秒級無密碼登入</li>
+                    </ul>
+                </div>
+                <div class="passkey-visual scroll-animate">
+                    <div class="fingerprint-scanner">
+                        <div class="scan-line"></div>
+                        <div class="fingerprint-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                                <path d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.118 6.844A21.88 21.88 0 0015.171 17m3.839 1.132c.645-2.266.99-4.659.99-7.132A8 8 0 008 4.07M3 15.364c.64-1.319 1-2.8 1-4.364 0-1.457.39-2.823 1.07-4"/>
+                            </svg>
+                        </div>
+                        <div class="scanner-text">ACCESS GRANTED</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI Report Section -->
+        <section class="report-section">
+            <div class="report-container">
+                <div class="report-visual scroll-animate">
+                    <div class="email-mockup">
+                        <div class="email-header">📧 Security Summary Report</div>
+                        <div class="email-body">
+                            <div class="email-chart"></div>
+                            <div class="email-lines">
+                                <div class="line"></div>
+                                <div class="line"></div>
+                                <div class="line short"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="report-text scroll-animate">
+                    <h2 class="section-title text-gradient">📧 AI 智能安全報告</h2>
+                    <p class="section-lead">每天早晨，您的安全摘要已準備就緒</p>
+                    <p class="section-desc">Sentinel AI 自動分析昨日所有流量，識別潛在威脅模式，並將精簡報告直接發送至您的信箱。</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Load Balancer Section -->
+        <section class="lb-section">
+            <h2 class="section-title text-gradient scroll-animate">⚖️ 智能負載均衡</h2>
+            <p class="section-subtitle scroll-animate">
+                多後端伺服器流量分配，自動故障轉移確保高可用性
+            </p>
+            
+            <!-- Animated Traffic Flow Diagram -->
+            <div class="lb-diagram scroll-animate">
+                <div class="lb-flow-container">
+                    <!-- Users/Traffic -->
+                    <div class="lb-source">
+                        <div class="lb-icon-box users">
+                            <span>👥</span>
+                        </div>
+                        <span class="lb-label">流量</span>
+                    </div>
+                    
+                    <!-- Flow Lines -->
+                    <svg class="lb-flow-lines" viewBox="0 0 120 160" preserveAspectRatio="none">
+                        <defs>
+                            <linearGradient id="flowGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#00d4ff" stop-opacity="0.8"/>
+                                <stop offset="100%" stop-color="#00d4ff" stop-opacity="0.3"/>
+                            </linearGradient>
+                        </defs>
+                        <!-- Flow to WAF -->
+                        <path d="M 10 80 C 60 80, 60 80, 110 80" stroke="url(#flowGrad1)" stroke-width="3" fill="none"/>
+                        <circle r="4" fill="#00f0ff">
+                            <animateMotion dur="1.5s" repeatCount="indefinite" path="M 10 80 C 60 80, 60 80, 110 80"/>
+                        </circle>
+                    </svg>
+                    
+                    <!-- WAF Node -->
+                    <div class="lb-waf-node">
+                        <div class="lb-icon-box waf">
+                            <span>🛡️</span>
+                        </div>
+                        <span class="lb-label">WAF</span>
+                        <span class="lb-badge">負載均衡</span>
+                    </div>
+                    
+                    <!-- Distribution Lines -->
+                    <svg class="lb-dist-lines" viewBox="0 0 120 120" preserveAspectRatio="xMidYMid meet">
+                        <defs>
+                            <linearGradient id="distGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#00d4ff" stop-opacity="0.9"/>
+                                <stop offset="100%" stop-color="#00ff88" stop-opacity="0.7"/>
+                            </linearGradient>
+                            <linearGradient id="failGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#ff6b6b" stop-opacity="0.6"/>
+                                <stop offset="100%" stop-color="#ff6b6b" stop-opacity="0.3"/>
+                            </linearGradient>
+                        </defs>
+                        <!-- To Server 1 (healthy - top, 40%) -->
+                        <path d="M 0 60 C 40 60, 80 25, 120 25" stroke="url(#distGrad)" stroke-width="3" fill="none"/>
+                        <circle r="4" fill="#00ff88">
+                            <animateMotion dur="1.3s" repeatCount="indefinite" path="M 0 60 C 40 60, 80 25, 120 25"/>
+                        </circle>
+                        <!-- To Server 2 (healthy - middle, 60%) -->
+                        <path d="M 0 60 C 40 55, 80 60, 120 60" stroke="url(#distGrad)" stroke-width="5" fill="none"/>
+                        <circle r="5" fill="#00ff88">
+                            <animateMotion dur="0.9s" repeatCount="indefinite" path="M 0 60 C 40 55, 80 60, 120 60"/>
+                        </circle>
+                        <!-- To Server 3 (failed - bottom, dashed) -->
+                        <path d="M 0 60 C 40 60, 80 95, 120 95" stroke="url(#failGrad)" stroke-width="2" stroke-dasharray="6 4" fill="none"/>
+                    </svg>
+                    
+                    <!-- Backend Servers -->
+                    <div class="lb-servers">
+                        <div class="lb-server healthy">
+                            <span class="server-status"></span>
+                            <span class="server-icon">🖥️</span>
+                            <span class="server-label">Server 1</span>
+                            <span class="server-weight">40%</span>
+                        </div>
+                        <div class="lb-server healthy">
+                            <span class="server-status"></span>
+                            <span class="server-icon">🖥️</span>
+                            <span class="server-label">Server 2</span>
+                            <span class="server-weight">60%</span>
+                        </div>
+                        <div class="lb-server failed">
+                            <span class="server-status"></span>
+                            <span class="server-icon">🖥️</span>
+                            <span class="server-label">Server 3</span>
+                            <span class="server-weight">故障</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Load Balancer Features -->
+            <div class="lb-features scroll-animate">
+                <div class="lb-feature-card" v-for="(item, i) in lbFeatures" :key="i">
+                    <span class="lb-feature-icon">{{ item.icon }}</span>
+                    <h4>{{ item.title }}</h4>
+                    <p>{{ item.desc }}</p>
+                </div>
+            </div>
+            
+            <!-- Strategies -->
+            <div class="lb-strategies scroll-animate">
+                <h3 class="text-gradient">支援的負載均衡策略</h3>
+                <div class="strategy-list">
+                    <div class="strategy-item" v-for="(strategy, i) in lbStrategies" :key="i">
+                        <span class="strategy-icon">{{ strategy.icon }}</span>
+                        <div class="strategy-info">
+                            <span class="strategy-name">{{ strategy.name }}</span>
+                            <span class="strategy-desc">{{ strategy.desc }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Architecture Section -->
+        <section class="architecture">
+            <h2 class="section-title text-gradient scroll-animate">技術架構</h2>
+            <p class="section-subtitle scroll-animate">
+                現代化技術堆疊，打造高效能防護系統
+            </p>
+            
+            <div class="arch-diagram">
+                <div class="arch-layer scroll-animate animate-hover-lift" v-for="(layer, index) in architecture" :key="index">
+                    <span class="arch-layer-icon animate-float-slow">{{ layer.icon }}</span>
+                    <div class="arch-layer-content">
+                        <h4>{{ layer.title }}</h4>
+                        <p>{{ layer.tech }}</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Why Choose Us Section -->
+        <section class="comparison-section">
+            <h2 class="section-title text-gradient scroll-animate">為什麼選擇 Security One WAF？</h2>
+            <p class="section-subtitle scroll-animate">
+                相較於傳統 WAF，我們提供更智能、更全面的防護
+            </p>
+            
+            <div class="comparison-table scroll-animate">
+                <div class="comparison-header">
+                    <div class="comparison-feature">功能</div>
+                    <div class="comparison-traditional">傳統 WAF</div>
+                    <div class="comparison-vito">Security One WAF</div>
+                </div>
+                <div class="comparison-row" v-for="(item, index) in comparison" :key="index">
+                    <div class="comparison-feature">{{ item.feature }}</div>
+                    <div class="comparison-traditional">
+                        <span :class="item.traditional ? 'check' : 'cross'">{{ item.traditional ? '✓' : '✗' }}</span>
+                    </div>
+                    <div class="comparison-vito">
+                        <span class="check highlight">✓</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Deployment Section -->
+        <section class="deploy-section">
+            <h2 class="section-title text-gradient scroll-animate">快速部署</h2>
+            <p class="section-subtitle scroll-animate">
+                支援多種部署方式，5 分鐘即可上線
+            </p>
+            
+            <div class="deploy-options scroll-animate">
+                <div class="deploy-card" v-for="(option, index) in deployOptions" :key="index">
+                    <div class="deploy-icon">{{ option.icon }}</div>
+                    <h4>{{ option.title }}</h4>
+                    <p>{{ option.desc }}</p>
+                    <code>{{ option.command }}</code>
+                </div>
+            </div>
+        </section>
+        
+        <!-- FAQ Section -->
+        <section class="faq-section">
+            <h2 class="section-title text-gradient scroll-animate">常見問題</h2>
+            
+            <div class="faq-list scroll-animate">
+                <div class="faq-item" v-for="(faq, index) in faqs" :key="index" @click="toggleFaq(index)">
+                    <div class="faq-question">
+                        <span>{{ faq.q }}</span>
+                        <span class="faq-toggle">{{ activeFaq === index ? '−' : '+' }}</span>
+                    </div>
+                    <Transition name="faq">
+                        <div class="faq-answer" v-show="activeFaq === index">
+                            {{ faq.a }}
+                        </div>
+                    </Transition>
+                </div>
+            </div>
+        </section>
+        
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <div class="cta-content scroll-animate">
+                <h2 class="text-gradient">準備好保護您的網站了嗎？</h2>
+                <p>立即聯繫我們，獲取專屬解決方案</p>
+                <a href="mailto:sales@security-one.com?subject=Security One WAF 諮詢" class="btn btn-primary animate-glow">
+                    📧 聯繫我們
+                </a>
+            </div>
+        </section>
+        
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-logo text-gradient">Security One WAF</div>
+            <p class="footer-text">個人版 Web 應用程式防火牆</p>
+            <div class="footer-links">
+                <a href="mailto:sales@security-one.com?subject=Security One WAF 諮詢">聯絡我們</a>
+                <a href="mailto:sales@security-one.com?subject=Security One WAF 文檔請求">文檔</a>
+            </div>
+            <p class="footer-text" style="margin-top: 2rem;">
+                © {{ new Date().getFullYear() }} Security One WAF. MIT License.
+            </p>
+        </footer>
+        
+        <!-- Feature Modal -->
+        <FeatureModal 
+            :isOpen="modalOpen" 
+            :feature="selectedFeature" 
+            @close="closeModal" 
+        />
+    </div>
+</template>
+
+<script setup>
+import { ref, computed, onMounted, onUnmounted } from 'vue';
+import LoadingScreen from '../Components/LoadingScreen.vue';
+import ParticleBackground from '../Components/ParticleBackground.vue';
+import FeatureCard from '../Components/FeatureCard.vue';
+import AnimatedCounter from '../Components/AnimatedCounter.vue';
+import FeatureModal from '../Components/FeatureModal.vue';
+
+const isLoading = ref(true);
+const modalOpen = ref(false);
+const selectedFeature = ref({});
+const heroRef = ref(null);
+const showcaseRef = ref(null);
+const scrollProgress = ref(0);
+const showcaseProgress = ref(0);
+const currentSlide = ref(0);
+const showcaseVisible = ref(false);
+const slideProgress = ref(0);
+
+// Parallax scroll effect for Hero (slowed down)
+const heroStyle = computed(() => {
+    const opacity = Math.max(0, 1 - scrollProgress.value * 0.8);
+    const scale = Math.max(0.85, 1 - scrollProgress.value * 0.15);
+    const blur = scrollProgress.value * 5;
+    const translateY = scrollProgress.value * -30;
+    
+    return {
+        opacity,
+        transform: `scale(${scale}) translateY(${translateY}px)`,
+        filter: `blur(${blur}px)`
+    };
+});
+
+const handleScroll = () => {
+    const scrollY = window.scrollY;
+    const windowHeight = window.innerHeight;
+    
+    // Hero: track first 2 viewports (slower)
+    scrollProgress.value = Math.min(1, scrollY / (windowHeight * 2));
+    
+    // Product Showcase: starts at ~2.5 viewports, lasts for 4 viewports
+    const showcaseStart = windowHeight * 2.5;
+    const showcaseEnd = windowHeight * 6.5;
+    const showcaseRange = showcaseEnd - showcaseStart;
+    
+    if (scrollY >= showcaseStart && scrollY <= showcaseEnd) {
+        showcaseVisible.value = true;
+        const localProgress = (scrollY - showcaseStart) / showcaseRange;
+        slideProgress.value = localProgress * 100;
+        
+        // Switch slides at 50% progress
+        currentSlide.value = localProgress < 0.5 ? 0 : 1;
+    } else {
+        showcaseVisible.value = false;
+    }
+};
+
+const openModal = (feature) => {
+    selectedFeature.value = feature;
+    modalOpen.value = true;
+};
+
+const closeModal = () => {
+    modalOpen.value = false;
+};
+
+const aiFeatures = [
+    {
+        icon: '🧠',
+        title: 'AI 即時分析',
+        description: '使用 Ollama 本地大語言模型進行請求分析，在不影響效能的情況下提供智能威脅偵測',
+        highlights: [
+            '3 秒內完成威脅評估',
+            '繞過傳統規則的攻擊偵測',
+            '低/中/高三級敏感度設定',
+            '所有判定記錄可追溯',
+            '本地部署保護隱私'
+        ],
+        tech: ['Ollama', 'LLM', 'SSE Streaming', 'Real-time Analysis']
+    },
+    {
+        icon: '🎯',
+        title: 'CVE 漏洞防護',
+        description: '自動從 NVD 同步最新 CVE，結合多來源情報，AI 生成專屬防護規則',
+        highlights: [
+            '即時同步 NVD 漏洞資料',
+            '自動搜尋 Exploit-DB / GitHub PoC',
+            'AI 分析攻擊向量生成規則',
+            '人工審核後一鍵部署',
+            'CVSS 評分優先排序'
+        ],
+        tech: ['NVD API', 'Exploit-DB', 'GitHub API', 'AI Rule Generation']
+    },
+    {
+        icon: '💬',
+        title: 'AI 安全助手',
+        description: '智能對話式安全分析與操作建議，讓安全管理更直覺',
+        highlights: [
+            '即時攻擊分析與建議',
+            '一鍵封鎖可疑 IP',
+            '安全事件總結報告',
+            'SSE 串流即時回應',
+            '支援中文對話'
+        ],
+        tech: ['Chat Interface', 'SSE', 'Action Commands', 'Context-aware']
+    }
+];
+
+const cveSteps = [
+    { icon: '📥', title: '自動抓取', description: 'NVD API 同步最新 CVE' },
+    { icon: '🔍', title: '情報蒐集', description: '搜尋 Exploit-DB、GitHub PoC' },
+    { icon: '🤖', title: 'AI 生成', description: 'LLM 分析並生成 WAF 規則' },
+    { icon: '👁️', title: '人工審核', description: '審核規則確保準確性' },
+    { icon: '🚀', title: '一鍵部署', description: '套用至指定站點' }
+];
+
+const cveSources = ['NVD NIST', 'Exploit-DB', 'GitHub PoC', 'CVE References'];
+
+// Load Balancer Features
+const lbFeatures = [
+    { icon: '🔄', title: '自動故障轉移', desc: '後端伺服器故障時自動重新路由流量，確保服務不中斷' },
+    { icon: '⚖️', title: '權重分配', desc: '依據伺服器效能自訂流量權重，最佳化資源利用' },
+    { icon: '💓', title: '健康檢查', desc: '定期監測後端伺服器狀態，即時感知異常' },
+    { icon: '📊', title: '流量視覺化', desc: '即時展示流量分配狀況與後端伺服器健康狀態' }
+];
+
+const lbStrategies = [
+    { icon: '🔁', name: '輪詢 (Round Robin)', desc: '依序分配請求到各後端伺服器' },
+    { icon: '⚖️', name: '加權輪詢', desc: '依據設定權重比例分配流量' },
+    { icon: '🎲', name: '隨機 (Random)', desc: '隨機選擇後端伺服器處理請求' },
+    { icon: '#️⃣', name: 'IP 雜湊', desc: '同一來源 IP 固定導向相同伺服器' }
+];
+
+const features = [
+    {
+        icon: '🛡️',
+        title: '站點管理',
+        description: '管理反向代理網站和防護設定，輕鬆守護多個網站',
+        highlights: ['多站點管理', '獨立防護設定', '域名綁定', '反向代理配置', 'SSL 證書管理'],
+        tech: ['Nginx', 'Reverse Proxy', 'SSL/TLS']
+    },
+    {
+        icon: '📊',
+        title: '即時監控',
+        description: '即時攻擊統計和 QPS 監控，掌握網站安全狀態',
+        highlights: ['即時 QPS 監控', '攻擊類型統計', '地理位置分析', '趨勢圖表', '即時告警'],
+        tech: ['Real-time Charts', 'WebSocket', 'Dashboard']
+    },
+    {
+        icon: '🚫',
+        title: '黑白名單',
+        description: 'IP 黑白名單管理，支持 CIDR 格式精確控制',
+        highlights: ['CIDR 格式支援', '臨時/永久封鎖', '白名單優先', '批量導入', '自動過期'],
+        tech: ['IP Management', 'CIDR', 'Auto-expire']
+    },
+    {
+        icon: '⚡',
+        title: 'CC 防護',
+        description: '配置請求限制和封鎖策略，防止惡意流量攻擊',
+        highlights: ['請求頻率限制', '滑動窗口算法', '自動封鎖', '白名單例外', '自訂閾值'],
+        tech: ['Rate Limiting', 'Sliding Window', 'Auto-block']
+    },
+    {
+        icon: '🤖',
+        title: 'AI 智能防禦',
+        description: 'Ollama AI 即時分析可疑請求，偵測繞過規則的攻擊',
+        highlights: ['本地 LLM 分析', '3秒超時設計', '三級敏感度', '完整日誌', '持續學習'],
+        tech: ['Ollama', 'LLM', 'Real-time Analysis']
+    },
+    {
+        icon: '📡',
+        title: 'CVE 即時更新',
+        description: '自動同步 NVD 漏洞資料庫，AI 生成防護規則',
+        highlights: ['NVD 即時同步', 'Exploit-DB 整合', 'GitHub PoC 搜尋', 'AI 規則生成', '人工審核'],
+        tech: ['NVD API', 'AI Generation', 'Rule Management']
+    },
+    {
+        icon: '🔐',
+        title: '人機驗證',
+        description: '驗證碼保護配置，有效阻擋自動化攻擊',
+        highlights: ['JavaScript 驗證', 'Cookie 驗證', '自訂觸發條件', '友好提示頁面', '白名單繞過'],
+        tech: ['CAPTCHA', 'JavaScript Challenge', 'Cookie Auth']
+    },
+    {
+        icon: '📝',
+        title: '攻擊日誌',
+        description: '詳細的攻擊記錄和分析，追蹤所有安全事件',
+        highlights: ['完整請求記錄', '攻擊類型分類', '地理位置追蹤', '時間軸分析', '匯出功能'],
+        tech: ['Logging', 'Analytics', 'Export']
+    },
+    {
+        icon: '🌍',
+        title: '地理封鎖',
+        description: '基於地理位置的訪問控制，精準防護策略',
+        highlights: ['國家/地區封鎖', 'IP 地理定位', '一鍵封鎖', '白名單例外', '即時更新'],
+        tech: ['GeoIP', 'Country Block', 'IP Location']
+    }
+];
+
+const stats = [
+    { value: 99.9, suffix: '%', label: '可用性' },
+    { value: 10, suffix: 'ms', label: '平均延遲' },
+    { value: 9, suffix: '+', label: '防護類型' },
+    { value: 24, suffix: ' / 7', label: '全天候監控' }
+];
+
+const architecture = [
+    { icon: '🌐', title: 'Nginx 反向代理', tech: '高效能負載均衡與流量處理' },
+    { icon: '🔥', title: 'Lua WAF 模組', tech: '即時請求分析與攻擊偵測' },
+    { icon: '🤖', title: 'AI 引擎', tech: 'Ollama 本地大語言模型 (3s 超時)' },
+    { icon: '📡', title: 'CVE 同步', tech: 'NVD API + Exploit-DB + GitHub' },
+    { icon: '⚡', title: 'Laravel 後端', tech: 'PHP 8.2 / Laravel 11' },
+    { icon: '🎨', title: 'Vue 3 前端', tech: 'Inertia.js / Vite' },
+    { icon: '🗄️', title: '資料存儲', tech: 'SQLite / MySQL' }
+];
+
+// Comparison data
+const comparison = [
+    { feature: 'AI 智能分析', traditional: false },
+    { feature: 'CVE 即時同步', traditional: false },
+    { feature: '本地 LLM 部署', traditional: false },
+    { feature: 'SQL 注入防護', traditional: true },
+    { feature: 'XSS 攻擊防護', traditional: true },
+    { feature: '即時攻擊地圖', traditional: false },
+    { feature: '一鍵規則部署', traditional: false },
+    { feature: '中文介面', traditional: false }
+];
+
+// Attack flow timeline
+const attackFlow = [
+    { time: '0ms', title: '攻擊請求', desc: '惡意 SQL 注入請求進入', type: 'danger' },
+    { time: '1ms', title: 'WAF 攔截', desc: 'Lua 模組即時分析請求', type: 'warning' },
+    { time: '5ms', title: '規則比對', desc: '匹配已知攻擊特徵', type: 'info' },
+    { time: '8ms', title: 'AI 分析', desc: 'LLM 深度威脅評估', type: 'info' },
+    { time: '10ms', title: '封鎖攻擊', desc: '返回 403 並記錄日誌', type: 'success' }
+];
+
+// Deploy options
+const deployOptions = [
+    { icon: '🐳', title: 'Docker', desc: '推薦方式，一鍵啟動', command: 'docker-compose up -d' },
+    { icon: '📦', title: '手動安裝', desc: '自訂配置，完全控制', command: 'composer install && npm run build' },
+    { icon: '☁️', title: '雲端部署', desc: '支援各大雲平台', command: 'kubectl apply -f k8s/' }
+];
+
+// FAQ data
+const faqs = [
+    { q: 'AI 防禦需要什麼硬體配置？', a: 'AI 防禦使用 Ollama 運行本地 LLM，建議至少 16GB VRAM。如果不使用 AI 功能，2GB RAM 即可運行基本 WAF。' },
+    { q: '如何更新 CVE 規則？', a: '系統會自動從 NVD 同步最新 CVE 資料，您也可以手動觸發更新。AI 會自動分析並生成對應的防護規則供您審核。' },
+    { q: '支援哪些攻擊類型？', a: '支援 SQL 注入、XSS、RCE、路徑遍歷、CC 攻擊、惡意 User-Agent 等多種攻擊類型的偵測與防護。' },
+    { q: '可以與現有系統整合嗎？', a: '可以，Security One WAF 作為反向代理運行，可以保護任何 HTTP/HTTPS 服務，無需修改現有應用程式。' }
+];
+
+const activeFaq = ref(null);
+
+const toggleFaq = (index) => {
+    activeFaq.value = activeFaq.value === index ? null : index;
+};
+
+const onLoadingComplete = () => {
+    isLoading.value = false;
+};
+
+onMounted(() => {
+    // Parallax scroll listener
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll(); // Initial call
+    
+    // Scroll animation observer
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.1 });
+    
+    document.querySelectorAll('.scroll-animate').forEach(el => {
+        observer.observe(el);
+    });
+});
+
+onUnmounted(() => {
+    window.removeEventListener('scroll', handleScroll);
+});
+</script>
+
+<style scoped>
+.app-wrapper {
+    position: relative;
+    min-height: 100vh;
+}
+
+/* Login Button - Fixed Top Right */
+.login-btn {
+    position: fixed;
+    top: 1.5rem;
+    right: 1.5rem;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    background: rgba(10, 15, 30, 0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    border-radius: 50px;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.login-btn:hover {
+    background: rgba(0, 212, 255, 0.15);
+    border-color: rgba(0, 212, 255, 0.6);
+    box-shadow: 0 4px 30px rgba(0, 212, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+.login-icon {
+    font-size: 1rem;
+}
+
+.login-text {
+    background: linear-gradient(135deg, #00d4ff, #8b5cf6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Hero Parallax Wrapper */
+.hero-wrapper {
+    height: 100vh;
+    position: relative;
+}
+
+/* Hero Title Sizes */
+.title-brand,
+.title-product {
+    background: inherit;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.title-brand {
+    font-size: 0.55em;
+}
+
+.title-product {
+    font-size: 1em;
+}
+
+.hero-fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 1;
+    will-change: transform, opacity, filter;
+    transition: none;
+}
+
+/* Scroll Indicator */
+.scroll-indicator {
+    position: absolute;
+    bottom: 3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.875rem;
+    transition: opacity 0.3s ease;
+}
+
+.scroll-arrow {
+    animation: bounceDown 1.5s ease-in-out infinite;
+    font-size: 1.5rem;
+    color: #00d4ff;
+}
+
+@keyframes bounceDown {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(10px); }
+}
+
+/* Animation Classes */
+.animate-float {
+    animation: float 3s ease-in-out infinite;
+}
+
+.animate-float-slow {
+    animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.animate-pulse-border {
+    animation: pulseBorder 2s ease-in-out infinite;
+}
+
+@keyframes pulseBorder {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(0, 212, 255, 0.4); }
+    50% { box-shadow: 0 0 0 8px rgba(0, 212, 255, 0); }
+}
+
+.animate-glow {
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from { box-shadow: 0 0 20px rgba(0, 212, 255, 0.4); }
+    to { box-shadow: 0 0 30px rgba(0, 212, 255, 0.6), 0 0 60px rgba(139, 92, 246, 0.3); }
+}
+
+.animate-hover-lift {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.animate-hover-lift:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.animate-hover-scale {
+    transition: transform 0.3s ease;
+}
+
+.animate-hover-scale:hover {
+    transform: scale(1.05);
+}
+
+.animate-pop {
+    animation: popIn 0.5s ease forwards;
+    opacity: 0;
+}
+
+@keyframes popIn {
+    from { opacity: 0; transform: scale(0.8); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+/* AI Section */
+.ai-section {
+    padding: 6rem 2rem;
+    position: relative;
+    z-index: 1;
+    background: linear-gradient(180deg, transparent 0%, rgba(139, 92, 246, 0.05) 50%, transparent 100%);
+}
+
+.ai-features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.ai-feature-card {
+    background: rgba(139, 92, 246, 0.1);
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    border-radius: 16px;
+    padding: 2rem;
+    transition: all 0.4s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.ai-feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.ai-feature-card:hover::before {
+    left: 100%;
+}
+
+.ai-feature-card:hover {
+    transform: translateY(-5px);
+    border-color: #8b5cf6;
+    box-shadow: 0 0 30px rgba(139, 92, 246, 0.3);
+}
+
+.ai-feature-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.ai-feature-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.25rem;
+    color: #8b5cf6;
+    margin-bottom: 0.5rem;
+}
+
+.ai-feature-desc {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.ai-feature-list {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 1rem;
+}
+
+.ai-feature-list li {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.85rem;
+    padding: 0.25rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.ai-feature-list li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: #00ff88;
+}
+
+.view-more {
+    color: #8b5cf6;
+    font-size: 0.85rem;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+}
+
+.ai-feature-card:hover .view-more {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* CVE Section */
+.cve-section {
+    padding: 6rem 2rem;
+    position: relative;
+    z-index: 1;
+    background: linear-gradient(180deg, transparent 0%, rgba(0, 212, 255, 0.05) 50%, transparent 100%);
+}
+
+.cve-flow {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    max-width: 1200px;
+    margin: 0 auto 3rem;
+}
+
+.cve-step {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: rgba(0, 212, 255, 0.1);
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.cve-step:hover {
+    border-color: #00d4ff;
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+}
+
+.cve-step-icon {
+    font-size: 1.5rem;
+}
+
+.cve-step-content h4 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.9rem;
+    color: #00d4ff;
+    margin-bottom: 0.25rem;
+}
+
+.cve-step-content p {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.75rem;
+}
+
+.cve-arrow {
+    color: #00d4ff;
+    font-size: 1.5rem;
+    animation: pulse-arrow 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse-arrow {
+    0%, 100% { opacity: 0.5; transform: translateX(0); }
+    50% { opacity: 1; transform: translateX(5px); }
+}
+
+.cve-info-box {
+    max-width: 600px;
+    margin: 0 auto;
+    background: rgba(15, 15, 30, 0.8);
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.cve-info-box h4 {
+    font-family: 'Orbitron', sans-serif;
+    color: #00d4ff;
+    margin-bottom: 1rem;
+}
+
+.cve-sources {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+}
+
+.cve-source {
+    background: rgba(0, 212, 255, 0.2);
+    border: 1px solid rgba(0, 212, 255, 0.4);
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    color: #00d4ff;
+    transition: all 0.3s ease;
+}
+
+.cve-source:hover {
+    background: rgba(0, 212, 255, 0.3);
+    transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+    .cve-flow {
+        flex-direction: column;
+    }
+    
+    .cve-arrow {
+        transform: rotate(90deg);
+    }
+    
+    @keyframes pulse-arrow {
+        0%, 100% { opacity: 0.5; transform: rotate(90deg) translateX(0); }
+        50% { opacity: 1; transform: rotate(90deg) translateX(5px); }
+    }
+}
+
+/* Product Showcase (Fixed Slideshow) */
+.product-showcase {
+    position: relative;
+    z-index: 10;
+}
+
+.showcase-spacer {
+    height: 400vh; /* 4 viewports of scroll distance */
+}
+
+.showcase-fixed-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(180deg, #0a0a0f 0%, #0f0f18 50%, #0a0a0f 100%);
+    z-index: 100;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.showcase-slide {
+    position: absolute;
+    width: 100%;
+    max-width: 950px;
+    max-height: 90vh;
+    padding: 1.5rem;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.showcase-slide.active {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+.showcase-image-wrapper {
+    position: relative;
+    margin: 1rem auto;
+    max-width: 800px;
+    max-height: 55vh;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.showcase-image-wrapper img {
+    width: 100%;
+    height: auto;
+    max-height: 55vh;
+    object-fit: contain;
+    display: block;
+    border-radius: 12px;
+    border: 1px solid rgba(0, 212, 255, 0.3);
+}
+
+.image-glow {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    pointer-events: none;
+}
+
+.image-glow.blue {
+    background: radial-gradient(circle at center, rgba(0, 212, 255, 0.15) 0%, transparent 50%);
+}
+
+.image-glow.purple {
+    background: radial-gradient(circle at center, rgba(139, 92, 246, 0.15) 0%, transparent 50%);
+}
+
+.showcase-tags {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.showcase-tags .tag {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50px;
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.showcase-tags .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    animation: pulse-dot 2s infinite;
+}
+
+.dot.red { background: #ff6b6b; box-shadow: 0 0 8px rgba(255, 107, 107, 0.5); }
+.dot.blue { background: #00d4ff; box-shadow: 0 0 8px rgba(0, 212, 255, 0.5); }
+.dot.green { background: #00ff88; box-shadow: 0 0 8px rgba(0, 255, 136, 0.5); }
+.dot.orange { background: #ffaa00; box-shadow: 0 0 8px rgba(255, 170, 0, 0.5); }
+.dot.cyan { background: #00ffff; box-shadow: 0 0 8px rgba(0, 255, 255, 0.5); }
+.dot.pink { background: #ff6bff; box-shadow: 0 0 8px rgba(255, 107, 255, 0.5); }
+
+@keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.7; transform: scale(1.2); }
+}
+
+.slide-indicators {
+    position: absolute;
+    bottom: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 0.75rem;
+    z-index: 10;
+}
+
+.indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.indicator.active {
+    background: #00d4ff;
+    box-shadow: 0 0 15px rgba(0, 212, 255, 0.5);
+    transform: scale(1.2);
+}
+
+.slide-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #00d4ff, #8b5cf6);
+    transition: width 0.1s ease;
+}
+
+@media (max-width: 768px) {
+    .showcase-tags {
+        gap: 0.75rem;
+    }
+    
+    .showcase-tags .tag {
+        font-size: 0.75rem;
+        padding: 0.375rem 0.75rem;
+    }
+}
+
+.showcase-image-container {
+    position: relative;
+    max-width: 900px;
+    width: 100%;
+    margin: 2rem 0;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    box-shadow: 
+        0 0 60px rgba(0, 212, 255, 0.2),
+        inset 0 0 60px rgba(0, 0, 0, 0.5);
+}
+
+.showcase-image {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.showcase-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        135deg,
+        rgba(0, 212, 255, 0.1) 0%,
+        transparent 50%,
+        rgba(139, 92, 246, 0.1) 100%
+    );
+    pointer-events: none;
+}
+
+.showcase-scanline {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, transparent, #00d4ff, transparent);
+    animation: scanDown 3s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes scanDown {
+    0% { top: 0; opacity: 1; }
+    100% { top: 100%; opacity: 0; }
+}
+
+.showcase-features {
+    display: flex;
+    gap: 3rem;
+    margin-top: 1rem;
+}
+
+.showcase-feature {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+}
+
+.feature-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    animation: pulse-dot 2s ease-in-out infinite;
+}
+
+.feature-dot.red {
+    background: #ff6b6b;
+    box-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
+}
+
+.feature-dot.blue {
+    background: #00d4ff;
+    box-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+    animation-delay: 0.3s;
+}
+
+.feature-dot.green {
+    background: #00ff88;
+    box-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+    animation-delay: 0.6s;
+}
+
+@keyframes pulse-dot {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.3); opacity: 0.7; }
+}
+
+@media (max-width: 768px) {
+    .showcase-features {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+    }
+}
+
+/* Comparison Section */
+.comparison-section {
+    padding: 6rem 2rem;
+    position: relative;
+    z-index: 1;
+    background: linear-gradient(180deg, transparent 0%, rgba(0, 255, 136, 0.03) 50%, transparent 100%);
+}
+
+.comparison-table {
+    max-width: 800px;
+    margin: 0 auto;
+    background: rgba(15, 15, 30, 0.8);
+    border: 1px solid rgba(0, 255, 136, 0.3);
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.comparison-header {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    background: rgba(0, 255, 136, 0.1);
+    padding: 1rem;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.9rem;
+    color: #00ff88;
+}
+
+.comparison-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    padding: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    transition: background 0.3s ease;
+}
+
+.comparison-row:hover {
+    background: rgba(0, 255, 136, 0.05);
+}
+
+.comparison-feature {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.comparison-traditional, .comparison-vito {
+    text-align: center;
+}
+
+.check { color: #00ff88; }
+.cross { color: #ff6b6b; }
+.highlight { font-size: 1.25rem; text-shadow: 0 0 10px rgba(0, 255, 136, 0.5); }
+
+/* Demo Timeline Section */
+.demo-section {
+    padding: 6rem 2rem;
+    position: relative;
+    z-index: 1;
+}
+
+.demo-timeline {
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.demo-timeline::before {
+    content: '';
+    position: absolute;
+    left: 80px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg, #ff6b6b, #ffaa00, #00d4ff, #00ff88);
+}
+
+.timeline-item {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.5rem 0;
+    position: relative;
+}
+
+.timeline-time {
+    width: 60px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.875rem;
+    color: #00d4ff;
+    text-align: right;
+}
+
+.timeline-dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    position: relative;
+    z-index: 1;
+}
+
+.timeline-dot.danger { background: #ff6b6b; box-shadow: 0 0 15px rgba(255, 107, 107, 0.5); }
+.timeline-dot.warning { background: #ffaa00; box-shadow: 0 0 15px rgba(255, 170, 0, 0.5); }
+.timeline-dot.info { background: #00d4ff; box-shadow: 0 0 15px rgba(0, 212, 255, 0.5); }
+.timeline-dot.success { background: #00ff88; box-shadow: 0 0 15px rgba(0, 255, 136, 0.5); }
+
+.timeline-content {
+    flex: 1;
+    background: rgba(15, 15, 30, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+}
+
+.timeline-content h4 {
+    font-family: 'Orbitron', sans-serif;
+    color: #fff;
+    margin-bottom: 0.25rem;
+}
+
+.timeline-content p {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.875rem;
+}
+
+/* Deploy Section */
+.deploy-section {
+    padding: 6rem 2rem;
+    position: relative;
+    z-index: 1;
+    background: linear-gradient(180deg, transparent 0%, rgba(139, 92, 246, 0.03) 50%, transparent 100%);
+}
+
+.deploy-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.deploy-card {
+    background: rgba(139, 92, 246, 0.1);
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    border-radius: 16px;
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.deploy-card:hover {
+    transform: translateY(-5px);
+    border-color: #8b5cf6;
+    box-shadow: 0 0 30px rgba(139, 92, 246, 0.3);
+}
+
+.deploy-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.deploy-card h4 {
+    font-family: 'Orbitron', sans-serif;
+    color: #8b5cf6;
+    margin-bottom: 0.5rem;
+}
+
+.deploy-card p {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+}
+
+.deploy-card code {
+    display: block;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    border-radius: 8px;
+    padding: 0.75rem;
+    font-size: 0.8rem;
+    color: #00d4ff;
+    font-family: monospace;
+}
+
+/* FAQ Section */
+.faq-section {
+    padding: 6rem 2rem;
+    position: relative;
+    z-index: 1;
+}
+
+.faq-list {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.faq-item {
+    background: rgba(15, 15, 30, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.faq-item:hover {
+    border-color: #00d4ff;
+}
+
+.faq-question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 1.5rem;
+    font-weight: 500;
+    color: #fff;
+}
+
+.faq-toggle {
+    font-size: 1.5rem;
+    color: #00d4ff;
+    transition: transform 0.3s ease;
+}
+
+.faq-answer {
+    padding: 0 1.5rem 1.25rem;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.6;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.faq-enter-active, .faq-leave-active {
+    transition: all 0.3s ease;
+}
+
+.faq-enter-from, .faq-leave-to {
+    opacity: 0;
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+/* CTA Section */
+.cta-section {
+    padding: 8rem 2rem;
+    position: relative;
+    z-index: 1;
+    background: linear-gradient(180deg, transparent, rgba(0, 212, 255, 0.1), transparent);
+}
+
+.cta-content {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.cta-content h2 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    margin-bottom: 1rem;
+}
+
+.cta-content p {
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 2rem;
+}
+
+@media (max-width: 768px) {
+    .comparison-header, .comparison-row {
+        grid-template-columns: 1.5fr 1fr 1fr;
+        font-size: 0.8rem;
+    }
+    
+    .demo-timeline::before {
+        left: 50px;
+    }
+    
+    .timeline-time {
+        width: 40px;
+        font-size: 0.75rem;
+    }
+}
+
+/* Load Balancer Section */
+.lb-section {
+    padding: 6rem 2rem;
+    position: relative;
+    z-index: 1;
+    background: linear-gradient(180deg, rgba(0, 212, 255, 0.03) 0%, rgba(0, 255, 136, 0.03) 100%);
+}
+
+.lb-diagram {
+    max-width: 900px;
+    margin: 3rem auto;
+    padding: 2rem;
+    background: rgba(15, 15, 30, 0.8);
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.lb-flow-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0;
+}
+
+.lb-source, .lb-waf-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.lb-icon-box {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.75rem;
+}
+
+.lb-icon-box.users {
+    background: linear-gradient(135deg, #8b5cf6, #6366f1);
+    box-shadow: 0 0 25px rgba(139, 92, 246, 0.4);
+}
+
+.lb-icon-box.waf {
+    background: linear-gradient(135deg, #00d4ff, #0099cc);
+    box-shadow: 0 0 25px rgba(0, 212, 255, 0.4);
+    animation: pulse-waf 2s ease-in-out infinite;
+}
+
+@keyframes pulse-waf {
+    0%, 100% { box-shadow: 0 0 25px rgba(0, 212, 255, 0.4); }
+    50% { box-shadow: 0 0 40px rgba(0, 212, 255, 0.6); }
+}
+
+.lb-label {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.7);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.lb-badge {
+    font-size: 0.65rem;
+    padding: 0.2rem 0.6rem;
+    background: rgba(0, 212, 255, 0.2);
+    border: 1px solid rgba(0, 212, 255, 0.4);
+    border-radius: 20px;
+    color: #00d4ff;
+}
+
+.lb-flow-lines, .lb-dist-lines {
+    width: 150px;
+    height: 140px;
+    flex-shrink: 0;
+}
+
+.lb-servers {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.lb-server {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    background: rgba(17, 24, 39, 0.95);
+    border: 1px solid rgba(0, 255, 136, 0.3);
+    border-radius: 10px;
+    min-width: 140px;
+}
+
+.lb-server.healthy .server-status {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #00ff88;
+    box-shadow: 0 0 10px #00ff88;
+    animation: status-pulse 1.5s infinite;
+}
+
+@keyframes status-pulse {
+    0%, 100% { box-shadow: 0 0 10px #00ff88; }
+    50% { box-shadow: 0 0 20px #00ff88; }
+}
+
+.lb-server.failed {
+    border-color: rgba(239, 68, 68, 0.5);
+    opacity: 0.6;
+}
+
+.lb-server.failed .server-status {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #ef4444;
+    animation: status-blink 1s infinite;
+}
+
+@keyframes status-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+
+.server-icon {
+    font-size: 1.25rem;
+}
+
+.server-label {
+    flex: 1;
+    font-size: 0.75rem;
+    color: #e5e7eb;
+}
+
+.server-weight {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #00d4ff;
+}
+
+.lb-server.failed .server-weight {
+    color: #ef4444;
+}
+
+/* LB Features Cards */
+.lb-features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    max-width: 1000px;
+    margin: 0 auto 3rem;
+}
+
+.lb-feature-card {
+    background: rgba(15, 15, 30, 0.8);
+    border: 1px solid rgba(0, 212, 255, 0.2);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.lb-feature-card:hover {
+    border-color: #00d4ff;
+    transform: translateY(-5px);
+    box-shadow: 0 0 30px rgba(0, 212, 255, 0.2);
+}
+
+.lb-feature-icon {
+    font-size: 2rem;
+    display: block;
+    margin-bottom: 0.75rem;
+}
+
+.lb-feature-card h4 {
+    font-family: 'Orbitron', sans-serif;
+    color: #00d4ff;
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+}
+
+.lb-feature-card p {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 1.5;
+}
+
+/* LB Strategies */
+.lb-strategies {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.lb-strategies h3 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+}
+
+.strategy-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.strategy-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    background: rgba(0, 255, 136, 0.05);
+    border: 1px solid rgba(0, 255, 136, 0.2);
+    border-radius: 10px;
+    text-align: left;
+    transition: all 0.3s ease;
+}
+
+.strategy-item:hover {
+    border-color: #00ff88;
+    background: rgba(0, 255, 136, 0.1);
+}
+
+.strategy-icon {
+    font-size: 1.5rem;
+}
+
+.strategy-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.strategy-name {
+    font-weight: 600;
+    color: #00ff88;
+    font-size: 0.85rem;
+}
+
+.strategy-desc {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+@media (max-width: 768px) {
+    .lb-flow-container {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .lb-flow-lines, .lb-dist-lines {
+        width: 160px;
+        height: 60px;
+        transform: rotate(90deg);
+    }
+    
+    .lb-servers {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .lb-server {
+        min-width: 120px;
+    }
+}
+
+/* SOC Command Center Section */
+.soc-section {
+    padding: 6rem 2rem;
+    position: relative;
+    z-index: 1;
+    background: linear-gradient(180deg, transparent 0%, rgba(255, 0, 100, 0.03) 50%, transparent 100%);
+}
+
+.soc-dashboard {
+    max-width: 900px;
+    margin: 0 auto;
+    perspective: 1000px;
+}
+
+.soc-screen {
+    background: rgba(10, 15, 30, 0.95);
+    border: 1px solid rgba(0, 212, 255, 0.4);
+    border-radius: 12px;
+    padding: 1.5rem;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 60px rgba(0, 212, 255, 0.15), inset 0 0 30px rgba(0, 0, 0, 0.5);
+    transform: rotateX(5deg);
+    transition: transform 0.5s ease;
+}
+
+.soc-screen:hover {
+    transform: rotateX(0deg);
+}
+
+.soc-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(0, 212, 255, 0.2);
+    margin-bottom: 1.5rem;
+}
+
+.status-dot {
+    width: 10px;
+    height: 10px;
+    background: #00ff88;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #00ff88;
+    animation: pulse-dot 1.5s infinite;
+}
+
+.status-text {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.8rem;
+    color: #00ff88;
+    letter-spacing: 2px;
+}
+
+.soc-content {
+    display: flex;
+    gap: 2rem;
+    min-height: 300px;
+}
+
+.soc-globe {
+    flex: 2;
+    border: 1px dashed rgba(0, 212, 255, 0.3);
+    border-radius: 8px;
+    background: radial-gradient(circle at center, rgba(0, 212, 255, 0.1) 0%, transparent 70%);
+    position: relative;
+}
+
+.soc-globe::before {
+    content: '🌍';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 5rem;
+    opacity: 0.3;
+    animation: float 4s ease-in-out infinite;
+}
+
+.soc-metrics {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.metric-box {
+    background: rgba(255, 255, 255, 0.03);
+    padding: 1.25rem;
+    border-radius: 8px;
+    border-left: 3px solid #00d4ff;
+}
+
+.metric-label {
+    display: block;
+    font-size: 0.65rem;
+    color: rgba(255, 255, 255, 0.5);
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+}
+
+.metric-val {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.5rem;
+    color: #fff;
+}
+
+.metric-val.critical {
+    color: #ff6b6b;
+    text-shadow: 0 0 15px rgba(255, 107, 107, 0.5);
+    animation: pulse-glow 1s infinite alternate;
+}
+
+@keyframes pulse-glow {
+    from { opacity: 0.8; }
+    to { opacity: 1; }
+}
+
+.scanline {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.8), transparent);
+    animation: scan-down 3s linear infinite;
+}
+
+@keyframes scan-down {
+    0% { top: 0; opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { top: 100%; opacity: 0; }
+}
+
+/* Passkey Authentication Section */
+.passkey-section {
+    padding: 6rem 2rem;
+    position: relative;
+    z-index: 1;
+    background: linear-gradient(180deg, transparent 0%, rgba(139, 92, 246, 0.05) 50%, transparent 100%);
+}
+
+.passkey-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+}
+
+.passkey-text {
+    flex: 1;
+}
+
+.section-lead {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 2rem;
+}
+
+.passkey-features {
+    list-style: none;
+    padding: 0;
+}
+
+.passkey-features li {
+    padding: 0.75rem 0;
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.8);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.passkey-visual {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.fingerprint-scanner {
+    width: 200px;
+    height: 250px;
+    border: 2px solid rgba(139, 92, 246, 0.4);
+    border-radius: 20px;
+    background: rgba(0, 0, 0, 0.5);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.scan-line {
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #00ff88, transparent);
+    top: 10%;
+    animation: fingerprint-scan 2s ease-in-out infinite;
+    box-shadow: 0 0 20px #00ff88;
+}
+
+@keyframes fingerprint-scan {
+    0%, 100% { top: 10%; opacity: 0; }
+    50% { top: 80%; opacity: 1; }
+}
+
+.fingerprint-icon {
+    width: 100px;
+    height: 100px;
+    color: rgba(139, 92, 246, 0.8);
+    margin-bottom: 1rem;
+    filter: drop-shadow(0 0 15px rgba(139, 92, 246, 0.5));
+}
+
+.fingerprint-icon svg {
+    width: 100%;
+    height: 100%;
+    animation: fingerprint-pulse 2s ease-in-out infinite;
+}
+
+@keyframes fingerprint-pulse {
+    0%, 100% { opacity: 0.6; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.05); }
+}
+
+.scanner-text {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.75rem;
+    color: #00ff88;
+    letter-spacing: 2px;
+    opacity: 0;
+    animation: scanner-text-fade 2s ease-in-out infinite;
+    animation-delay: 1s;
+}
+
+@keyframes scanner-text-fade {
+    0%, 60%, 100% { opacity: 0; }
+    70%, 90% { opacity: 1; }
+}
+
+/* AI Report Section */
+.report-section {
+    padding: 6rem 2rem;
+    position: relative;
+    z-index: 1;
+}
+
+.report-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+}
+
+.report-visual {
+    flex: 1;
+}
+
+.email-mockup {
+    background: rgba(15, 15, 30, 0.9);
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s ease;
+}
+
+.email-mockup:hover {
+    transform: translateY(-10px);
+}
+
+.email-header {
+    background: linear-gradient(90deg, rgba(0, 212, 255, 0.2), rgba(139, 92, 246, 0.2));
+    padding: 1rem 1.5rem;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.9rem;
+    color: #00d4ff;
+    border-bottom: 1px solid rgba(0, 212, 255, 0.2);
+}
+
+.email-body {
+    padding: 1.5rem;
+}
+
+.email-chart {
+    height: 80px;
+    background: linear-gradient(90deg, 
+        rgba(0, 212, 255, 0.3) 0%, 
+        rgba(0, 255, 136, 0.3) 25%, 
+        rgba(139, 92, 246, 0.3) 50%,
+        rgba(0, 212, 255, 0.3) 75%,
+        rgba(255, 107, 107, 0.3) 100%
+    );
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.email-chart::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    100% { left: 100%; }
+}
+
+.email-lines .line {
+    height: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    margin-bottom: 0.75rem;
+}
+
+.email-lines .line.short {
+    width: 60%;
+}
+
+.report-text {
+    flex: 1;
+}
+
+.section-desc {
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 1.8;
+}
+
+@media (max-width: 900px) {
+    .passkey-container,
+    .report-container {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .soc-content {
+        flex-direction: column;
+    }
+    
+    .soc-globe {
+        min-height: 200px;
+    }
+}
+</style>
