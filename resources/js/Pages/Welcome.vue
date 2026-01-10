@@ -73,7 +73,7 @@
         </section>
         
         <!-- Product Showcase (Fixed Scroll Slideshow) -->
-        <section class="product-showcase">
+        <section class="product-showcase" ref="showcaseRef">
             <!-- Spacer for scroll distance -->
             <div class="showcase-spacer"></div>
             
@@ -631,20 +631,27 @@ const handleScroll = () => {
     // Hero: track first 2 viewports (slower)
     scrollProgress.value = Math.min(1, scrollY / (windowHeight * 2));
     
-    // Product Showcase: starts at ~2.5 viewports, lasts for 4 viewports
-    const showcaseStart = windowHeight * 2.5;
-    const showcaseEnd = windowHeight * 6.5;
-    const showcaseRange = showcaseEnd - showcaseStart;
-    
-    if (scrollY >= showcaseStart && scrollY <= showcaseEnd) {
-        showcaseVisible.value = true;
-        const localProgress = (scrollY - showcaseStart) / showcaseRange;
-        slideProgress.value = localProgress * 100;
+    // Product Showcase: use actual element position for mobile compatibility
+    if (showcaseRef.value) {
+        const rect = showcaseRef.value.getBoundingClientRect();
+        const sectionTop = scrollY + rect.top;
+        const sectionHeight = showcaseRef.value.offsetHeight;
         
-        // Switch slides at 50% progress
-        currentSlide.value = localProgress < 0.5 ? 0 : 1;
-    } else {
-        showcaseVisible.value = false;
+        // Start when section enters viewport, end when we've scrolled through the spacer
+        const showcaseStart = sectionTop;
+        const showcaseEnd = sectionTop + sectionHeight - windowHeight;
+        const showcaseRange = showcaseEnd - showcaseStart;
+        
+        if (scrollY >= showcaseStart && scrollY <= showcaseEnd) {
+            showcaseVisible.value = true;
+            const localProgress = (scrollY - showcaseStart) / showcaseRange;
+            slideProgress.value = localProgress * 100;
+            
+            // Switch slides at 50% progress
+            currentSlide.value = localProgress < 0.5 ? 0 : 1;
+        } else {
+            showcaseVisible.value = false;
+        }
     }
 };
 
