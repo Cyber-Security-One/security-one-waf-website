@@ -24,7 +24,7 @@
                     </div>
                 </div>
                 
-                <h1 class="loading-logo">Security One WAF</h1>
+                <h1 class="loading-logo">Security One SOC</h1>
                 <p class="loading-text">正在載入安全系統...</p>
                 
                 <!-- Progress Bar -->

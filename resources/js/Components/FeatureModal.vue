@@ -50,7 +50,7 @@
                     
                     <!-- Modal Footer -->
                     <div class="modal-footer">
-                        <a href="mailto:sales@securityone.com?subject=Security One WAF 諮詢" class="modal-btn primary">
+                        <a href="mailto:sales@securityone.com?subject=Security One SOC 諮詢" class="modal-btn primary">
                             🚀 了解更多
                         </a>
                         <button class="modal-btn secondary" @click="close">關閉</button>

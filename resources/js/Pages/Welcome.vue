@@ -1,7 +1,7 @@
 <template>
     <div class="app-wrapper">
         <!-- Login Button (Fixed Top Right) -->
-        <a href="https://security-one-waf.vito1317.com" class="login-btn" target="_blank" rel="noopener noreferrer">
+        <a href="https://security-one-soc.vito1317.com" class="login-btn" target="_blank" rel="noopener noreferrer">
             <span class="login-icon">🔐</span>
             <span class="login-text">登入</span>
         </a>
@@ -20,16 +20,16 @@
         <div class="hero-wrapper">
             <section class="hero hero-fixed" ref="heroRef" :style="heroStyle">
                 <span class="hero-badge animate-pulse-border">
-                    🛡️ AI-Powered Web Application Firewall
+                    🛡️ AI-Powered Security Operations Center
                 </span>
                 <h1 class="hero-title text-gradient">
-                    <span class="title-brand">Security One</span> <span class="title-product">WAF</span>
+                    <span class="title-brand">Security One</span> <span class="title-product">SOC</span>
                 </h1>
                 <p class="hero-subtitle">
-                    智能 Web 應用程式防火牆，結合 AI 威脅偵測與 CVE 資料庫即時更新，為您的網站提供最先進的自動化防護
+                    智能 統一安全平台，結合 AI 威脅偵測與 CVE 資料庫即時更新，為您的網站提供最先進的自動化防護
                 </p>
                 <div class="hero-cta">
-                    <a href="mailto:sales@security-one.com?subject=Security One WAF 諮詢" class="btn btn-primary animate-glow">
+                    <a href="mailto:service@cybersecureone.com?subject=Security One SOC 諮詢" class="btn btn-primary animate-glow">
                         <span>🚀</span> 聯絡我們
                     </a>
                 </div>
@@ -59,6 +59,105 @@
                     :delay="index * 0.1"
                     @click="openModal(feature)"
                 />
+            </div>
+        </section>
+
+        <!-- Core Attack Protection Section -->
+        <section class="attack-protection-section">
+            <h2 class="section-title text-gradient scroll-animate">🛡️ 核心攻擊防護</h2>
+            <p class="section-subtitle scroll-animate">
+                7 種攻擊類型全方位防護，傳統規則引擎與 AI 雙重偵測
+            </p>
+            
+            <div class="attack-types-grid">
+                <div class="attack-type-card scroll-animate" v-for="(attack, index) in attackTypes" :key="index">
+                    <div class="attack-icon">{{ attack.icon }}</div>
+                    <h4 class="attack-name">{{ attack.name }}</h4>
+                    <p class="attack-desc">{{ attack.desc }}</p>
+                    <div class="attack-targets">
+                        <span v-for="target in attack.targets" :key="target">{{ target }}</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- IDS/IPS Distributed Defense Section -->
+        <section class="ids-section">
+            <h2 class="section-title text-gradient scroll-animate">🔗 IDS/IPS 分散式防禦</h2>
+            <p class="section-subtitle scroll-animate">
+                部署在後端伺服器的 Agent，形成縱深防禦架構
+            </p>
+            
+            <div class="ids-architecture scroll-animate">
+                <div class="ids-hub">
+                    <div class="hub-icon">🏢</div>
+                    <span class="hub-label">SOC Hub</span>
+                    <span class="hub-desc">中央控制中心</span>
+                </div>
+                
+                <div class="ids-connections">
+                    <svg viewBox="0 0 200 100" preserveAspectRatio="none">
+                        <path d="M 20 50 Q 100 20, 180 30" stroke="url(#idsGrad)" stroke-width="2" fill="none" class="conn-path"/>
+                        <path d="M 20 50 Q 100 50, 180 50" stroke="url(#idsGrad)" stroke-width="2" fill="none" class="conn-path"/>
+                        <path d="M 20 50 Q 100 80, 180 70" stroke="url(#idsGrad)" stroke-width="2" fill="none" class="conn-path"/>
+                        <defs>
+                            <linearGradient id="idsGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#00d4ff"/>
+                                <stop offset="100%" stop-color="#8b5cf6"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+                
+                <div class="ids-agents">
+                    <div class="agent-node" v-for="(agent, i) in idsAgents" :key="i">
+                        <div class="agent-icon">{{ agent.icon }}</div>
+                        <span class="agent-label">{{ agent.name }}</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="ids-engines scroll-animate">
+                <div class="engine-card" v-for="engine in idsEngines" :key="engine.name">
+                    <div class="engine-icon">{{ engine.icon }}</div>
+                    <h4>{{ engine.name }}</h4>
+                    <p>{{ engine.desc }}</p>
+                    <ul>
+                        <li v-for="feature in engine.features" :key="feature">{{ feature }}</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Traffic Control Section -->
+        <section class="traffic-section">
+            <h2 class="section-title text-gradient scroll-animate">⚡ 流量控制與防護</h2>
+            <p class="section-subtitle scroll-animate">
+                CC/DDoS 防護、自動封鎖、人機驗證多重機制
+            </p>
+            
+            <div class="traffic-features scroll-animate">
+                <div class="traffic-card" v-for="item in trafficFeatures" :key="item.title">
+                    <div class="traffic-icon">{{ item.icon }}</div>
+                    <h4>{{ item.title }}</h4>
+                    <p>{{ item.desc }}</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Rule Management Section -->
+        <section class="rules-section">
+            <h2 class="section-title text-gradient scroll-animate">📋 規則管理</h2>
+            <p class="section-subtitle scroll-animate">
+                自訂規則、全域規則、CVE 自動生成規則
+            </p>
+            
+            <div class="rules-flow scroll-animate">
+                <div class="rule-type" v-for="rule in ruleTypes" :key="rule.name">
+                    <div class="rule-icon">{{ rule.icon }}</div>
+                    <h4>{{ rule.name }}</h4>
+                    <p>{{ rule.desc }}</p>
+                </div>
             </div>
         </section>
         
@@ -400,7 +499,7 @@
                         <div class="lb-icon-box waf">
                             <span>🛡️</span>
                         </div>
-                        <span class="lb-label">WAF</span>
+                        <span class="lb-label">SOC</span>
                         <span class="lb-badge">負載均衡</span>
                     </div>
                     
@@ -498,7 +597,7 @@
         
         <!-- Why Choose Us Section -->
         <section class="comparison-section">
-            <h2 class="section-title text-gradient scroll-animate">為什麼選擇 Security One WAF？</h2>
+            <h2 class="section-title text-gradient scroll-animate">為什麼選擇 Security One SOC？</h2>
             <p class="section-subtitle scroll-animate">
                 相較於傳統 WAF，我們提供更智能、更全面的防護
             </p>
@@ -507,7 +606,7 @@
                 <div class="comparison-header">
                     <div class="comparison-feature">功能</div>
                     <div class="comparison-traditional">傳統 WAF</div>
-                    <div class="comparison-vito">Security One WAF</div>
+                    <div class="comparison-vito">Security One SOC</div>
                 </div>
                 <div class="comparison-row" v-for="(item, index) in comparison" :key="index">
                     <div class="comparison-feature">{{ item.feature }}</div>
@@ -562,7 +661,7 @@
             <div class="cta-content scroll-animate">
                 <h2 class="text-gradient">準備好保護您的網站了嗎？</h2>
                 <p>立即聯繫我們，獲取專屬解決方案</p>
-                <a href="mailto:sales@security-one.com?subject=Security One WAF 諮詢" class="btn btn-primary animate-glow">
+                <a href="mailto:service@cybersecureone.com?subject=Security One SOC 諮詢" class="btn btn-primary animate-glow">
                     📧 聯繫我們
                 </a>
             </div>
@@ -570,14 +669,14 @@
         
         <!-- Footer -->
         <footer class="footer">
-            <div class="footer-logo text-gradient">Security One WAF</div>
-            <p class="footer-text">個人版 Web 應用程式防火牆</p>
+            <div class="footer-logo text-gradient">Security One SOC</div>
+            <p class="footer-text">個人版 統一安全平台</p>
             <div class="footer-links">
-                <a href="mailto:sales@security-one.com?subject=Security One WAF 諮詢">聯絡我們</a>
-                <a href="mailto:sales@security-one.com?subject=Security One WAF 文檔請求">文檔</a>
+                <a href="mailto:service@cybersecureone.com?subject=Security One SOC 諮詢">聯絡我們</a>
+                <a href="mailto:service@cybersecureone.com?subject=Security One SOC 文檔請求">文檔</a>
             </div>
             <p class="footer-text" style="margin-top: 2rem;">
-                © {{ new Date().getFullYear() }} Security One WAF. MIT License.
+                © {{ new Date().getFullYear() }} Security One SOC. MIT License.
             </p>
         </footer>
         
@@ -794,13 +893,110 @@ const features = [
         description: '基於地理位置的訪問控制，精準防護策略',
         highlights: ['國家/地區封鎖', 'IP 地理定位', '一鍵封鎖', '白名單例外', '即時更新'],
         tech: ['GeoIP', 'Country Block', 'IP Location']
+    },
+    {
+        icon: '🔒',
+        title: 'SSL 憑證',
+        description: '整合 Let\'s Encrypt 的自動化 SSL 憑證管理',
+        highlights: ['一鍵簽發', '自動驗證', '憑證監控', '到期提醒', '自動續期'],
+        tech: ['Let\'s Encrypt', 'ACME', 'Auto-renew']
+    },
+    {
+        icon: '💬',
+        title: 'AI 助手 Sentinel',
+        description: '對話式 AI 安全助手，智能分析與操作協助',
+        highlights: ['自然語言對話', '攻擊分析', 'IP 封鎖操作', '報告生成', 'Function Calling'],
+        tech: ['LLM', 'Chat Interface', 'Automation']
+    },
+    {
+        icon: '⚙️',
+        title: '系統日誌',
+        description: '即時查看 Nginx 存取日誌與錯誤日誌',
+        highlights: ['Access Log', 'Error Log', '即時滾動', '搜尋過濾', '日誌解析'],
+        tech: ['Log Viewer', 'Real-time', 'Parsing']
+    },
+    {
+        icon: '👁️',
+        title: 'SOC 儀表板',
+        description: '專業安全操作中心，3D 視覺化攻擊地圖',
+        highlights: ['3D 地球視覺化', '即時統計', 'AI 威脅報告', '全螢幕模式', '報告郵件發送'],
+        tech: ['Three.js', 'SSE', 'Real-time']
+    },
+    {
+        icon: '🔗',
+        title: 'IDS/IPS 整合',
+        description: '分散式入侵偵測，後端伺服器縱深防禦',
+        highlights: ['Agent 管理', '規則同步', '告警整合', '集中封鎖', 'AI 偵測'],
+        tech: ['Distributed', 'Agent-based', 'Real-time']
     }
+];
+
+// Attack Types Data
+const attackTypes = [
+    { icon: '💉', name: 'SQL Injection', desc: 'SQL 關鍵字、函數、語法結構偵測', targets: ['URL', 'Body', 'Header'] },
+    { icon: '📜', name: 'XSS', desc: 'Script 標籤、事件處理器、協議繞過', targets: ['URL', 'Body'] },
+    { icon: '⚙️', name: 'RCE', desc: 'Shell 命令注入、反向 Shell 嘗試', targets: ['URL', 'Body'] },
+    { icon: '📁', name: 'Path Traversal', desc: '目錄跳轉序列、敏感檔案存取', targets: ['URL'] },
+    { icon: '🔍', name: 'Scanner', desc: '已知掃描器特徵、自動化工具識別', targets: ['User-Agent'] },
+    { icon: '☕', name: 'OGNL Injection', desc: 'Struts2 相關漏洞特徵', targets: ['URL', 'Body'] },
+    { icon: '📦', name: 'Java Deser', desc: '序列化魔術位元組、Gadget Chain', targets: ['Body', 'Header'] }
+];
+
+// IDS Agents Data
+const idsAgents = [
+    { icon: '🖥️', name: 'Web Server 1' },
+    { icon: '🖥️', name: 'Web Server 2' },
+    { icon: '🖥️', name: 'API Server' }
+];
+
+// IDS Detection Engines
+const idsEngines = [
+    { 
+        icon: '🔎', 
+        name: '特徵偵測引擎', 
+        desc: '基於已知攻擊特徵碼的規則匹配',
+        features: ['正規表達式匹配', '資料庫與內建規則', 'Log4Shell / XXE / SSRF']
+    },
+    { 
+        icon: '📊', 
+        name: '異常偵測引擎', 
+        desc: '基於基線偏離的異常行為偵測',
+        features: ['高請求頻率偵測', '大請求體偵測', '非營業時段活動']
+    },
+    { 
+        icon: '🎯', 
+        name: '行為分析引擎', 
+        desc: '分析請求行為模式，偵測惡意行為',
+        features: ['掃描行為偵測', '暴力破解偵測', '爬蟲/Bot 識別']
+    },
+    { 
+        icon: '🤖', 
+        name: 'AI 智能偵測', 
+        desc: '使用 LLM 分析 HTTP 請求模式',
+        features: ['威脅評分 0-100', '自動攻擊分類', '分析理由說明']
+    }
+];
+
+// Traffic Control Features
+const trafficFeatures = [
+    { icon: '🚫', title: 'CC/DDoS 防護', desc: '速率限制、突發限制、封鎖時間控制' },
+    { icon: '🤖', title: '人機驗證', desc: '拼圖滑塊、點選驗證、Token 綁定' },
+    { icon: '⚡', title: '自動封鎖', desc: '基於攻擊行為自動加入黑名單' },
+    { icon: '📋', title: 'IP 名單管理', desc: '黑白名單、CIDR 支援、自動過期' }
+];
+
+// Rule Types
+const ruleTypes = [
+    { icon: '✏️', name: '自訂規則', desc: '針對特定站點的自訂偵測規則' },
+    { icon: '🌐', name: '全域規則', desc: '套用至所有站點的通用規則' },
+    { icon: '📡', name: 'CVE 規則', desc: 'AI 根據 CVE 自動生成防護規則' },
+    { icon: '💡', name: 'AI 建議規則', desc: 'AI 分析攻擊模式建議的規則' }
 ];
 
 const stats = [
     { value: 99.9, suffix: '%', label: '可用性' },
     { value: 10, suffix: 'ms', label: '平均延遲' },
-    { value: 9, suffix: '+', label: '防護類型' },
+    { value: 38, suffix: '+', label: '功能模組' },
     { value: 24, suffix: ' / 7', label: '全天候監控' }
 ];
 
@@ -823,7 +1019,11 @@ const comparison = [
     { feature: 'XSS 攻擊防護', traditional: true },
     { feature: '即時攻擊地圖', traditional: false },
     { feature: '一鍵規則部署', traditional: false },
-    { feature: '中文介面', traditional: false }
+    { feature: '中文介面', traditional: false },
+    { feature: 'IDS/IPS 整合', traditional: false },
+    { feature: '分散式 Agent', traditional: false },
+    { feature: 'AI 威脅偵測', traditional: false },
+    { feature: 'Passkey 驗證', traditional: false }
 ];
 
 // Attack flow timeline
@@ -847,7 +1047,7 @@ const faqs = [
     { q: 'AI 防禦需要什麼硬體配置？', a: 'AI 防禦使用 Ollama 運行本地 LLM，建議至少 16GB VRAM。如果不使用 AI 功能，2GB RAM 即可運行基本 WAF。' },
     { q: '如何更新 CVE 規則？', a: '系統會自動從 NVD 同步最新 CVE 資料，您也可以手動觸發更新。AI 會自動分析並生成對應的防護規則供您審核。' },
     { q: '支援哪些攻擊類型？', a: '支援 SQL 注入、XSS、RCE、路徑遍歷、CC 攻擊、惡意 User-Agent 等多種攻擊類型的偵測與防護。' },
-    { q: '可以與現有系統整合嗎？', a: '可以，Security One WAF 作為反向代理運行，可以保護任何 HTTP/HTTPS 服務，無需修改現有應用程式。' }
+    { q: '可以與現有系統整合嗎？', a: '可以，Security One SOC 作為反向代理運行，可以保護任何 HTTP/HTTPS 服務，無需修改現有應用程式。' }
 ];
 
 const activeFaq = ref(null);
@@ -2088,6 +2288,319 @@ onUnmounted(() => {
     .lb-server {
         min-width: 120px;
     }
+}
+
+/* Core Attack Protection Section */
+.attack-protection-section {
+    padding: 6rem 2rem;
+    position: relative;
+    z-index: 1;
+    background: linear-gradient(180deg, transparent 0%, rgba(255, 107, 107, 0.03) 50%, transparent 100%);
+}
+
+.attack-types-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.attack-type-card {
+    background: rgba(255, 107, 107, 0.1);
+    border: 1px solid rgba(255, 107, 107, 0.3);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.attack-type-card:hover {
+    transform: translateY(-5px);
+    border-color: #ff6b6b;
+    box-shadow: 0 0 30px rgba(255, 107, 107, 0.2);
+}
+
+.attack-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.attack-name {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.9rem;
+    color: #ff6b6b;
+    margin-bottom: 0.5rem;
+}
+
+.attack-desc {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 0.75rem;
+}
+
+.attack-targets {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.attack-targets span {
+    font-size: 0.65rem;
+    padding: 0.25rem 0.5rem;
+    background: rgba(255, 107, 107, 0.2);
+    border-radius: 50px;
+    color: #ff6b6b;
+}
+
+/* IDS/IPS Section */
+.ids-section {
+    padding: 6rem 2rem;
+    position: relative;
+    z-index: 1;
+    background: linear-gradient(180deg, transparent 0%, rgba(139, 92, 246, 0.05) 50%, transparent 100%);
+}
+
+.ids-architecture {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    max-width: 900px;
+    margin: 0 auto 4rem;
+    flex-wrap: wrap;
+}
+
+.ids-hub {
+    text-align: center;
+    padding: 2rem;
+    background: rgba(139, 92, 246, 0.15);
+    border: 2px solid rgba(139, 92, 246, 0.5);
+    border-radius: 16px;
+    min-width: 150px;
+}
+
+.hub-icon {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+}
+
+.hub-label {
+    display: block;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1rem;
+    color: #8b5cf6;
+    margin-bottom: 0.25rem;
+}
+
+.hub-desc {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.ids-connections {
+    flex: 1;
+    max-width: 200px;
+    height: 100px;
+}
+
+.ids-connections svg {
+    width: 100%;
+    height: 100%;
+}
+
+.conn-path {
+    stroke-dasharray: 5 5;
+    animation: dash-flow 1s linear infinite;
+}
+
+@keyframes dash-flow {
+    to { stroke-dashoffset: -10; }
+}
+
+.ids-agents {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.agent-node {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1.25rem;
+    background: rgba(0, 212, 255, 0.1);
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    border-radius: 8px;
+}
+
+.agent-icon {
+    font-size: 1.5rem;
+}
+
+.agent-label {
+    font-size: 0.85rem;
+    color: #00d4ff;
+}
+
+.ids-engines {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.engine-card {
+    background: rgba(15, 15, 30, 0.8);
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.engine-card:hover {
+    border-color: #8b5cf6;
+    box-shadow: 0 0 30px rgba(139, 92, 246, 0.2);
+}
+
+.engine-icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.engine-card h4 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1rem;
+    color: #8b5cf6;
+    margin-bottom: 0.5rem;
+}
+
+.engine-card p {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 1rem;
+}
+
+.engine-card ul {
+    list-style: none;
+    padding: 0;
+}
+
+.engine-card li {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.5);
+    padding: 0.25rem 0;
+    padding-left: 1.25rem;
+    position: relative;
+}
+
+.engine-card li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: #00ff88;
+}
+
+/* Traffic Control Section */
+.traffic-section {
+    padding: 6rem 2rem;
+    position: relative;
+    z-index: 1;
+    background: linear-gradient(180deg, transparent 0%, rgba(0, 212, 255, 0.03) 50%, transparent 100%);
+}
+
+.traffic-features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.traffic-card {
+    background: rgba(0, 212, 255, 0.1);
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.traffic-card:hover {
+    transform: translateY(-5px);
+    border-color: #00d4ff;
+    box-shadow: 0 0 30px rgba(0, 212, 255, 0.2);
+}
+
+.traffic-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.traffic-card h4 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1rem;
+    color: #00d4ff;
+    margin-bottom: 0.5rem;
+}
+
+.traffic-card p {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* Rules Management Section */
+.rules-section {
+    padding: 6rem 2rem;
+    position: relative;
+    z-index: 1;
+    background: linear-gradient(180deg, transparent 0%, rgba(0, 255, 136, 0.03) 50%, transparent 100%);
+}
+
+.rules-flow {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.rule-type {
+    flex: 1;
+    min-width: 200px;
+    max-width: 240px;
+    background: rgba(0, 255, 136, 0.1);
+    border: 1px solid rgba(0, 255, 136, 0.3);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.rule-type:hover {
+    transform: translateY(-5px);
+    border-color: #00ff88;
+    box-shadow: 0 0 30px rgba(0, 255, 136, 0.2);
+}
+
+.rule-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.rule-type h4 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1rem;
+    color: #00ff88;
+    margin-bottom: 0.5rem;
+}
+
+.rule-type p {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.6);
 }
 
 /* SOC Command Center Section */

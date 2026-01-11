@@ -2,7 +2,7 @@ import { createApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';
 
 createInertiaApp({
-    title: (title) => title ? `${title} - Security One WAF` : 'Security One WAF',
+    title: (title) => title ? `${title} - Security One SOC` : 'Security One SOC',
     resolve: (name) => {
         const pages = import.meta.glob('./Pages/**/*.vue', { eager: true });
         return pages[`./Pages/${name}.vue`];

@@ -3,9 +3,9 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="Security One WAF - 個人版 Web 應用程式防火牆，提供智能防護、即時監控與 AI 安全分析">
+        <meta name="description" content="Security One SOC - 個人版 統一安全平台，提供智能防護、即時監控與 AI 安全分析">
         
-        <title inertia>{{ config('app.name', 'Security One WAF') }}</title>
+        <title inertia>{{ config('app.name', 'Security One SOC') }}</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
