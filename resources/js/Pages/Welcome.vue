@@ -1005,7 +1005,7 @@ const architecture = [
     { icon: '🔥', title: 'Lua WAF 模組', tech: '即時請求分析與攻擊偵測' },
     { icon: '🤖', title: 'AI 引擎', tech: 'Ollama 本地大語言模型 (3s 超時)' },
     { icon: '📡', title: 'CVE 同步', tech: 'NVD API + Exploit-DB + GitHub' },
-    { icon: '⚡', title: 'Laravel 後端', tech: 'PHP 8.2 / Laravel 11' },
+    { icon: '⚡', title: 'Laravel 後端', tech: 'PHP 8.2 / Laravel 12' },
     { icon: '🎨', title: 'Vue 3 前端', tech: 'Inertia.js / Vite' },
     { icon: '🗄️', title: '資料存儲', tech: 'SQLite / MySQL' }
 ];
