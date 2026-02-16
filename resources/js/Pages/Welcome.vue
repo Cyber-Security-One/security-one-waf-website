@@ -600,6 +600,102 @@
                     <span>源站伺服器</span>
                 </div>
             </div>
+
+            <!-- CDN Global Nodes Map -->
+            <div class="cdn-global-map scroll-animate">
+                <h3 class="text-gradient">🌍 全球 CDN 節點</h3>
+                <p class="map-subtitle">遍布全球的邊緣節點，確保用戶就近存取</p>
+                
+                <div class="world-map-container">
+                    <svg viewBox="0 0 1000 500" class="world-map-svg">
+                        <!-- Simplified world map outline -->
+                        <defs>
+                            <radialGradient id="nodeGlow" cx="50%" cy="50%" r="50%">
+                                <stop offset="0%" stop-color="#00f0ff" stop-opacity="0.8"/>
+                                <stop offset="100%" stop-color="#00f0ff" stop-opacity="0"/>
+                            </radialGradient>
+                            <radialGradient id="nodeGlowGreen" cx="50%" cy="50%" r="50%">
+                                <stop offset="0%" stop-color="#00ff88" stop-opacity="0.8"/>
+                                <stop offset="100%" stop-color="#00ff88" stop-opacity="0"/>
+                            </radialGradient>
+                            <filter id="glow">
+                                <feGaussianBlur stdDeviation="3" result="blur"/>
+                                <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                            </filter>
+                        </defs>
+                        
+                        <!-- Continent outlines (simplified) -->
+                        <!-- North America -->
+                        <path d="M 100 120 Q 150 80, 250 100 Q 280 120, 260 180 Q 240 220, 200 240 Q 160 220, 120 200 Q 90 170, 100 120" 
+                              fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+                        <!-- South America -->
+                        <path d="M 220 260 Q 260 250, 280 280 Q 300 340, 280 400 Q 260 430, 240 420 Q 210 380, 200 320 Q 200 280, 220 260"
+                              fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+                        <!-- Europe -->
+                        <path d="M 440 90 Q 480 80, 520 100 Q 540 120, 530 150 Q 510 170, 470 160 Q 440 140, 440 90"
+                              fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+                        <!-- Africa -->
+                        <path d="M 460 180 Q 500 170, 540 200 Q 560 260, 540 330 Q 520 370, 490 360 Q 460 320, 450 260 Q 440 210, 460 180"
+                              fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+                        <!-- Asia -->
+                        <path d="M 560 80 Q 650 60, 750 90 Q 800 120, 820 170 Q 810 220, 760 230 Q 700 220, 650 180 Q 600 150, 560 120 Q 550 100, 560 80"
+                              fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+                        <!-- Oceania -->
+                        <path d="M 780 300 Q 830 280, 880 300 Q 910 330, 890 360 Q 860 380, 820 370 Q 780 350, 770 320 Q 770 310, 780 300"
+                              fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+                        
+                        <!-- Connection lines between nodes -->
+                        <g class="connection-lines" opacity="0.3">
+                            <line x1="730" y1="155" x2="780" y2="120" stroke="#00d4ff" stroke-width="1" stroke-dasharray="4 4">
+                                <animate attributeName="stroke-dashoffset" from="8" to="0" dur="1s" repeatCount="indefinite"/>
+                            </line>
+                            <line x1="730" y1="155" x2="680" y2="200" stroke="#00d4ff" stroke-width="1" stroke-dasharray="4 4">
+                                <animate attributeName="stroke-dashoffset" from="8" to="0" dur="1.2s" repeatCount="indefinite"/>
+                            </line>
+                            <line x1="730" y1="155" x2="500" y2="115" stroke="#00d4ff" stroke-width="1" stroke-dasharray="4 4">
+                                <animate attributeName="stroke-dashoffset" from="8" to="0" dur="1.5s" repeatCount="indefinite"/>
+                            </line>
+                            <line x1="500" y1="115" x2="200" y2="140" stroke="#00d4ff" stroke-width="1" stroke-dasharray="4 4">
+                                <animate attributeName="stroke-dashoffset" from="8" to="0" dur="2s" repeatCount="indefinite"/>
+                            </line>
+                            <line x1="500" y1="115" x2="520" y2="240" stroke="#00d4ff" stroke-width="1" stroke-dasharray="4 4">
+                                <animate attributeName="stroke-dashoffset" from="8" to="0" dur="1.4s" repeatCount="indefinite"/>
+                            </line>
+                            <line x1="200" y1="140" x2="240" y2="310" stroke="#00d4ff" stroke-width="1" stroke-dasharray="4 4">
+                                <animate attributeName="stroke-dashoffset" from="8" to="0" dur="1.8s" repeatCount="indefinite"/>
+                            </line>
+                            <line x1="680" y1="200" x2="840" y2="320" stroke="#00d4ff" stroke-width="1" stroke-dasharray="4 4">
+                                <animate attributeName="stroke-dashoffset" from="8" to="0" dur="1.6s" repeatCount="indefinite"/>
+                            </line>
+                        </g>
+                        
+                        <!-- CDN Nodes -->
+                        <g v-for="(node, i) in cdnNodes" :key="'cdn-node-'+i" class="cdn-map-node">
+                            <!-- Glow -->
+                            <circle :cx="node.x" :cy="node.y" r="18" :fill="node.primary ? 'url(#nodeGlowGreen)' : 'url(#nodeGlow)'" class="node-glow-circle"/>
+                            <!-- Pulse ring -->
+                            <circle :cx="node.x" :cy="node.y" r="8" fill="none" :stroke="node.primary ? '#00ff88' : '#00f0ff'" stroke-width="1.5" opacity="0.6">
+                                <animate attributeName="r" from="8" to="20" dur="2s" repeatCount="indefinite"/>
+                                <animate attributeName="opacity" from="0.6" to="0" dur="2s" repeatCount="indefinite"/>
+                            </circle>
+                            <!-- Core dot -->
+                            <circle :cx="node.x" :cy="node.y" :r="node.primary ? 6 : 4" :fill="node.primary ? '#00ff88' : '#00f0ff'" filter="url(#glow)"/>
+                            <!-- Label -->
+                            <text :x="node.x" :y="node.y - 14" text-anchor="middle" fill="white" font-size="11" font-weight="600">{{ node.name }}</text>
+                            <text :x="node.x" :y="node.y + 24" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="9">{{ node.latency }}</text>
+                        </g>
+                    </svg>
+                </div>
+                
+                <!-- Node list -->
+                <div class="cdn-nodes-list">
+                    <div class="cdn-node-badge" v-for="(node, i) in cdnNodes" :key="'badge-'+i" :class="{ primary: node.primary }">
+                        <span class="node-dot"></span>
+                        <span class="node-name">{{ node.name }}</span>
+                        <span class="node-latency-badge">{{ node.latency }}</span>
+                    </div>
+                </div>
+            </div>
             
             <div class="cdn-features scroll-animate">
                 <div class="cdn-feature-card" v-for="(item, i) in cdnFeatures" :key="i">
@@ -980,6 +1076,20 @@ const lbStrategies = [
     { icon: '⚖️', name: '加權輪詢', desc: '依據設定權重比例分配流量' },
     { icon: '🎲', name: '隨機 (Random)', desc: '隨機選擇後端伺服器處理請求' },
     { icon: '#️⃣', name: 'IP 雜湊', desc: '同一來源 IP 固定導向相同伺服器' }
+];
+
+// CDN Global Nodes
+const cdnNodes = [
+    { name: '台灣 (Origin)', x: 730, y: 155, latency: '1ms', primary: true },
+    { name: '香港', x: 700, y: 180, latency: '12ms', primary: false },
+    { name: '東京', x: 780, y: 120, latency: '25ms', primary: false },
+    { name: '新加坡', x: 680, y: 200, latency: '35ms', primary: false },
+    { name: '法蘭克福', x: 500, y: 115, latency: '150ms', primary: false },
+    { name: '美西', x: 150, y: 140, latency: '160ms', primary: false },
+    { name: '美東', x: 230, y: 140, latency: '180ms', primary: false },
+    { name: '聖保羅', x: 260, y: 310, latency: '280ms', primary: false },
+    { name: '約翰內斯堡', x: 520, y: 310, latency: '220ms', primary: false },
+    { name: '雪梨', x: 840, y: 340, latency: '120ms', primary: false }
 ];
 
 // CDN Features Data
@@ -2315,6 +2425,98 @@ onUnmounted(() => {
 .cdn-feature-card p {
     color: rgba(255, 255, 255, 0.6);
     font-size: 0.85rem;
+}
+
+/* CDN Global Map */
+.cdn-global-map {
+    margin: 3rem auto;
+    max-width: 900px;
+    text-align: center;
+}
+
+.cdn-global-map h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.map-subtitle {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+}
+
+.world-map-container {
+    padding: 1.5rem;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 20px;
+    margin-bottom: 2rem;
+}
+
+.world-map-svg {
+    width: 100%;
+    height: auto;
+}
+
+.cdn-map-node {
+    cursor: default;
+}
+
+.node-glow-circle {
+    animation: pulse 3s ease-in-out infinite;
+}
+
+/* CDN Nodes List */
+.cdn-nodes-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.cdn-node-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 1rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    font-size: 0.8rem;
+    transition: all 0.3s ease;
+}
+
+.cdn-node-badge:hover {
+    border-color: rgba(0, 212, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+.cdn-node-badge.primary {
+    border-color: rgba(0, 255, 136, 0.3);
+    background: rgba(0, 255, 136, 0.08);
+}
+
+.cdn-node-badge .node-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #00f0ff;
+    box-shadow: 0 0 6px #00f0ff;
+}
+
+.cdn-node-badge.primary .node-dot {
+    background: #00ff88;
+    box-shadow: 0 0 6px #00ff88;
+}
+
+.cdn-node-badge .node-name {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.cdn-node-badge .node-latency-badge {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.7rem;
 }
 
 /* DDoS Section */
