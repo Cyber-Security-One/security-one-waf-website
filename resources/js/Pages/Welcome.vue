@@ -627,84 +627,29 @@
                 <p class="map-subtitle">遍布全球的邊緣節點，確保用戶就近存取</p>
                 
                 <div class="world-map-container">
-                    <svg viewBox="0 0 1000 500" class="world-map-svg">
-                        <!-- Simplified world map outline -->
-                        <defs>
-                            <radialGradient id="nodeGlow" cx="50%" cy="50%" r="50%">
-                                <stop offset="0%" stop-color="#00f0ff" stop-opacity="0.8"/>
-                                <stop offset="100%" stop-color="#00f0ff" stop-opacity="0"/>
-                            </radialGradient>
-                            <radialGradient id="nodeGlowGreen" cx="50%" cy="50%" r="50%">
-                                <stop offset="0%" stop-color="#00ff88" stop-opacity="0.8"/>
-                                <stop offset="100%" stop-color="#00ff88" stop-opacity="0"/>
-                            </radialGradient>
-                            <filter id="glow">
-                                <feGaussianBlur stdDeviation="3" result="blur"/>
-                                <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-                            </filter>
-                        </defs>
-                        
-                        <!-- Continent outlines (simplified) -->
-                        <!-- North America -->
-                        <path d="M 100 120 Q 150 80, 250 100 Q 280 120, 260 180 Q 240 220, 200 240 Q 160 220, 120 200 Q 90 170, 100 120" 
-                              fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
-                        <!-- South America -->
-                        <path d="M 220 260 Q 260 250, 280 280 Q 300 340, 280 400 Q 260 430, 240 420 Q 210 380, 200 320 Q 200 280, 220 260"
-                              fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
-                        <!-- Europe -->
-                        <path d="M 440 90 Q 480 80, 520 100 Q 540 120, 530 150 Q 510 170, 470 160 Q 440 140, 440 90"
-                              fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
-                        <!-- Africa -->
-                        <path d="M 460 180 Q 500 170, 540 200 Q 560 260, 540 330 Q 520 370, 490 360 Q 460 320, 450 260 Q 440 210, 460 180"
-                              fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
-                        <!-- Asia -->
-                        <path d="M 560 80 Q 650 60, 750 90 Q 800 120, 820 170 Q 810 220, 760 230 Q 700 220, 650 180 Q 600 150, 560 120 Q 550 100, 560 80"
-                              fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
-                        <!-- Oceania -->
-                        <path d="M 780 300 Q 830 280, 880 300 Q 910 330, 890 360 Q 860 380, 820 370 Q 780 350, 770 320 Q 770 310, 780 300"
-                              fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
-                        
-                        <!-- Connection lines between nodes -->
-                        <g class="connection-lines" opacity="0.3">
-                            <line x1="730" y1="155" x2="780" y2="120" stroke="#00d4ff" stroke-width="1" stroke-dasharray="4 4">
-                                <animate attributeName="stroke-dashoffset" from="8" to="0" dur="1s" repeatCount="indefinite"/>
+                    <div class="world-map-img-wrapper">
+                        <img src="/images/world_map.png" alt="World Map" class="world-map-img" />
+                        <!-- CDN Node markers positioned via CSS -->
+                        <div v-for="(node, i) in cdnNodes" :key="'map-node-'+i"
+                             class="map-node-marker"
+                             :class="{ primary: node.primary }"
+                             :style="{ left: node.left + '%', top: node.top + '%' }">
+                            <div class="marker-pulse"></div>
+                            <div class="marker-dot"></div>
+                            <div class="marker-label">
+                                <span class="marker-name">{{ node.name }}</span>
+                                <span class="marker-latency">{{ node.latency }}</span>
+                            </div>
+                        </div>
+                        <!-- Connection lines (SVG overlay) -->
+                        <svg class="map-lines-overlay" viewBox="0 0 100 100" preserveAspectRatio="none">
+                            <line v-for="(line, i) in cdnConnections" :key="'line-'+i"
+                                  :x1="line.x1" :y1="line.y1" :x2="line.x2" :y2="line.y2"
+                                  stroke="#00d4ff" stroke-width="0.15" stroke-dasharray="0.8 0.8" opacity="0.4">
+                                <animate attributeName="stroke-dashoffset" from="1.6" to="0" :dur="(1 + i * 0.2) + 's'" repeatCount="indefinite"/>
                             </line>
-                            <line x1="730" y1="155" x2="680" y2="200" stroke="#00d4ff" stroke-width="1" stroke-dasharray="4 4">
-                                <animate attributeName="stroke-dashoffset" from="8" to="0" dur="1.2s" repeatCount="indefinite"/>
-                            </line>
-                            <line x1="730" y1="155" x2="500" y2="115" stroke="#00d4ff" stroke-width="1" stroke-dasharray="4 4">
-                                <animate attributeName="stroke-dashoffset" from="8" to="0" dur="1.5s" repeatCount="indefinite"/>
-                            </line>
-                            <line x1="500" y1="115" x2="200" y2="140" stroke="#00d4ff" stroke-width="1" stroke-dasharray="4 4">
-                                <animate attributeName="stroke-dashoffset" from="8" to="0" dur="2s" repeatCount="indefinite"/>
-                            </line>
-                            <line x1="500" y1="115" x2="520" y2="240" stroke="#00d4ff" stroke-width="1" stroke-dasharray="4 4">
-                                <animate attributeName="stroke-dashoffset" from="8" to="0" dur="1.4s" repeatCount="indefinite"/>
-                            </line>
-                            <line x1="200" y1="140" x2="240" y2="310" stroke="#00d4ff" stroke-width="1" stroke-dasharray="4 4">
-                                <animate attributeName="stroke-dashoffset" from="8" to="0" dur="1.8s" repeatCount="indefinite"/>
-                            </line>
-                            <line x1="680" y1="200" x2="840" y2="320" stroke="#00d4ff" stroke-width="1" stroke-dasharray="4 4">
-                                <animate attributeName="stroke-dashoffset" from="8" to="0" dur="1.6s" repeatCount="indefinite"/>
-                            </line>
-                        </g>
-                        
-                        <!-- CDN Nodes -->
-                        <g v-for="(node, i) in cdnNodes" :key="'cdn-node-'+i" class="cdn-map-node">
-                            <!-- Glow -->
-                            <circle :cx="node.x" :cy="node.y" r="18" :fill="node.primary ? 'url(#nodeGlowGreen)' : 'url(#nodeGlow)'" class="node-glow-circle"/>
-                            <!-- Pulse ring -->
-                            <circle :cx="node.x" :cy="node.y" r="8" fill="none" :stroke="node.primary ? '#00ff88' : '#00f0ff'" stroke-width="1.5" opacity="0.6">
-                                <animate attributeName="r" from="8" to="20" dur="2s" repeatCount="indefinite"/>
-                                <animate attributeName="opacity" from="0.6" to="0" dur="2s" repeatCount="indefinite"/>
-                            </circle>
-                            <!-- Core dot -->
-                            <circle :cx="node.x" :cy="node.y" :r="node.primary ? 6 : 4" :fill="node.primary ? '#00ff88' : '#00f0ff'" filter="url(#glow)"/>
-                            <!-- Label -->
-                            <text :x="node.x" :y="node.y - 14" text-anchor="middle" fill="white" font-size="11" font-weight="600">{{ node.name }}</text>
-                            <text :x="node.x" :y="node.y + 24" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="9">{{ node.latency }}</text>
-                        </g>
-                    </svg>
+                        </svg>
+                    </div>
                 </div>
                 
                 <!-- Node list -->
@@ -970,6 +915,52 @@
             </div>
         </section>
         
+        <!-- WAF Security Test Results -->
+        <section class="waf-test-section">
+            <h2 class="section-title text-gradient scroll-animate">📄 WAF 安全測試報告</h2>
+            <p class="section-subtitle scroll-animate">
+                經過專業第三方工具 WAF-CHECKER.COM 完整測試，驗證防護效果
+            </p>
+            <div class="waf-test-grid scroll-animate">
+                <div class="waf-test-card">
+                    <div class="waf-test-badge malicious">🛡️ 惡意流量測試</div>
+                    <img src="/images/waf_malicious_test.png" alt="WAF Malicious Traffic Test" class="waf-test-img" />
+                    <div class="waf-test-stats">
+                        <div class="waf-test-stat">
+                            <span class="stat-value text-gradient">99.98%</span>
+                            <span class="stat-label">WAF 有效率</span>
+                        </div>
+                        <div class="waf-test-stat">
+                            <span class="stat-value text-gradient">6,377</span>
+                            <span class="stat-label">總測試數</span>
+                        </div>
+                        <div class="waf-test-stat">
+                            <span class="stat-value text-gradient">1</span>
+                            <span class="stat-label">僅 Bypass</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="waf-test-card">
+                    <div class="waf-test-badge fp">✅ 誤報率測試 (FP)</div>
+                    <img src="/images/waf_fp_test.png" alt="WAF False Positive Test" class="waf-test-img" />
+                    <div class="waf-test-stats">
+                        <div class="waf-test-stat">
+                            <span class="stat-value text-gradient">100%</span>
+                            <span class="stat-label">WAF 準確率</span>
+                        </div>
+                        <div class="waf-test-stat">
+                            <span class="stat-value text-gradient">3,633</span>
+                            <span class="stat-label">總測試數</span>
+                        </div>
+                        <div class="waf-test-stat">
+                            <span class="stat-value text-gradient">0</span>
+                            <span class="stat-label">誤報數</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- CTA Section -->
         <section class="cta-section">
             <div class="cta-content scroll-animate">
@@ -1144,18 +1135,34 @@ const lbStrategies = [
     { icon: '#️⃣', name: 'IP 雜湊', desc: '同一來源 IP 固定導向相同伺服器' }
 ];
 
-// CDN Global Nodes
+// CDN Global Nodes (positions as % on world_map.png, based on WAF node coordinates)
+// Mercator: left% = (lng + 180) / 360 * 100, top% ≈ (90 - lat) / 180 * 100 (adjusted for map crop)
 const cdnNodes = [
-    { name: '台灣 (Origin)', x: 730, y: 155, latency: '1ms', primary: true },
-    { name: '香港', x: 700, y: 180, latency: '12ms', primary: false },
-    { name: '東京', x: 780, y: 120, latency: '25ms', primary: false },
-    { name: '新加坡', x: 680, y: 200, latency: '35ms', primary: false },
-    { name: '法蘭克福', x: 500, y: 115, latency: '150ms', primary: false },
-    { name: '美西', x: 150, y: 140, latency: '160ms', primary: false },
-    { name: '美東', x: 230, y: 140, latency: '180ms', primary: false },
-    { name: '聖保羅', x: 260, y: 310, latency: '280ms', primary: false },
-    { name: '約翰內斯堡', x: 520, y: 310, latency: '220ms', primary: false },
-    { name: '雪梨', x: 840, y: 340, latency: '120ms', primary: false }
+    { name: '台北主節點 (Origin)', left: 80.4, top: 32, latency: '1ms', primary: true },
+    { name: '台灣GCP', left: 81.5, top: 31.5, latency: '3ms', primary: true },
+    { name: '新加坡', left: 78.8, top: 47, latency: '35ms', primary: false },
+    { name: '美西 (LA)', left: 17.2, top: 28, latency: '160ms', primary: false },
+    { name: '香港', left: 79.5, top: 35, latency: '12ms', primary: false },
+    { name: '東京', left: 83.8, top: 25, latency: '25ms', primary: false },
+    { name: '法蘭克福', left: 52.4, top: 22, latency: '150ms', primary: false },
+    { name: '美東 (NY)', left: 23.5, top: 27, latency: '180ms', primary: false },
+    { name: '聖保羅', left: 36.5, top: 63, latency: '280ms', primary: false },
+    { name: '約翰內斯堡', left: 55.6, top: 67, latency: '220ms', primary: false },
+    { name: '雪梨', left: 90.5, top: 72, latency: '120ms', primary: false }
+];
+
+// Connection lines (from Taiwan origin to each node, as %)
+const cdnConnections = [
+    { x1: 80.4, y1: 32, x2: 81.5, y2: 31.5 },  // 台北→台灣GCP
+    { x1: 80.4, y1: 32, x2: 78.8, y2: 47 },     // →新加坡
+    { x1: 80.4, y1: 32, x2: 79.5, y2: 35 },     // →香港
+    { x1: 80.4, y1: 32, x2: 83.8, y2: 25 },     // →東京
+    { x1: 80.4, y1: 32, x2: 52.4, y2: 22 },     // →法蘭克福
+    { x1: 52.4, y1: 22, x2: 17.2, y2: 28 },     // 法蘭克福→美西
+    { x1: 52.4, y1: 22, x2: 23.5, y2: 27 },     // 法蘭克福→美東
+    { x1: 23.5, y1: 27, x2: 36.5, y2: 63 },     // 美東→聖保羅
+    { x1: 52.4, y1: 22, x2: 55.6, y2: 67 },     // 法蘭克福→約翰內斯堡
+    { x1: 78.8, y1: 47, x2: 90.5, y2: 72 },     // 新加坡→雪梨
 ];
 
 // CDN Features Data
@@ -2528,13 +2535,182 @@ onUnmounted(() => {
     margin-bottom: 2rem;
 }
 
-.world-map-svg {
+.world-map-img-wrapper {
+    position: relative;
     width: 100%;
-    height: auto;
 }
 
-.cdn-map-node {
-    cursor: default;
+.world-map-img {
+    width: 100%;
+    height: auto;
+    opacity: 0.35;
+    display: block;
+}
+
+.map-lines-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+/* Map Node Markers */
+.map-node-marker {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+}
+
+.marker-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #00f0ff;
+    box-shadow: 0 0 8px #00f0ff, 0 0 20px rgba(0, 240, 255, 0.3);
+    position: relative;
+    z-index: 2;
+}
+
+.map-node-marker.primary .marker-dot {
+    width: 12px;
+    height: 12px;
+    background: #00ff88;
+    box-shadow: 0 0 10px #00ff88, 0 0 25px rgba(0, 255, 136, 0.4);
+}
+
+.marker-pulse {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 2px solid #00f0ff;
+    animation: markerPulse 2s ease-in-out infinite;
+}
+
+.map-node-marker.primary .marker-pulse {
+    border-color: #00ff88;
+}
+
+@keyframes markerPulse {
+    0% { width: 10px; height: 10px; opacity: 0.8; }
+    100% { width: 35px; height: 35px; opacity: 0; }
+}
+
+.marker-label {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: -30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+.marker-name {
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.8);
+}
+
+.marker-latency {
+    color: rgba(0, 240, 255, 0.8);
+    font-size: 0.6rem;
+    font-family: monospace;
+}
+
+.map-node-marker.primary .marker-latency {
+    color: rgba(0, 255, 136, 0.8);
+}
+
+/* WAF Test Section */
+.waf-test-section {
+    padding: 6rem 2rem;
+    position: relative;
+    z-index: 1;
+    background: linear-gradient(180deg, transparent, rgba(0, 212, 255, 0.03), transparent);
+}
+
+.waf-test-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    max-width: 1100px;
+    margin: 2rem auto;
+}
+
+.waf-test-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.waf-test-card:hover {
+    border-color: rgba(0, 212, 255, 0.3);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.waf-test-badge {
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.waf-test-badge.malicious {
+    background: rgba(255, 71, 87, 0.1);
+    color: #ff6b81;
+    border-bottom: 1px solid rgba(255, 71, 87, 0.2);
+}
+
+.waf-test-badge.fp {
+    background: rgba(0, 255, 136, 0.1);
+    color: #00ff88;
+    border-bottom: 1px solid rgba(0, 255, 136, 0.2);
+}
+
+.waf-test-img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.waf-test-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    padding: 1.25rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.waf-test-stat {
+    text-align: center;
+}
+
+.waf-test-stat .stat-value {
+    font-size: 1.5rem;
+    font-weight: 800;
+    display: block;
+}
+
+.waf-test-stat .stat-label {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.75rem;
+}
+
+@media (max-width: 768px) {
+    .waf-test-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 .node-glow-circle {
