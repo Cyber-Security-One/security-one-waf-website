@@ -1135,34 +1135,34 @@ const lbStrategies = [
     { icon: '#️⃣', name: 'IP 雜湊', desc: '同一來源 IP 固定導向相同伺服器' }
 ];
 
-// CDN Global Nodes (positions as % on world_map.png, based on WAF node coordinates)
-// Mercator: left% = (lng + 180) / 360 * 100, top% ≈ (90 - lat) / 180 * 100 (adjusted for map crop)
+// CDN Global Nodes (positions match WAF Map.vue coordinate system)
+// WAF formula: left% = (lon + 158) / 338 * 100, top% = (78 - lat) / 134 * 100
 const cdnNodes = [
-    { name: '台北主節點 (Origin)', left: 80.4, top: 32, latency: '1ms', primary: true },
-    { name: '台灣GCP', left: 81.5, top: 31.5, latency: '3ms', primary: true },
-    { name: '新加坡', left: 78.8, top: 47, latency: '35ms', primary: false },
-    { name: '美西 (LA)', left: 17.2, top: 28, latency: '160ms', primary: false },
-    { name: '香港', left: 79.5, top: 35, latency: '12ms', primary: false },
-    { name: '東京', left: 83.8, top: 25, latency: '25ms', primary: false },
-    { name: '法蘭克福', left: 52.4, top: 22, latency: '150ms', primary: false },
-    { name: '美東 (NY)', left: 23.5, top: 27, latency: '180ms', primary: false },
-    { name: '聖保羅', left: 36.5, top: 63, latency: '280ms', primary: false },
-    { name: '約翰內斯堡', left: 55.6, top: 67, latency: '220ms', primary: false },
-    { name: '雪梨', left: 90.5, top: 72, latency: '120ms', primary: false }
+    { name: '台北主節點 (Origin)', left: 82.7, top: 39.5, latency: '1ms', primary: true },
+    { name: '台灣GCP', left: 83.0, top: 39.5, latency: '3ms', primary: true },
+    { name: '新加坡', left: 77.5, top: 57.2, latency: '35ms', primary: false },
+    { name: '美西 (LA)', left: 11.8, top: 32.8, latency: '160ms', primary: false },
+    { name: '香港', left: 80.5, top: 41.6, latency: '12ms', primary: false },
+    { name: '東京', left: 88.1, top: 31.6, latency: '25ms', primary: false },
+    { name: '法蘭克福', left: 49.3, top: 20.8, latency: '150ms', primary: false },
+    { name: '美東 (NY)', left: 24.9, top: 27.8, latency: '180ms', primary: false },
+    { name: '聖保羅', left: 33.0, top: 75.7, latency: '280ms', primary: false },
+    { name: '約翰內斯堡', left: 55.0, top: 77.8, latency: '220ms', primary: false },
+    { name: '雪梨', left: 91.5, top: 83.5, latency: '120ms', primary: false }
 ];
 
 // Connection lines (from Taiwan origin to each node, as %)
 const cdnConnections = [
-    { x1: 80.4, y1: 32, x2: 81.5, y2: 31.5 },  // 台北→台灣GCP
-    { x1: 80.4, y1: 32, x2: 78.8, y2: 47 },     // →新加坡
-    { x1: 80.4, y1: 32, x2: 79.5, y2: 35 },     // →香港
-    { x1: 80.4, y1: 32, x2: 83.8, y2: 25 },     // →東京
-    { x1: 80.4, y1: 32, x2: 52.4, y2: 22 },     // →法蘭克福
-    { x1: 52.4, y1: 22, x2: 17.2, y2: 28 },     // 法蘭克福→美西
-    { x1: 52.4, y1: 22, x2: 23.5, y2: 27 },     // 法蘭克福→美東
-    { x1: 23.5, y1: 27, x2: 36.5, y2: 63 },     // 美東→聖保羅
-    { x1: 52.4, y1: 22, x2: 55.6, y2: 67 },     // 法蘭克福→約翰內斯堡
-    { x1: 78.8, y1: 47, x2: 90.5, y2: 72 },     // 新加坡→雪梨
+    { x1: 82.7, y1: 39.5, x2: 83.0, y2: 39.5 },  // 台北→台灣GCP
+    { x1: 82.7, y1: 39.5, x2: 77.5, y2: 57.2 },   // →新加坡
+    { x1: 82.7, y1: 39.5, x2: 80.5, y2: 41.6 },   // →香港
+    { x1: 82.7, y1: 39.5, x2: 88.1, y2: 31.6 },   // →東京
+    { x1: 82.7, y1: 39.5, x2: 49.3, y2: 20.8 },   // →法蘭克福
+    { x1: 49.3, y1: 20.8, x2: 11.8, y2: 32.8 },   // 法蘭克福→美西
+    { x1: 49.3, y1: 20.8, x2: 24.9, y2: 27.8 },   // 法蘭克福→美東
+    { x1: 24.9, y1: 27.8, x2: 33.0, y2: 75.7 },   // 美東→聖保羅
+    { x1: 49.3, y1: 20.8, x2: 55.0, y2: 77.8 },   // 法蘭克福→約翰內斯堡
+    { x1: 77.5, y1: 57.2, x2: 91.5, y2: 83.5 },   // 新加坡→雪梨
 ];
 
 // CDN Features Data
