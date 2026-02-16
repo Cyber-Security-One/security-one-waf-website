@@ -66,7 +66,7 @@
         <section class="attack-protection-section">
             <h2 class="section-title text-gradient scroll-animate">🛡️ 核心攻擊防護</h2>
             <p class="section-subtitle scroll-animate">
-                7 種攻擊類型全方位防護，傳統規則引擎與 AI 雙重偵測
+                13 種攻擊類型全方位防護，傳統規則引擎與 AI 雙重偵測
             </p>
             
             <div class="attack-types-grid">
@@ -577,6 +577,158 @@
             </div>
         </section>
         
+        <!-- CDN Cache Acceleration Section -->
+        <section class="cdn-section">
+            <h2 class="section-title text-gradient scroll-animate">🚀 CDN 快取加速</h2>
+            <p class="section-subtitle scroll-animate">
+                內建 Nginx Proxy Cache，智能靜態資源加速，有效降低源站負載
+            </p>
+            
+            <div class="cdn-flow scroll-animate">
+                <div class="cdn-node">
+                    <div class="cdn-icon">👥</div>
+                    <span>用戶請求</span>
+                </div>
+                <div class="cdn-arrow">→</div>
+                <div class="cdn-node highlight">
+                    <div class="cdn-icon">⚡</div>
+                    <span>CDN 快取層</span>
+                </div>
+                <div class="cdn-arrow">→</div>
+                <div class="cdn-node">
+                    <div class="cdn-icon">🖥️</div>
+                    <span>源站伺服器</span>
+                </div>
+            </div>
+            
+            <div class="cdn-features scroll-animate">
+                <div class="cdn-feature-card" v-for="(item, i) in cdnFeatures" :key="i">
+                    <span class="cdn-feature-icon">{{ item.icon }}</span>
+                    <h4>{{ item.title }}</h4>
+                    <p>{{ item.desc }}</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- DDoS Scrubbing Section -->
+        <section class="ddos-section">
+            <h2 class="section-title text-gradient scroll-animate">🌊 DDoS 清洗中心</h2>
+            <p class="section-subtitle scroll-animate">
+                專業級流量清洗，多層防護機制抵禦大規模分散式攻擊
+            </p>
+            
+            <div class="ddos-layers scroll-animate">
+                <div class="ddos-layer" v-for="(layer, i) in ddosLayers" :key="i">
+                    <div class="layer-shield">
+                        <span class="layer-num">L{{ i + 1 }}</span>
+                    </div>
+                    <div class="layer-info">
+                        <h4>{{ layer.name }}</h4>
+                        <p>{{ layer.desc }}</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- GeoIP Smart Routing Section -->
+        <section class="geoip-section">
+            <h2 class="section-title text-gradient scroll-animate">🗺️ GeoIP 智能路由</h2>
+            <p class="section-subtitle scroll-animate">
+                基於地理位置的智能流量調度，就近接入最優節點
+            </p>
+            
+            <div class="geoip-features scroll-animate">
+                <div class="geoip-card" v-for="(item, i) in geoipFeatures" :key="i">
+                    <div class="geoip-icon">{{ item.icon }}</div>
+                    <h4>{{ item.title }}</h4>
+                    <p>{{ item.desc }}</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Multi-Node Management Section -->
+        <section class="multinode-section">
+            <h2 class="section-title text-gradient scroll-animate">🏗️ 多節點分散式部署</h2>
+            <p class="section-subtitle scroll-animate">
+                全球多節點部署，集中管理與自動故障切換
+            </p>
+            
+            <div class="node-grid scroll-animate">
+                <div class="node-card" v-for="(node, i) in nodeExamples" :key="i" :class="node.status">
+                    <div class="node-status-dot"></div>
+                    <div class="node-icon">🛡️</div>
+                    <h4>{{ node.name }}</h4>
+                    <span class="node-region">{{ node.region }}</span>
+                    <span class="node-latency">{{ node.latency }}</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ClamAV & Snort Integration Section -->
+        <section class="security-engines-section">
+            <h2 class="section-title text-gradient scroll-animate">🔬 進階安全引擎</h2>
+            <p class="section-subtitle scroll-animate">
+                整合 ClamAV 防毒掃描與 Snort 3 深度封包檢測
+            </p>
+            
+            <div class="engines-grid scroll-animate">
+                <div class="engine-highlight-card">
+                    <div class="engine-badge">🦠</div>
+                    <h3>ClamAV 防毒引擎</h3>
+                    <p>即時掃描上傳檔案，自動更新病毒庫</p>
+                    <ul>
+                        <li>✓ 檔案上傳即時掃描</li>
+                        <li>✓ 病毒庫自動更新</li>
+                        <li>✓ 隔離區管理</li>
+                        <li>✓ 掃描報告產生</li>
+                    </ul>
+                </div>
+                <div class="engine-highlight-card">
+                    <div class="engine-badge">🐉</div>
+                    <h3>Snort 3 規則引擎</h3>
+                    <p>企業級 IDS 深度封包檢測引擎</p>
+                    <ul>
+                        <li>✓ Snort 3 原生支援</li>
+                        <li>✓ 深度封包檢測 (DPI)</li>
+                        <li>✓ 自訂 Snort 規則</li>
+                        <li>✓ 告警即時整合</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- RBAC Section -->
+        <section class="rbac-section">
+            <div class="rbac-container">
+                <div class="rbac-text scroll-animate">
+                    <h2 class="section-title text-gradient">👥 角色權限管理</h2>
+                    <p class="section-lead">精細化的 RBAC 存取控制，讓團隊協作更安全高效</p>
+                    <ul class="rbac-features">
+                        <li>🔐 角色型存取控制 (RBAC)</li>
+                        <li>📋 站點級別權限分配</li>
+                        <li>👁️ 操作日誌完整追蹤</li>
+                        <li>🛡️ 最小權限原則</li>
+                    </ul>
+                </div>
+                <div class="rbac-visual scroll-animate">
+                    <div class="rbac-diagram">
+                        <div class="rbac-role admin">
+                            <span class="role-icon">👑</span>
+                            <span class="role-name">管理員</span>
+                        </div>
+                        <div class="rbac-role operator">
+                            <span class="role-icon">⚙️</span>
+                            <span class="role-name">操作員</span>
+                        </div>
+                        <div class="rbac-role viewer">
+                            <span class="role-icon">👁️</span>
+                            <span class="role-name">檢視者</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Architecture Section -->
         <section class="architecture">
             <h2 class="section-title text-gradient scroll-animate">技術架構</h2>
@@ -830,6 +982,39 @@ const lbStrategies = [
     { icon: '#️⃣', name: 'IP 雜湊', desc: '同一來源 IP 固定導向相同伺服器' }
 ];
 
+// CDN Features Data
+const cdnFeatures = [
+    { icon: '⚡', title: '靜態資源加速', desc: '自動快取 CSS、JS、圖片等靜態資源' },
+    { icon: '🎯', title: '智能快取策略', desc: '依副檔名、路徑自訂快取規則' },
+    { icon: '🗑️', title: '一鍵清除快取', desc: '按路徑或全站快速清除快取' },
+    { icon: '📊', title: '快取命中統計', desc: '即時監控快取命中率與效能' }
+];
+
+// DDoS Scrubbing Layers
+const ddosLayers = [
+    { name: '流量清洗', desc: '識別並過濾惡意流量，保留合法請求' },
+    { name: 'SYN Flood 防護', desc: 'SYN Cookie 驗證，防止半連接攻擊' },
+    { name: 'UDP Flood 過濾', desc: '丟棄異常 UDP 封包，保護頻寬' },
+    { name: '速率限制', desc: '智能速率控制，防止資源耗盡' },
+    { name: '黑洞路由', desc: '終極防線，將攻擊流量導向黑洞' }
+];
+
+// GeoIP Features
+const geoipFeatures = [
+    { icon: '🌍', title: 'Anycast 路由', desc: '全球任播，自動選擇最近節點' },
+    { icon: '📍', title: '就近接入', desc: '基於 GeoIP 判斷，就近導向最優節點' },
+    { icon: '🚧', title: '地理圍欄', desc: '按國家/地區封鎖或允許流量' },
+    { icon: '🔄', title: '智能 DNS', desc: '結合延遲監測，動態調整解析結果' }
+];
+
+// Multi-Node Examples
+const nodeExamples = [
+    { name: 'HK-01', region: '香港', latency: '12ms', status: 'healthy' },
+    { name: 'TW-01', region: '台灣', latency: '8ms', status: 'healthy' },
+    { name: 'JP-01', region: '日本', latency: '25ms', status: 'healthy' },
+    { name: 'US-01', region: '美國', latency: '180ms', status: 'warning' }
+];
+
 const features = [
     {
         icon: '🛡️',
@@ -928,6 +1113,55 @@ const features = [
         description: '分散式入侵偵測，後端伺服器縱深防禦',
         highlights: ['Agent 管理', '規則同步', '告警整合', '集中封鎖', 'AI 偵測'],
         tech: ['Distributed', 'Agent-based', 'Real-time']
+    },
+    {
+        icon: '🚀',
+        title: 'CDN 快取加速',
+        description: 'Nginx Proxy Cache 加速靜態資源，降低源站負載',
+        highlights: ['智能靜態快取', '自訂快取規則', '一鍵清除快取', '按站點管理', '快取命中統計'],
+        tech: ['Nginx Proxy Cache', 'Cache Purge', 'CDN']
+    },
+    {
+        icon: '🌊',
+        title: 'DDoS 清洗中心',
+        description: '專業 DDoS 流量清洗，過濾惡意流量保護源站',
+        highlights: ['流量清洗策略', 'SYN Flood 防護', 'UDP Flood 防護', '黑洞路由', '清洗報告'],
+        tech: ['Traffic Scrubbing', 'Rate Limiting', 'DDoS Mitigation']
+    },
+    {
+        icon: '🗺️',
+        title: 'GeoIP 智能路由',
+        description: '基於地理位置的智能流量路由，就近接入最佳節點',
+        highlights: ['Anycast 路由', '就近接入', '地理圍欄', '智能 DNS', '延遲優化'],
+        tech: ['GeoIP', 'Anycast', 'Smart DNS']
+    },
+    {
+        icon: '🏗️',
+        title: '多節點管理',
+        description: '分散式 WAF 節點部署與管理，全球覆蓋',
+        highlights: ['節點狀態監控', '組態同步', '故障自動切換', '流量調度', '集中管理'],
+        tech: ['Multi-Node', 'Distributed', 'Auto-failover']
+    },
+    {
+        icon: '🦠',
+        title: 'ClamAV 防毒掃描',
+        description: 'IDS 整合 ClamAV 掃毒引擎，即時掃描上傳檔案',
+        highlights: ['檔案上傳掃毒', '即時掃描', '病毒庫自動更新', '掃描報告', '隔離管理'],
+        tech: ['ClamAV', 'Virus Scan', 'File Upload']
+    },
+    {
+        icon: '🐉',
+        title: 'Snort 規則引擎',
+        description: '整合 Snort 3 IDS 規則引擎，企業級深度封包檢測',
+        highlights: ['Snort 3 支援', '規則自動更新', '自訂 Snort 規則', '深度封包檢測', '告警整合'],
+        tech: ['Snort 3', 'DPI', 'IDS Rules']
+    },
+    {
+        icon: '👥',
+        title: '角色權限管理',
+        description: 'RBAC 角色型存取控制，多用戶權限分級管理',
+        highlights: ['角色管理', '權限分級', '站點存取控制', '操作日誌', '多用戶支援'],
+        tech: ['RBAC', 'Roles', 'Permissions']
     }
 ];
 
@@ -939,7 +1173,13 @@ const attackTypes = [
     { icon: '📁', name: 'Path Traversal', desc: '目錄跳轉序列、敏感檔案存取', targets: ['URL'] },
     { icon: '🔍', name: 'Scanner', desc: '已知掃描器特徵、自動化工具識別', targets: ['User-Agent'] },
     { icon: '☕', name: 'OGNL Injection', desc: 'Struts2 相關漏洞特徵', targets: ['URL', 'Body'] },
-    { icon: '📦', name: 'Java Deser', desc: '序列化魔術位元組、Gadget Chain', targets: ['Body', 'Header'] }
+    { icon: '📦', name: 'Java Deser', desc: '序列化魔術位元組、Gadget Chain', targets: ['Body', 'Header'] },
+    { icon: '🌐', name: 'SSRF', desc: '內網 IP 存取、雲端元數據 URL 偵測', targets: ['URL', 'Body'] },
+    { icon: '📄', name: 'XXE', desc: 'XML 外部實體注入、DTD 宣告偵測', targets: ['Body', 'Header'] },
+    { icon: '🔥', name: 'Log4Shell', desc: 'JNDI 注入模式、Log4j 漏洞偵測', targets: ['URL', 'Body', 'Header'] },
+    { icon: '🕷️', name: 'WebShell', desc: '後門特徵碼、惡意執行函數偵測', targets: ['URL', 'Body'] },
+    { icon: '🐘', name: 'PHP Injection', desc: 'PHP 函數注入、include/require 偵測', targets: ['URL', 'Body'] },
+    { icon: '🔨', name: 'Brute Force', desc: '登入失敗頻率、暴力破解行為偵測', targets: ['Behavior'] }
 ];
 
 // IDS Agents Data
@@ -996,7 +1236,7 @@ const ruleTypes = [
 const stats = [
     { value: 99.9, suffix: '%', label: '可用性' },
     { value: 10, suffix: 'ms', label: '平均延遲' },
-    { value: 38, suffix: '+', label: '功能模組' },
+    { value: 45, suffix: '+', label: '功能模組' },
     { value: 24, suffix: ' / 7', label: '全天候監控' }
 ];
 
@@ -1023,7 +1263,15 @@ const comparison = [
     { feature: 'IDS/IPS 整合', traditional: false },
     { feature: '分散式 Agent', traditional: false },
     { feature: 'AI 威脅偵測', traditional: false },
-    { feature: 'Passkey 驗證', traditional: false }
+    { feature: 'Passkey 驗證', traditional: false },
+    { feature: 'CDN 快取加速', traditional: false },
+    { feature: 'DDoS 清洗中心', traditional: false },
+    { feature: 'GeoIP 智能路由', traditional: false },
+    { feature: '多節點管理', traditional: false },
+    { feature: 'ClamAV 防毒', traditional: false },
+    { feature: 'Snort 規則引擎', traditional: false },
+    { feature: 'RBAC 權限管理', traditional: false },
+    { feature: 'SSRF / XXE / Log4Shell 防護', traditional: false }
 ];
 
 // Attack flow timeline
@@ -1046,8 +1294,12 @@ const deployOptions = [
 const faqs = [
     { q: 'AI 防禦需要什麼硬體配置？', a: 'AI 防禦使用 Ollama 運行本地 LLM，建議至少 16GB VRAM。如果不使用 AI 功能，2GB RAM 即可運行基本 WAF。' },
     { q: '如何更新 CVE 規則？', a: '系統會自動從 NVD 同步最新 CVE 資料，您也可以手動觸發更新。AI 會自動分析並生成對應的防護規則供您審核。' },
-    { q: '支援哪些攻擊類型？', a: '支援 SQL 注入、XSS、RCE、路徑遍歷、CC 攻擊、惡意 User-Agent 等多種攻擊類型的偵測與防護。' },
-    { q: '可以與現有系統整合嗎？', a: '可以，Security One SOC 作為反向代理運行，可以保護任何 HTTP/HTTPS 服務，無需修改現有應用程式。' }
+    { q: '支援哪些攻擊類型？', a: '支援 13 種攻擊類型：SQL 注入、XSS、RCE、路徑遍歷、SSRF、XXE、Log4Shell、WebShell、PHP Injection、暴力破解、CC 攻擊、OGNL 注入、Java 反序列化等。' },
+    { q: '可以與現有系統整合嗎？', a: '可以，Security One SOC 作為反向代理運行，可以保護任何 HTTP/HTTPS 服務，無需修改現有應用程式。' },
+    { q: 'CDN 快取功能如何運作？', a: '系統內建 Nginx Proxy Cache，可針對每個站點配置靜態資源快取策略，支援按路徑或副檔名清除快取，有效降低源站負載。' },
+    { q: '如何防護 DDoS 攻擊？', a: '系統提供 DDoS 清洗中心，結合速率限制、SYN Flood 防護、UDP Flood 過濾等多重機制，可自動識別並清洗惡意流量。' },
+    { q: '支援多節點部署嗎？', a: '支援，您可以部署多個 WAF 節點，系統提供集中管理、組態同步、健康監控和故障自動切換功能，結合 GeoIP 智能路由實現全球覆蓋。' },
+    { q: 'IDS Agent 支援哪些掃毒功能？', a: 'IDS Agent 整合 ClamAV 掃毒引擎，可即時掃描上傳檔案，自動更新病毒庫，並產生掃描報告。同時支援 Snort 3 深度封包檢測。' }
 ];
 
 const activeFaq = ref(null);
@@ -1975,6 +2227,466 @@ onUnmounted(() => {
     max-height: 0;
     padding-top: 0;
     padding-bottom: 0;
+}
+
+/* CDN Section */
+.cdn-section {
+    padding: 6rem 2rem;
+    position: relative;
+    z-index: 1;
+}
+
+.cdn-flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+}
+
+.cdn-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1.5rem 2rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    transition: all 0.3s ease;
+}
+
+.cdn-node.highlight {
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.15), rgba(139, 92, 246, 0.15));
+    border-color: rgba(0, 212, 255, 0.3);
+    box-shadow: 0 0 30px rgba(0, 212, 255, 0.1);
+}
+
+.cdn-icon {
+    font-size: 2rem;
+}
+
+.cdn-node span {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.cdn-arrow {
+    font-size: 1.5rem;
+    color: var(--primary);
+    animation: pulse 2s infinite;
+}
+
+.cdn-features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.cdn-feature-card {
+    text-align: center;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    transition: all 0.3s ease;
+}
+
+.cdn-feature-card:hover {
+    border-color: rgba(0, 212, 255, 0.3);
+    transform: translateY(-4px);
+}
+
+.cdn-feature-icon {
+    font-size: 2rem;
+    display: block;
+    margin-bottom: 0.75rem;
+}
+
+.cdn-feature-card h4 {
+    color: white;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+}
+
+.cdn-feature-card p {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.85rem;
+}
+
+/* DDoS Section */
+.ddos-section {
+    padding: 6rem 2rem;
+    position: relative;
+    z-index: 1;
+    background: linear-gradient(180deg, transparent, rgba(139, 92, 246, 0.05), transparent);
+}
+
+.ddos-layers {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.ddos-layer {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.25rem 2rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    transition: all 0.3s ease;
+}
+
+.ddos-layer:hover {
+    border-color: rgba(139, 92, 246, 0.4);
+    transform: translateX(8px);
+}
+
+.layer-shield {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.3), rgba(0, 212, 255, 0.3));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.layer-num {
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: white;
+}
+
+.layer-info h4 {
+    color: white;
+    margin-bottom: 0.25rem;
+    font-size: 1rem;
+}
+
+.layer-info p {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.85rem;
+}
+
+/* GeoIP Section */
+.geoip-section {
+    padding: 6rem 2rem;
+    position: relative;
+    z-index: 1;
+}
+
+.geoip-features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.geoip-card {
+    text-align: center;
+    padding: 2rem 1.5rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    transition: all 0.3s ease;
+}
+
+.geoip-card:hover {
+    border-color: rgba(0, 255, 136, 0.3);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px rgba(0, 255, 136, 0.1);
+}
+
+.geoip-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.geoip-card h4 {
+    color: white;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+}
+
+.geoip-card p {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.85rem;
+}
+
+/* Multi-Node Section */
+.multinode-section {
+    padding: 6rem 2rem;
+    position: relative;
+    z-index: 1;
+    background: linear-gradient(180deg, transparent, rgba(0, 212, 255, 0.05), transparent);
+}
+
+.node-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1.5rem;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.node-card {
+    text-align: center;
+    padding: 2rem 1.5rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.node-card:hover {
+    transform: translateY(-4px);
+}
+
+.node-card.healthy {
+    border-color: rgba(0, 255, 136, 0.2);
+}
+
+.node-card.healthy:hover {
+    border-color: rgba(0, 255, 136, 0.4);
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.1);
+}
+
+.node-card.warning {
+    border-color: rgba(255, 214, 0, 0.2);
+}
+
+.node-card.warning:hover {
+    border-color: rgba(255, 214, 0, 0.4);
+}
+
+.node-status-dot {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.node-card.healthy .node-status-dot {
+    background: #00ff88;
+    box-shadow: 0 0 8px #00ff88;
+}
+
+.node-card.warning .node-status-dot {
+    background: #ffd600;
+    box-shadow: 0 0 8px #ffd600;
+}
+
+.node-icon {
+    font-size: 2rem;
+    margin-bottom: 0.75rem;
+}
+
+.node-card h4 {
+    color: white;
+    font-size: 1.1rem;
+    margin-bottom: 0.25rem;
+}
+
+.node-region {
+    display: block;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.8rem;
+    margin-bottom: 0.5rem;
+}
+
+.node-latency {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.node-card.healthy .node-latency {
+    background: rgba(0, 255, 136, 0.15);
+    color: #00ff88;
+}
+
+.node-card.warning .node-latency {
+    background: rgba(255, 214, 0, 0.15);
+    color: #ffd600;
+}
+
+/* Security Engines Section */
+.security-engines-section {
+    padding: 6rem 2rem;
+    position: relative;
+    z-index: 1;
+}
+
+.engines-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.engine-highlight-card {
+    padding: 2.5rem 2rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+
+.engine-highlight-card:hover {
+    border-color: rgba(0, 212, 255, 0.3);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px rgba(0, 212, 255, 0.1);
+}
+
+.engine-badge {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.engine-highlight-card h3 {
+    color: white;
+    font-size: 1.3rem;
+    margin-bottom: 0.75rem;
+}
+
+.engine-highlight-card > p {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+}
+
+.engine-highlight-card ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.engine-highlight-card li {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.85rem;
+    padding: 0.4rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* RBAC Section */
+.rbac-section {
+    padding: 6rem 2rem;
+    position: relative;
+    z-index: 1;
+    background: linear-gradient(180deg, transparent, rgba(139, 92, 246, 0.05), transparent);
+}
+
+.rbac-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    max-width: 1000px;
+    margin: 0 auto;
+    align-items: center;
+}
+
+.rbac-section .section-lead {
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+}
+
+.rbac-features {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.rbac-features li {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.95rem;
+}
+
+.rbac-diagram {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+}
+
+.rbac-role {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 2rem;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 240px;
+    transition: all 0.3s ease;
+}
+
+.rbac-role:hover {
+    transform: translateX(8px);
+}
+
+.rbac-role.admin {
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 165, 0, 0.15));
+    border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+.rbac-role.operator {
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.15), rgba(139, 92, 246, 0.15));
+    border: 1px solid rgba(0, 212, 255, 0.3);
+}
+
+.rbac-role.viewer {
+    background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(0, 212, 255, 0.1));
+    border: 1px solid rgba(0, 255, 136, 0.2);
+}
+
+.role-icon {
+    font-size: 1.5rem;
+}
+
+.role-name {
+    color: white;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+@media (max-width: 768px) {
+    .rbac-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .cdn-flow {
+        flex-direction: column;
+    }
+    
+    .cdn-arrow {
+        transform: rotate(90deg);
+    }
+    
+    .engines-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 /* CTA Section */

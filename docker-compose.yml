@@ -1,0 +1,10 @@
+services:
+  website:
+    build: .
+    container_name: security-one-website
+    ports:
+      - "8080:80"
+    volumes:
+      - ./resources:/var/www/html/resources
+      - ./public:/var/www/html/public
+    restart: unless-stopped
