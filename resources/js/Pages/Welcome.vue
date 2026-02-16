@@ -579,10 +579,30 @@
         
         <!-- CDN Cache Acceleration Section -->
         <section class="cdn-section">
-            <h2 class="section-title text-gradient scroll-animate">🚀 CDN 快取加速</h2>
+            <h2 class="section-title text-gradient scroll-animate">🚀 CDN 全球加速網路</h2>
             <p class="section-subtitle scroll-animate">
-                內建 Nginx Proxy Cache，智能靜態資源加速，有效降低源站負載
+                遍布全球 10+ 邊緣節點，整合 Nginx Proxy Cache 智能快取，讓您的用戶無論身處何地都能毫秒級存取
             </p>
+
+            <!-- CDN Stats Banner -->
+            <div class="cdn-stats-banner scroll-animate">
+                <div class="cdn-stat">
+                    <span class="cdn-stat-value text-gradient">10+</span>
+                    <span class="cdn-stat-label">全球節點</span>
+                </div>
+                <div class="cdn-stat">
+                    <span class="cdn-stat-value text-gradient">99.99%</span>
+                    <span class="cdn-stat-label">服務可用性</span>
+                </div>
+                <div class="cdn-stat">
+                    <span class="cdn-stat-value text-gradient">&lt;50ms</span>
+                    <span class="cdn-stat-label">全球平均延遲</span>
+                </div>
+                <div class="cdn-stat">
+                    <span class="cdn-stat-value text-gradient">100Tbps</span>
+                    <span class="cdn-stat-label">網路總容量</span>
+                </div>
+            </div>
             
             <div class="cdn-flow scroll-animate">
                 <div class="cdn-node">
@@ -708,11 +728,57 @@
 
         <!-- DDoS Scrubbing Section -->
         <section class="ddos-section">
-            <h2 class="section-title text-gradient scroll-animate">🌊 DDoS 清洗中心</h2>
+            <h2 class="section-title text-gradient scroll-animate">🌊 DDoS 流量清洗中心</h2>
             <p class="section-subtitle scroll-animate">
-                專業級流量清洗，多層防護機制抵禦大規模分散式攻擊
+                企業級 DDoS 防護，多層智能清洗引擎，即時偵測並過濾惡意流量，保障業務持續運行
             </p>
+
+            <!-- DDoS Stats Dashboard -->
+            <div class="ddos-stats-dashboard scroll-animate">
+                <div class="ddos-stat-card">
+                    <div class="ddos-stat-value text-gradient">100<span class="unit">Tbps</span></div>
+                    <div class="ddos-stat-label">清洗總容量</div>
+                </div>
+                <div class="ddos-stat-card">
+                    <div class="ddos-stat-value text-gradient">99.99<span class="unit">%</span></div>
+                    <div class="ddos-stat-label">惡意流量過濾率</div>
+                </div>
+                <div class="ddos-stat-card">
+                    <div class="ddos-stat-value text-gradient">&lt;3<span class="unit">s</span></div>
+                    <div class="ddos-stat-label">攻擊回應時間</div>
+                </div>
+                <div class="ddos-stat-card">
+                    <div class="ddos-stat-value text-gradient">24/7</div>
+                    <div class="ddos-stat-label">全天候自動防護</div>
+                </div>
+            </div>
+
+            <!-- Live Traffic Visualization -->
+            <div class="ddos-traffic-visual scroll-animate">
+                <div class="traffic-header">
+                    <span class="traffic-label">⚡ 即時流量清洗模擬</span>
+                    <span class="traffic-status">
+                        <span class="status-dot active"></span> 防護啟用中
+                    </span>
+                </div>
+                <div class="traffic-bars">
+                    <div class="traffic-row" v-for="(type, i) in ddosTrafficTypes" :key="'traffic-'+i">
+                        <span class="traffic-type">{{ type.name }}</span>
+                        <div class="traffic-bar-bg">
+                            <div class="traffic-bar-fill malicious" :style="{ width: type.malicious + '%', animationDelay: (i * 0.3) + 's' }"></div>
+                            <div class="traffic-bar-fill clean" :style="{ width: type.clean + '%', animationDelay: (i * 0.3 + 0.15) + 's' }"></div>
+                        </div>
+                        <span class="traffic-percent">{{ type.blocked }}% 攔截</span>
+                    </div>
+                </div>
+                <div class="traffic-legend">
+                    <span><span class="legend-dot malicious"></span>惡意流量</span>
+                    <span><span class="legend-dot clean"></span>正常流量</span>
+                </div>
+            </div>
             
+            <!-- Defense Layers -->
+            <h3 class="ddos-layers-title text-gradient scroll-animate">🛡️ 五層縱深防禦架構</h3>
             <div class="ddos-layers scroll-animate">
                 <div class="ddos-layer" v-for="(layer, i) in ddosLayers" :key="i">
                     <div class="layer-shield">
@@ -1107,6 +1173,15 @@ const ddosLayers = [
     { name: 'UDP Flood 過濾', desc: '丟棄異常 UDP 封包，保護頻寬' },
     { name: '速率限制', desc: '智能速率控制，防止資源耗盡' },
     { name: '黑洞路由', desc: '終極防線，將攻擊流量導向黑洞' }
+];
+
+// DDoS Traffic Types (for visualization)
+const ddosTrafficTypes = [
+    { name: 'SYN Flood', malicious: 85, clean: 15, blocked: 98 },
+    { name: 'UDP Flood', malicious: 72, clean: 28, blocked: 96 },
+    { name: 'HTTP Flood', malicious: 65, clean: 35, blocked: 94 },
+    { name: 'DNS Amplification', malicious: 90, clean: 10, blocked: 99 },
+    { name: 'Slowloris', malicious: 45, clean: 55, blocked: 97 }
 ];
 
 // GeoIP Features
@@ -2519,12 +2594,238 @@ onUnmounted(() => {
     font-size: 0.7rem;
 }
 
+/* CDN Stats Banner */
+.cdn-stats-banner {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    max-width: 800px;
+    margin: 2rem auto 3rem;
+}
+
+.cdn-stat {
+    text-align: center;
+    padding: 1.5rem 1rem;
+    background: rgba(0, 212, 255, 0.05);
+    border: 1px solid rgba(0, 212, 255, 0.15);
+    border-radius: 16px;
+    transition: all 0.3s ease;
+}
+
+.cdn-stat:hover {
+    border-color: rgba(0, 212, 255, 0.4);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 212, 255, 0.15);
+}
+
+.cdn-stat-value {
+    font-size: 2rem;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+}
+
+.cdn-stat-value .unit {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.cdn-stat-label {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.85rem;
+}
+
 /* DDoS Section */
 .ddos-section {
     padding: 6rem 2rem;
     position: relative;
     z-index: 1;
     background: linear-gradient(180deg, transparent, rgba(139, 92, 246, 0.05), transparent);
+}
+
+/* DDoS Stats Dashboard */
+.ddos-stats-dashboard {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    max-width: 900px;
+    margin: 2rem auto 3rem;
+}
+
+.ddos-stat-card {
+    text-align: center;
+    padding: 1.5rem 1rem;
+    background: rgba(139, 92, 246, 0.08);
+    border: 1px solid rgba(139, 92, 246, 0.2);
+    border-radius: 16px;
+    transition: all 0.3s ease;
+}
+
+.ddos-stat-card:hover {
+    border-color: rgba(139, 92, 246, 0.5);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(139, 92, 246, 0.15);
+}
+
+.ddos-stat-value {
+    font-size: 2rem;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+}
+
+.ddos-stat-value .unit {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.ddos-stat-label {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.85rem;
+}
+
+/* DDoS Traffic Visualization */
+.ddos-traffic-visual {
+    max-width: 750px;
+    margin: 0 auto 3rem;
+    padding: 2rem;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 20px;
+}
+
+.traffic-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.traffic-label {
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.traffic-status {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #00ff88;
+    font-size: 0.85rem;
+}
+
+.status-dot.active {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #00ff88;
+    box-shadow: 0 0 8px #00ff88;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.traffic-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.traffic-row {
+    display: grid;
+    grid-template-columns: 130px 1fr 80px;
+    align-items: center;
+    gap: 1rem;
+}
+
+.traffic-type {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.85rem;
+    font-family: monospace;
+}
+
+.traffic-bar-bg {
+    height: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+}
+
+.traffic-bar-fill {
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 10px;
+    animation: barGrow 1.5s ease-out forwards;
+    transform-origin: left;
+}
+
+.traffic-bar-fill.malicious {
+    background: linear-gradient(90deg, #ff4757, #ff6b81);
+    z-index: 1;
+    opacity: 0.4;
+}
+
+.traffic-bar-fill.clean {
+    background: linear-gradient(90deg, #00ff88, #00d4ff);
+    z-index: 2;
+}
+
+@keyframes barGrow {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+}
+
+.traffic-percent {
+    color: #00ff88;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-align: right;
+    font-family: monospace;
+}
+
+.traffic-legend {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    margin-top: 1.5rem;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.legend-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 0.4rem;
+    vertical-align: middle;
+}
+
+.legend-dot.malicious {
+    background: #ff4757;
+}
+
+.legend-dot.clean {
+    background: #00ff88;
+}
+
+.ddos-layers-title {
+    text-align: center;
+    font-size: 1.3rem;
+    margin-bottom: 1.5rem;
+}
+
+@media (max-width: 768px) {
+    .cdn-stats-banner,
+    .ddos-stats-dashboard {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .traffic-row {
+        grid-template-columns: 100px 1fr 60px;
+    }
 }
 
 .ddos-layers {
