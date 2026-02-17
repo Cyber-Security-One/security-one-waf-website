@@ -4,6 +4,12 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="Security One SOC - 個人版 統一安全平台，提供智能防護、即時監控與 AI 安全分析">
+
+        <!-- Open Graph / LINE / Facebook -->
+        <meta property="og:type" content="website">
+        <meta property="og:title" content="Security One SOC">
+        <meta property="og:description" content="個人版 統一安全平台，提供智能防護、即時監控與 AI 安全分析">
+        <meta property="og:site_name" content="Security One SOC">
         
         <title inertia>{{ config('app.name', 'Security One SOC') }}</title>
 
