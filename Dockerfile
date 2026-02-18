@@ -26,8 +26,8 @@ RUN npm install && npm run build
 # Setup SQLite database
 RUN touch database/database.sqlite
 
-# Configure environment
-RUN cp .env.example .env \
+# Configure environment (only copy .env.example if .env doesn't exist)
+RUN if [ ! -f .env ]; then cp .env.example .env; fi \
     && php artisan key:generate --no-interaction \
     && php artisan migrate --no-interaction
 
