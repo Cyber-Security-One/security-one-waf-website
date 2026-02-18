@@ -66,16 +66,31 @@
         <section class="attack-protection-section">
             <h2 class="section-title text-gradient scroll-animate">🛡️ 核心攻擊防護</h2>
             <p class="section-subtitle scroll-animate">
-                13 種攻擊類型全方位防護，傳統規則引擎與 AI 雙重偵測
+                18 種攻擊類型全方位防護，多層級安全等級控制
             </p>
             
-            <div class="attack-types-grid">
-                <div class="attack-type-card scroll-animate" v-for="(attack, index) in attackTypes" :key="index">
-                    <div class="attack-icon">{{ attack.icon }}</div>
-                    <h4 class="attack-name">{{ attack.name }}</h4>
-                    <p class="attack-desc">{{ attack.desc }}</p>
-                    <div class="attack-targets">
-                        <span v-for="target in attack.targets" :key="target">{{ target }}</span>
+            <div class="waf-rules-container scroll-animate">
+                <div class="waf-category" v-for="(category, catIndex) in wafProtectionRules" :key="catIndex">
+                    <div class="waf-category-header">
+                        <span class="cat-icon">{{ category.icon }}</span>
+                        <h3>{{ category.name }}</h3>
+                    </div>
+                    <div class="waf-rules-list">
+                        <div class="waf-rule-item" v-for="(rule, ruleIndex) in category.rules" :key="ruleIndex">
+                            <div class="rule-info">
+                                <div class="rule-title-row">
+                                    <span class="rule-name">{{ rule.name }}</span>
+                                    <span class="rule-severity" :class="rule.severity">{{ rule.severity.toUpperCase() }}</span>
+                                </div>
+                                <p class="rule-desc">{{ rule.desc }}</p>
+                            </div>
+                            <div class="rule-levels">
+                                <span class="level-btn" :class="{ inactive: true }">OFF</span>
+                                <span class="level-btn" :class="{ inactive: true }">LOW</span>
+                                <span class="level-btn" :class="{ inactive: true }">MED</span>
+                                <span class="level-btn active high">HIGH</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
