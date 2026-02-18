@@ -1,0 +1,15 @@
+{
+  "name": "my-project",
+  "mode": "vendored",
+  "dependencies": {
+    "onmax/nuxt-skills": {
+      "version": "620580785210ffd944b96226fe156b78d435d940",
+      "source": "https://github.com/onmax/nuxt-skills",
+      "include": {
+        "skills": [
+          "motion"
+        ]
+      }
+    }
+  }
+}

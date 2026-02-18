@@ -1,0 +1,62 @@
+{
+  "name": "onmax/nuxt-skills",
+  "version": "620580785210ffd944b96226fe156b78d435d940",
+  "summary": "Auto-generated tile from GitHub (18 skills)",
+  "private": true,
+  "skills": {
+    "document-writer": {
+      "path": "skills/document-writer/SKILL.md"
+    },
+    "motion": {
+      "path": "skills/motion/SKILL.md"
+    },
+    "nuxt": {
+      "path": "skills/nuxt/SKILL.md"
+    },
+    "nuxt-better-auth": {
+      "path": "skills/nuxt-better-auth/SKILL.md"
+    },
+    "nuxt-content": {
+      "path": "skills/nuxt-content/SKILL.md"
+    },
+    "nuxt-modules": {
+      "path": "skills/nuxt-modules/SKILL.md"
+    },
+    "nuxt-seo": {
+      "path": "skills/nuxt-seo/SKILL.md"
+    },
+    "nuxt-ui": {
+      "path": "skills/nuxt-ui/SKILL.md"
+    },
+    "nuxthub": {
+      "path": "skills/nuxthub/SKILL.md"
+    },
+    "pnpm": {
+      "path": "skills/pnpm/SKILL.md"
+    },
+    "reka-ui": {
+      "path": "skills/reka-ui/SKILL.md"
+    },
+    "tresjs": {
+      "path": "skills/tresjs/SKILL.md"
+    },
+    "ts-library": {
+      "path": "skills/ts-library/SKILL.md"
+    },
+    "tsdown": {
+      "path": "skills/tsdown/SKILL.md"
+    },
+    "vite": {
+      "path": "skills/vite/SKILL.md"
+    },
+    "vitest": {
+      "path": "skills/vitest/SKILL.md"
+    },
+    "vue": {
+      "path": "skills/vue/SKILL.md"
+    },
+    "vueuse": {
+      "path": "skills/vueuse/SKILL.md"
+    }
+  }
+}

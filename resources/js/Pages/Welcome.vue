@@ -1,10 +1,26 @@
 <template>
-    <div class="app-wrapper">
+    <div class="app-wrapper" @mousemove="handleHeroMouse">
+        <!-- Scroll Progress Bar -->
+        <motion.div
+            class="scroll-progress-bar"
+            :style="{ scaleX }"
+        />
+
         <!-- Login Button (Fixed Top Right) -->
-        <a href="https://security-one-soc.vito1317.com" class="login-btn" target="_blank" rel="noopener noreferrer">
+        <motion.a
+            href="https://security-one-soc.vito1317.com"
+            class="login-btn"
+            target="_blank"
+            rel="noopener noreferrer"
+            :initial="{ opacity: 0, x: 30 }"
+            :animate="!isLoading ? { opacity: 1, x: 0 } : { opacity: 0, x: 30 }"
+            :transition="{ type: 'spring', stiffness: 200, damping: 20, delay: 1.5 }"
+            :whileHover="{ scale: 1.08, y: -2 }"
+            :whilePress="{ scale: 0.95 }"
+        >
             <span class="login-icon">🔐</span>
             <span class="login-text">登入</span>
-        </a>
+        </motion.a>
         
         <!-- Loading Screen -->
         <LoadingScreen v-if="isLoading" @complete="onLoadingComplete" />
@@ -18,59 +34,132 @@
         
         <!-- Hero Section (Fixed Parallax) -->
         <div class="hero-wrapper">
+            <!-- Cursor Follow Gradient -->
+            <motion.div class="hero-cursor-gradient" :style="{ background: heroGradient }" />
+
             <section class="hero hero-fixed" ref="heroRef" :style="heroStyle">
-                <span class="hero-badge animate-pulse-border">
+                <motion.span
+                    class="hero-badge animate-pulse-border"
+                    :initial="{ opacity: 0, y: -50, scale: 0.5, filter: 'blur(10px)' }"
+                    :animate="!isLoading ? { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' } : { opacity: 0, y: -50, scale: 0.5, filter: 'blur(10px)' }"
+                    :transition="{ type: 'spring', stiffness: 150, damping: 12, delay: 0.2 }"
+                >
                     🛡️ AI-Powered Security Operations Center
-                </span>
-                <h1 class="hero-title text-gradient">
+                </motion.span>
+                <motion.h1
+                    class="hero-title text-gradient"
+                    :initial="{ opacity: 0, scale: 0.3, filter: 'blur(20px)' }"
+                    :animate="!isLoading ? { opacity: 1, scale: 1, filter: 'blur(0px)' } : { opacity: 0, scale: 0.3, filter: 'blur(20px)' }"
+                    :transition="{ type: 'spring', stiffness: 80, damping: 10, delay: 0.5 }"
+                >
                     <span class="title-brand">Security One</span> <span class="title-product">SOC</span>
-                </h1>
-                <p class="hero-subtitle">
+                </motion.h1>
+                <motion.p
+                    class="hero-subtitle"
+                    :initial="{ opacity: 0, y: 60, filter: 'blur(8px)' }"
+                    :animate="!isLoading ? { opacity: 1, y: 0, filter: 'blur(0px)' } : { opacity: 0, y: 60, filter: 'blur(8px)' }"
+                    :transition="{ type: 'spring', stiffness: 60, damping: 12, delay: 0.9 }"
+                >
                     智能 統一安全平台，結合 AI 威脅偵測與 CVE 資料庫即時更新，為您的網站提供最先進的自動化防護
-                </p>
-                <div class="hero-cta">
-                    <a href="mailto:service@cybersecureone.com?subject=Security One SOC 諮詢" class="btn btn-primary animate-glow">
+                </motion.p>
+                <motion.div
+                    class="hero-cta"
+                    :initial="{ opacity: 0, y: 40, scale: 0.5 }"
+                    :animate="!isLoading ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 40, scale: 0.5 }"
+                    :transition="{ type: 'spring', stiffness: 120, damping: 8, delay: 1.2 }"
+                >
+                    <motion.a
+                        href="mailto:service@cybersecureone.com?subject=Security One SOC 諮詢"
+                        class="btn btn-primary animate-glow"
+                        :whileHover="{ scale: 1.15, y: -8 }"
+                        :whilePress="{ scale: 0.9 }"
+                        :transition="{ type: 'spring', stiffness: 400, damping: 10 }"
+                    >
                         <span>🚀</span> 聯絡我們
-                    </a>
-                </div>
-                
+                    </motion.a>
+                </motion.div>
+
                 <!-- Scroll Indicator -->
-                <div class="scroll-indicator" :style="{ opacity: 1 - scrollProgress }">
+                <motion.div
+                    class="scroll-indicator"
+                    :style="{ opacity: 1 - scrollProgress }"
+                    :initial="{ opacity: 0, y: 20 }"
+                    :animate="!isLoading ? { opacity: 1, y: [0, 12, 0] } : { opacity: 0 }"
+                    :transition="{ opacity: { delay: 1.8, duration: 0.5 }, y: { repeat: Infinity, duration: 1.5, ease: 'easeInOut' } }"
+                >
                     <span>向下滾動</span>
                     <div class="scroll-arrow">↓</div>
-                </div>
+                </motion.div>
             </section>
         </div>
         
         <!-- Features Section -->
         <section id="features" class="features">
-            <h2 class="section-title text-gradient scroll-animate">核心功能</h2>
-            <p class="section-subtitle scroll-animate">
+            <motion.h2
+                class="section-title text-gradient"
+                :initial="{ opacity: 0, y: 40, filter: 'blur(10px)' }"
+                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :viewport="{ once: true, amount: 0.3 }"
+                :transition="{ type: 'spring', stiffness: 80, damping: 12 }"
+            >核心功能</motion.h2>
+            <motion.p
+                class="section-subtitle"
+                :initial="{ opacity: 0, y: 30, filter: 'blur(6px)' }"
+                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :viewport="{ once: true, amount: 0.3 }"
+                :transition="{ type: 'spring', stiffness: 80, damping: 14, delay: 0.15 }"
+            >
                 完整的 WAF 解決方案，從防護到監控一應俱全
-            </p>
-            
-            <div class="features-grid">
-                <FeatureCard
+            </motion.p>
+
+            <div class="features-grid" style="perspective: 1000px;">
+                <motion.div
                     v-for="(feature, index) in features"
                     :key="index"
-                    :icon="feature.icon"
-                    :title="feature.title"
-                    :description="feature.description"
-                    :delay="index * 0.1"
-                    @click="openModal(feature)"
-                />
+                    :initial="{ opacity: 0, y: 80, scale: 0.6, rotateX: 45, filter: 'blur(10px)' }"
+                    :whileInView="{ opacity: 1, y: 0, scale: 1, rotateX: 0, filter: 'blur(0px)' }"
+                    :viewport="{ once: true, amount: 0.1 }"
+                    :transition="{ type: 'spring', stiffness: 70, damping: 12, delay: (index % 4) * 0.1 }"
+                    :whileHover="{ scale: 1.08, y: -12, rotateY: 5 }"
+                    style="transform-style: preserve-3d;"
+                >
+                    <FeatureCard
+                        :icon="feature.icon"
+                        :title="feature.title"
+                        :description="feature.description"
+                        :delay="0"
+                        @click="openModal(feature)"
+                    />
+                </motion.div>
             </div>
         </section>
 
         <!-- Core Attack Protection Section -->
         <section class="attack-protection-section">
-            <h2 class="section-title text-gradient scroll-animate">🛡️ 核心攻擊防護</h2>
-            <p class="section-subtitle scroll-animate">
+            <motion.h2
+                class="section-title text-gradient"
+                :initial="{ opacity: 0, y: 40, filter: 'blur(10px)' }"
+                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :viewport="{ once: true, amount: 0.3 }"
+                :transition="{ type: 'spring', stiffness: 80, damping: 12 }"
+            >🛡️ 核心攻擊防護</motion.h2>
+            <motion.p
+                class="section-subtitle"
+                :initial="{ opacity: 0, y: 30, filter: 'blur(6px)' }"
+                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :viewport="{ once: true, amount: 0.3 }"
+                :transition="{ type: 'spring', stiffness: 80, damping: 14, delay: 0.15 }"
+            >
                 18 種攻擊類型全方位防護，多層級安全等級控制
-            </p>
-            
+            </motion.p>
+
             <div class="waf-rules-container scroll-animate stagger-children">
-                <div class="waf-category" v-for="(category, catIndex) in wafProtectionRules" :key="catIndex">
+                <motion.div class="waf-category" v-for="(category, catIndex) in wafProtectionRules" :key="catIndex"
+                    :initial="{ opacity: 0, x: -60, scale: 0.9, filter: 'blur(8px)' }"
+                    :whileInView="{ opacity: 1, x: 0, scale: 1, filter: 'blur(0px)' }"
+                    :viewport="{ once: true, amount: 0.1 }"
+                    :transition="{ type: 'spring', stiffness: 60, damping: 12, delay: catIndex * 0.2 }"
+                >
                     <div class="waf-category-header">
                         <span class="cat-icon">{{ category.icon }}</span>
                         <h3>{{ category.name }}</h3>
@@ -92,16 +181,28 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </motion.div>
             </div>
         </section>
 
         <!-- IDS/IPS Distributed Defense Section -->
         <section class="ids-section">
-            <h2 class="section-title text-gradient scroll-animate">🔗 IDS/IPS 分散式防禦</h2>
-            <p class="section-subtitle scroll-animate">
+            <motion.h2
+                class="section-title text-gradient"
+                :initial="{ opacity: 0, y: 40, filter: 'blur(10px)' }"
+                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :viewport="{ once: true, amount: 0.3 }"
+                :transition="{ type: 'spring', stiffness: 80, damping: 12 }"
+            >🔗 IDS/IPS 分散式防禦</motion.h2>
+            <motion.p
+                class="section-subtitle"
+                :initial="{ opacity: 0, y: 30, filter: 'blur(6px)' }"
+                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :viewport="{ once: true, amount: 0.3 }"
+                :transition="{ type: 'spring', stiffness: 80, damping: 14, delay: 0.15 }"
+            >
                 部署在後端伺服器的 Agent，形成縱深防禦架構
-            </p>
+            </motion.p>
             
             <div class="ids-architecture scroll-animate scale-up">
                 <div class="ids-hub">
@@ -132,57 +233,108 @@
                 </div>
             </div>
             
-            <div class="ids-engines scroll-animate stagger-children">
-                <div class="engine-card" v-for="engine in idsEngines" :key="engine.name">
+            <div class="ids-engines">
+                <motion.div class="engine-card" v-for="(engine, ei) in idsEngines" :key="engine.name"
+                    :initial="{ opacity: 0, y: 40, rotateX: 15 }"
+                    :whileInView="{ opacity: 1, y: 0, rotateX: 0 }"
+                    :viewport="{ once: true, amount: 0.3 }"
+                    :transition="{ type: 'spring', stiffness: 80, damping: 15, delay: ei * 0.12 }"
+                    :whileHover="{ y: -12, scale: 1.08, rotateX: -5 }"
+                >
                     <div class="engine-icon">{{ engine.icon }}</div>
                     <h4>{{ engine.name }}</h4>
                     <p>{{ engine.desc }}</p>
                     <ul>
                         <li v-for="feature in engine.features" :key="feature">{{ feature }}</li>
                     </ul>
-                </div>
+                </motion.div>
             </div>
         </section>
 
         <!-- Traffic Control Section -->
         <section class="traffic-section">
-            <h2 class="section-title text-gradient scroll-animate">⚡ 流量控制與防護</h2>
-            <p class="section-subtitle scroll-animate">
+            <motion.h2
+                class="section-title text-gradient"
+                :initial="{ opacity: 0, y: 40, filter: 'blur(10px)' }"
+                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :viewport="{ once: true, amount: 0.3 }"
+                :transition="{ type: 'spring', stiffness: 80, damping: 12 }"
+            >⚡ 流量控制與防護</motion.h2>
+            <motion.p
+                class="section-subtitle"
+                :initial="{ opacity: 0, y: 30, filter: 'blur(6px)' }"
+                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :viewport="{ once: true, amount: 0.3 }"
+                :transition="{ type: 'spring', stiffness: 80, damping: 14, delay: 0.15 }"
+            >
                 CC/DDoS 防護、自動封鎖、人機驗證多重機制
-            </p>
-            
-            <div class="traffic-features scroll-animate stagger-children">
-                <div class="traffic-card" v-for="item in trafficFeatures" :key="item.title">
+            </motion.p>
+
+            <div class="traffic-features">
+                <motion.div class="traffic-card" v-for="(item, ti) in trafficFeatures" :key="item.title"
+                    :initial="{ opacity: 0, y: 30, scale: 0.95 }"
+                    :whileInView="{ opacity: 1, y: 0, scale: 1 }"
+                    :viewport="{ once: true, amount: 0.3 }"
+                    :transition="{ type: 'spring', stiffness: 100, damping: 15, delay: ti * 0.1 }"
+                    :whileHover="{ y: -12, scale: 1.08 }"
+                >
                     <div class="traffic-icon">{{ item.icon }}</div>
                     <h4>{{ item.title }}</h4>
                     <p>{{ item.desc }}</p>
-                </div>
+                </motion.div>
             </div>
         </section>
 
         <!-- Rule Management Section -->
         <section class="rules-section">
-            <h2 class="section-title text-gradient scroll-animate">📋 規則管理</h2>
-            <p class="section-subtitle scroll-animate">
+            <motion.h2
+                class="section-title text-gradient"
+                :initial="{ opacity: 0, y: 40, filter: 'blur(10px)' }"
+                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :viewport="{ once: true, amount: 0.3 }"
+                :transition="{ type: 'spring', stiffness: 80, damping: 12 }"
+            >📋 規則管理</motion.h2>
+            <motion.p
+                class="section-subtitle"
+                :initial="{ opacity: 0, y: 30, filter: 'blur(6px)' }"
+                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :viewport="{ once: true, amount: 0.3 }"
+                :transition="{ type: 'spring', stiffness: 80, damping: 14, delay: 0.15 }"
+            >
                 自訂規則、全域規則、CVE 自動生成規則
-            </p>
-            
-            <div class="rules-flow scroll-animate stagger-children">
-                <div class="rule-type" v-for="rule in ruleTypes" :key="rule.name">
+            </motion.p>
+
+            <div class="rules-flow">
+                <motion.div class="rule-type" v-for="(rule, ri) in ruleTypes" :key="rule.name"
+                    :initial="{ opacity: 0, y: 30, scale: 0.9 }"
+                    :whileInView="{ opacity: 1, y: 0, scale: 1 }"
+                    :viewport="{ once: true, amount: 0.3 }"
+                    :transition="{ type: 'spring', stiffness: 100, damping: 15, delay: ri * 0.12 }"
+                    :whileHover="{ y: -12, scale: 1.1, rotate: 2 }"
+                >
                     <div class="rule-icon">{{ rule.icon }}</div>
                     <h4>{{ rule.name }}</h4>
                     <p>{{ rule.desc }}</p>
-                </div>
+                </motion.div>
             </div>
         </section>
         
         <!-- Stats Section -->
         <section class="stats">
             <div class="stats-grid">
-                <div class="stat-item scroll-animate animate-hover-scale" v-for="(stat, index) in stats" :key="index">
+                <motion.div
+                    class="stat-item"
+                    v-for="(stat, index) in stats"
+                    :key="index"
+                    :initial="{ opacity: 0, scale: 0, y: 60, filter: 'blur(10px)' }"
+                    :whileInView="{ opacity: 1, scale: 1, y: 0, filter: 'blur(0px)' }"
+                    :viewport="{ once: true, amount: 0.3 }"
+                    :transition="{ type: 'spring', stiffness: 150, damping: 8, delay: index * 0.15 }"
+                    :whileHover="{ scale: 1.15, y: -10 }"
+                >
                     <AnimatedCounter :target="stat.value" :suffix="stat.suffix" />
                     <p class="stat-label">{{ stat.label }}</p>
-                </div>
+                </motion.div>
             </div>
         </section>
         
@@ -242,16 +394,35 @@
         
         <!-- AI Features Highlight Section -->
         <section id="ai-features" class="ai-section">
-            <h2 class="section-title text-gradient scroll-animate">🤖 AI 智能防禦</h2>
-            <p class="section-subtitle scroll-animate">
+            <motion.h2
+                class="section-title text-gradient"
+                :initial="{ opacity: 0, y: 40, filter: 'blur(10px)' }"
+                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :viewport="{ once: true, amount: 0.3 }"
+                :transition="{ type: 'spring', stiffness: 80, damping: 12 }"
+            >🤖 AI 智能防禦</motion.h2>
+            <motion.p
+                class="section-subtitle"
+                :initial="{ opacity: 0, y: 30, filter: 'blur(6px)' }"
+                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :viewport="{ once: true, amount: 0.3 }"
+                :transition="{ type: 'spring', stiffness: 80, damping: 14, delay: 0.15 }"
+            >
                 突破傳統規則限制，使用 AI 即時分析與偵測進階威脅
-            </p>
-            
+            </motion.p>
+
             <div class="ai-features-grid">
-                <div class="ai-feature-card scroll-animate" 
-                     v-for="(feature, index) in aiFeatures" 
-                     :key="index"
-                     @click="openModal(feature)">
+                <motion.div
+                    class="ai-feature-card"
+                    v-for="(feature, index) in aiFeatures"
+                    :key="index"
+                    :initial="{ opacity: 0, y: 100, scale: 0.5, rotateY: -30, filter: 'blur(15px)' }"
+                    :whileInView="{ opacity: 1, y: 0, scale: 1, rotateY: 0, filter: 'blur(0px)' }"
+                    :viewport="{ once: true, amount: 0.1 }"
+                    :transition="{ type: 'spring', stiffness: 60, damping: 10, delay: index * 0.25 }"
+                    :whileHover="{ y: -15, scale: 1.06, rotateY: 5 }"
+                    @click="openModal(feature)"
+                >
                     <div class="ai-feature-icon animate-float">{{ feature.icon }}</div>
                     <h3 class="ai-feature-title">{{ feature.title }}</h3>
                     <p class="ai-feature-desc">{{ feature.description }}</p>
@@ -259,66 +430,129 @@
                         <li v-for="(item, i) in feature.highlights.slice(0, 3)" :key="i">{{ item }}</li>
                     </ul>
                     <span class="view-more">查看詳情 →</span>
-                </div>
+                </motion.div>
             </div>
         </section>
         
         <!-- CVE Database Section -->
         <section class="cve-section">
-            <h2 class="section-title text-gradient scroll-animate">📡 CVE 資料庫即時更新</h2>
-            <p class="section-subtitle scroll-animate">
+            <motion.h2
+                class="section-title text-gradient"
+                :initial="{ opacity: 0, y: 40, filter: 'blur(10px)' }"
+                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :viewport="{ once: true, amount: 0.3 }"
+                :transition="{ type: 'spring', stiffness: 80, damping: 12 }"
+            >📡 CVE 資料庫即時更新</motion.h2>
+            <motion.p
+                class="section-subtitle"
+                :initial="{ opacity: 0, y: 30, filter: 'blur(6px)' }"
+                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :viewport="{ once: true, amount: 0.3 }"
+                :transition="{ type: 'spring', stiffness: 80, damping: 14, delay: 0.15 }"
+            >
                 自動同步 NVD 漏洞資料庫，AI 智能生成防護規則
-            </p>
-            
-            <div class="cve-flow scroll-animate stagger-children">
-                <div class="cve-step animate-hover-lift" v-for="(step, index) in cveSteps" :key="index">
+            </motion.p>
+
+            <div class="cve-flow">
+                <motion.div class="cve-step" v-for="(step, index) in cveSteps" :key="index"
+                    :initial="{ opacity: 0, x: -40 }"
+                    :whileInView="{ opacity: 1, x: 0 }"
+                    :viewport="{ once: true, amount: 0.3 }"
+                    :transition="{ type: 'spring', stiffness: 80, damping: 15, delay: index * 0.15 }"
+                    :whileHover="{ y: -5, scale: 1.05 }"
+                >
                     <div class="cve-step-icon">{{ step.icon }}</div>
                     <div class="cve-step-content">
                         <h4>{{ step.title }}</h4>
                         <p>{{ step.description }}</p>
                     </div>
                     <div v-if="index < cveSteps.length - 1" class="cve-arrow">→</div>
-                </div>
+                </motion.div>
             </div>
             
-            <div class="cve-info-box scroll-animate">
+            <motion.div class="cve-info-box"
+                :initial="{ opacity: 0, y: 20 }"
+                :whileInView="{ opacity: 1, y: 0 }"
+                :viewport="{ once: true, amount: 0.5 }"
+                :transition="{ type: 'spring', stiffness: 100, damping: 20, delay: 0.3 }"
+            >
                 <h4>🔍 支援的情報來源</h4>
                 <div class="cve-sources">
-                    <span class="cve-source animate-pop" v-for="(source, i) in cveSources" :key="i" :style="{ animationDelay: i * 0.1 + 's' }">
+                    <motion.span class="cve-source" v-for="(source, i) in cveSources" :key="i"
+                        :initial="{ opacity: 0, scale: 0.5 }"
+                        :whileInView="{ opacity: 1, scale: 1 }"
+                        :viewport="{ once: true }"
+                        :transition="{ type: 'spring', stiffness: 200, damping: 12, delay: 0.4 + i * 0.1 }"
+                        :whileHover="{ scale: 1.1 }"
+                    >
                         {{ source }}
-                    </span>
+                    </motion.span>
                 </div>
-            </div>
+            </motion.div>
         </section>
         
         <!-- Attack Demo Section -->
         <section class="demo-section">
-            <h2 class="section-title text-gradient scroll-animate">攻擊偵測流程</h2>
-            <p class="section-subtitle scroll-animate">
+            <motion.h2
+                class="section-title text-gradient"
+                :initial="{ opacity: 0, y: 40, filter: 'blur(10px)' }"
+                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :viewport="{ once: true, amount: 0.3 }"
+                :transition="{ type: 'spring', stiffness: 80, damping: 12 }"
+            >攻擊偵測流程</motion.h2>
+            <motion.p
+                class="section-subtitle"
+                :initial="{ opacity: 0, y: 30, filter: 'blur(6px)' }"
+                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :viewport="{ once: true, amount: 0.3 }"
+                :transition="{ type: 'spring', stiffness: 80, damping: 14, delay: 0.15 }"
+            >
                 從攻擊發生到封鎖只需毫秒級反應
-            </p>
-            
-            <div class="demo-timeline scroll-animate stagger-children">
-                <div class="timeline-item" v-for="(step, index) in attackFlow" :key="index">
+            </motion.p>
+
+            <div class="demo-timeline">
+                <motion.div class="timeline-item" v-for="(step, index) in attackFlow" :key="index"
+                    :initial="{ opacity: 0, x: index % 2 === 0 ? -40 : 40 }"
+                    :whileInView="{ opacity: 1, x: 0 }"
+                    :viewport="{ once: true, amount: 0.3 }"
+                    :transition="{ type: 'spring', stiffness: 80, damping: 15, delay: index * 0.15 }"
+                >
                     <div class="timeline-time">{{ step.time }}</div>
                     <div class="timeline-dot" :class="step.type"></div>
                     <div class="timeline-content">
                         <h4>{{ step.title }}</h4>
                         <p>{{ step.desc }}</p>
                     </div>
-                </div>
+                </motion.div>
             </div>
         </section>
-        
+
         <!-- SOC Command Center Section -->
         <section class="soc-section">
             <div class="soc-bg-grid"></div>
-            <h2 class="section-title text-gradient scroll-animate">👁️ SOC 戰情中心</h2>
-            <p class="section-subtitle scroll-animate">
+            <motion.h2
+                class="section-title text-gradient"
+                :initial="{ opacity: 0, y: 40, filter: 'blur(10px)' }"
+                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :viewport="{ once: true, amount: 0.3 }"
+                :transition="{ type: 'spring', stiffness: 80, damping: 12 }"
+            >👁️ SOC 戰情中心</motion.h2>
+            <motion.p
+                class="section-subtitle"
+                :initial="{ opacity: 0, y: 30, filter: 'blur(6px)' }"
+                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :viewport="{ once: true, amount: 0.3 }"
+                :transition="{ type: 'spring', stiffness: 80, damping: 14, delay: 0.15 }"
+            >
                 專業級資安監控儀表板，全螢幕 3D 威脅視覺化
-            </p>
-            
-            <div class="soc-dashboard scroll-animate scale-up">
+            </motion.p>
+
+            <motion.div class="soc-dashboard"
+                :initial="{ opacity: 0, scale: 0.6, y: 80, filter: 'blur(20px)' }"
+                :whileInView="{ opacity: 1, scale: 1, y: 0, filter: 'blur(0px)' }"
+                :viewport="{ once: true, amount: 0.05 }"
+                :transition="{ type: 'spring', stiffness: 40, damping: 12, delay: 0.2 }"
+            >
                 <div class="soc-screen">
                     <!-- Decor Elements -->
                     <div class="screen-overlay"></div>
@@ -554,7 +788,7 @@
                         <span class="soc-footer-time">2026/02/18 14:42:05</span>
                     </div>
                 </div>
-            </div>
+            </motion.div>
         </section>
 
         <!-- WAF Protection Pipeline (Sticky Scroll) -->
@@ -665,7 +899,12 @@
         <!-- Passkey Authentication Section -->
         <section class="passkey-section">
             <div class="passkey-container">
-                <div class="passkey-text scroll-animate from-left">
+                <motion.div class="passkey-text"
+                    :initial="{ opacity: 0, x: -60 }"
+                    :whileInView="{ opacity: 1, x: 0 }"
+                    :viewport="{ once: true, amount: 0.3 }"
+                    :transition="{ type: 'spring', stiffness: 70, damping: 18 }"
+                >
                     <h2 class="section-title text-gradient">🔐 零信任身份驗證</h2>
                     <p class="section-lead">無需修改後端程式碼，立即為您的網站啟用生物辨識登入</p>
                     <ul class="passkey-features">
@@ -674,8 +913,13 @@
                         <li>🛡️ 站點級別存取控制</li>
                         <li>⚡ 毫秒級無密碼登入</li>
                     </ul>
-                </div>
-                <div class="passkey-visual scroll-animate from-right">
+                </motion.div>
+                <motion.div class="passkey-visual"
+                    :initial="{ opacity: 0, x: 60, scale: 0.9 }"
+                    :whileInView="{ opacity: 1, x: 0, scale: 1 }"
+                    :viewport="{ once: true, amount: 0.3 }"
+                    :transition="{ type: 'spring', stiffness: 70, damping: 18, delay: 0.2 }"
+                >
                     <div class="fingerprint-scanner">
                         <div class="scan-line"></div>
                         <div class="fingerprint-icon">
@@ -685,14 +929,19 @@
                         </div>
                         <div class="scanner-text">ACCESS GRANTED</div>
                     </div>
-                </div>
+                </motion.div>
             </div>
         </section>
 
         <!-- AI Report Section -->
         <section class="report-section">
             <div class="report-container">
-                <div class="report-visual scroll-animate from-left">
+                <motion.div class="report-visual"
+                    :initial="{ opacity: 0, x: -60, rotateY: 15 }"
+                    :whileInView="{ opacity: 1, x: 0, rotateY: 0 }"
+                    :viewport="{ once: true, amount: 0.3 }"
+                    :transition="{ type: 'spring', stiffness: 70, damping: 18 }"
+                >
                     <div class="email-mockup">
                         <div class="email-header">📧 Security Summary Report</div>
                         <div class="email-body">
@@ -704,21 +953,38 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="report-text scroll-animate from-right">
+                </motion.div>
+                <motion.div class="report-text"
+                    :initial="{ opacity: 0, x: 60 }"
+                    :whileInView="{ opacity: 1, x: 0 }"
+                    :viewport="{ once: true, amount: 0.3 }"
+                    :transition="{ type: 'spring', stiffness: 70, damping: 18, delay: 0.2 }"
+                >
                     <h2 class="section-title text-gradient">📧 AI 智能安全報告</h2>
                     <p class="section-lead">每天早晨，您的安全摘要已準備就緒</p>
                     <p class="section-desc">Sentinel AI 自動分析昨日所有流量，識別潛在威脅模式，並將精簡報告直接發送至您的信箱。</p>
-                </div>
+                </motion.div>
             </div>
         </section>
-        
+
         <!-- Load Balancer Section -->
         <section class="lb-section">
-            <h2 class="section-title text-gradient scroll-animate">⚖️ 智能負載均衡</h2>
-            <p class="section-subtitle scroll-animate">
+            <motion.h2
+                class="section-title text-gradient"
+                :initial="{ opacity: 0, y: 40, filter: 'blur(10px)' }"
+                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :viewport="{ once: true, amount: 0.3 }"
+                :transition="{ type: 'spring', stiffness: 80, damping: 12 }"
+            >⚖️ 智能負載均衡</motion.h2>
+            <motion.p
+                class="section-subtitle"
+                :initial="{ opacity: 0, y: 30, filter: 'blur(6px)' }"
+                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :viewport="{ once: true, amount: 0.3 }"
+                :transition="{ type: 'spring', stiffness: 80, damping: 14, delay: 0.15 }"
+            >
                 多後端伺服器流量分配，自動故障轉移確保高可用性
-            </p>
+            </motion.p>
             
             <!-- Animated Traffic Flow Diagram -->
             <div class="lb-diagram scroll-animate scale-up">
@@ -806,12 +1072,18 @@
             </div>
             
             <!-- Load Balancer Features -->
-            <div class="lb-features scroll-animate stagger-children">
-                <div class="lb-feature-card" v-for="(item, i) in lbFeatures" :key="i">
+            <div class="lb-features">
+                <motion.div class="lb-feature-card" v-for="(item, i) in lbFeatures" :key="i"
+                    :initial="{ opacity: 0, y: 30, scale: 0.95 }"
+                    :whileInView="{ opacity: 1, y: 0, scale: 1 }"
+                    :viewport="{ once: true, amount: 0.3 }"
+                    :transition="{ type: 'spring', stiffness: 100, damping: 15, delay: i * 0.1 }"
+                    :whileHover="{ y: -12, scale: 1.08 }"
+                >
                     <span class="lb-feature-icon">{{ item.icon }}</span>
                     <h4>{{ item.title }}</h4>
                     <p>{{ item.desc }}</p>
-                </div>
+                </motion.div>
             </div>
             
             <!-- Strategies -->
@@ -886,10 +1158,22 @@
 
         <!-- CDN Cache Acceleration Section -->
         <section class="cdn-section">
-            <h2 class="section-title text-gradient scroll-animate">🚀 CDN 全球加速網路</h2>
-            <p class="section-subtitle scroll-animate">
+            <motion.h2
+                class="section-title text-gradient"
+                :initial="{ opacity: 0, y: 40, filter: 'blur(10px)' }"
+                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :viewport="{ once: true, amount: 0.3 }"
+                :transition="{ type: 'spring', stiffness: 80, damping: 12 }"
+            >🚀 CDN 全球加速網路</motion.h2>
+            <motion.p
+                class="section-subtitle"
+                :initial="{ opacity: 0, y: 30, filter: 'blur(6px)' }"
+                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :viewport="{ once: true, amount: 0.3 }"
+                :transition="{ type: 'spring', stiffness: 80, damping: 14, delay: 0.15 }"
+            >
                 遍布全球 10+ 邊緣節點，整合 Nginx Proxy Cache 智能快取，讓您的用戶無論身處何地都能毫秒級存取
-            </p>
+            </motion.p>
 
             <!-- CDN Stats Banner -->
             <div class="cdn-stats-banner scroll-animate">
@@ -974,40 +1258,78 @@
                 </div>
             </div>
             
-            <div class="cdn-features scroll-animate stagger-children">
-                <div class="cdn-feature-card" v-for="(item, i) in cdnFeatures" :key="i">
+            <div class="cdn-features">
+                <motion.div class="cdn-feature-card" v-for="(item, i) in cdnFeatures" :key="i"
+                    :initial="{ opacity: 0, y: 30, scale: 0.95 }"
+                    :whileInView="{ opacity: 1, y: 0, scale: 1 }"
+                    :viewport="{ once: true, amount: 0.3 }"
+                    :transition="{ type: 'spring', stiffness: 100, damping: 15, delay: i * 0.1 }"
+                    :whileHover="{ y: -12, scale: 1.08 }"
+                >
                     <span class="cdn-feature-icon">{{ item.icon }}</span>
                     <h4>{{ item.title }}</h4>
                     <p>{{ item.desc }}</p>
-                </div>
+                </motion.div>
             </div>
         </section>
 
         <!-- DDoS Scrubbing Section -->
         <section class="ddos-section">
-            <h2 class="section-title text-gradient scroll-animate">🌊 DDoS 流量清洗中心</h2>
-            <p class="section-subtitle scroll-animate">
+            <motion.h2
+                class="section-title text-gradient"
+                :initial="{ opacity: 0, y: 40, filter: 'blur(10px)' }"
+                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :viewport="{ once: true, amount: 0.3 }"
+                :transition="{ type: 'spring', stiffness: 80, damping: 12 }"
+            >🌊 DDoS 流量清洗中心</motion.h2>
+            <motion.p
+                class="section-subtitle"
+                :initial="{ opacity: 0, y: 30, filter: 'blur(6px)' }"
+                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :viewport="{ once: true, amount: 0.3 }"
+                :transition="{ type: 'spring', stiffness: 80, damping: 14, delay: 0.15 }"
+            >
                 企業級 DDoS 防護，多層智能清洗引擎，即時偵測並過濾惡意流量，保障業務持續運行
-            </p>
+            </motion.p>
 
             <!-- DDoS Stats Dashboard -->
-            <div class="ddos-stats-dashboard scroll-animate stagger-children">
-                <div class="ddos-stat-card">
+            <div class="ddos-stats-dashboard">
+                <motion.div class="ddos-stat-card"
+                    :initial="{ opacity: 0, y: 50, scale: 0, filter: 'blur(10px)' }"
+                    :whileInView="{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }"
+                    :viewport="{ once: true, amount: 0.2 }"
+                    :transition="{ type: 'spring', stiffness: 150, damping: 8 }"
+                >
                     <div class="ddos-stat-value text-gradient">100<span class="unit">Tbps</span></div>
                     <div class="ddos-stat-label">清洗總容量</div>
-                </div>
-                <div class="ddos-stat-card">
+                </motion.div>
+                <motion.div class="ddos-stat-card"
+                    :initial="{ opacity: 0, y: 30, scale: 0.9 }"
+                    :whileInView="{ opacity: 1, y: 0, scale: 1 }"
+                    :viewport="{ once: true, amount: 0.3 }"
+                    :transition="{ type: 'spring', stiffness: 120, damping: 12, delay: 0.1 }"
+                >
                     <div class="ddos-stat-value text-gradient">99.99<span class="unit">%</span></div>
                     <div class="ddos-stat-label">惡意流量過濾率</div>
-                </div>
-                <div class="ddos-stat-card">
+                </motion.div>
+                <motion.div class="ddos-stat-card"
+                    :initial="{ opacity: 0, y: 30, scale: 0.9 }"
+                    :whileInView="{ opacity: 1, y: 0, scale: 1 }"
+                    :viewport="{ once: true, amount: 0.3 }"
+                    :transition="{ type: 'spring', stiffness: 120, damping: 12, delay: 0.2 }"
+                >
                     <div class="ddos-stat-value text-gradient">&lt;3<span class="unit">s</span></div>
                     <div class="ddos-stat-label">攻擊回應時間</div>
-                </div>
-                <div class="ddos-stat-card">
+                </motion.div>
+                <motion.div class="ddos-stat-card"
+                    :initial="{ opacity: 0, y: 30, scale: 0.9 }"
+                    :whileInView="{ opacity: 1, y: 0, scale: 1 }"
+                    :viewport="{ once: true, amount: 0.3 }"
+                    :transition="{ type: 'spring', stiffness: 120, damping: 12, delay: 0.3 }"
+                >
                     <div class="ddos-stat-value text-gradient">24/7</div>
                     <div class="ddos-stat-label">全天候自動防護</div>
-                </div>
+                </motion.div>
             </div>
 
             <!-- Live Traffic Visualization -->
@@ -1036,8 +1358,13 @@
             
             <!-- Defense Layers -->
             <h3 class="ddos-layers-title text-gradient scroll-animate">🛡️ 五層縱深防禦架構</h3>
-            <div class="ddos-layers scroll-animate stagger-children">
-                <div class="ddos-layer" v-for="(layer, i) in ddosLayers" :key="i">
+            <div class="ddos-layers">
+                <motion.div class="ddos-layer" v-for="(layer, i) in ddosLayers" :key="i"
+                    :initial="{ opacity: 0, x: -30 }"
+                    :whileInView="{ opacity: 1, x: 0 }"
+                    :viewport="{ once: true, amount: 0.3 }"
+                    :transition="{ type: 'spring', stiffness: 80, damping: 15, delay: i * 0.12 }"
+                >
                     <div class="layer-shield">
                         <span class="layer-num">L{{ i + 1 }}</span>
                     </div>
@@ -1045,52 +1372,100 @@
                         <h4>{{ layer.name }}</h4>
                         <p>{{ layer.desc }}</p>
                     </div>
-                </div>
+                </motion.div>
             </div>
         </section>
 
         <!-- GeoIP Smart Routing Section -->
         <section class="geoip-section">
-            <h2 class="section-title text-gradient scroll-animate">🗺️ GeoIP 智能路由</h2>
-            <p class="section-subtitle scroll-animate">
+            <motion.h2
+                class="section-title text-gradient"
+                :initial="{ opacity: 0, y: 40, filter: 'blur(10px)' }"
+                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :viewport="{ once: true, amount: 0.3 }"
+                :transition="{ type: 'spring', stiffness: 80, damping: 12 }"
+            >🗺️ GeoIP 智能路由</motion.h2>
+            <motion.p
+                class="section-subtitle"
+                :initial="{ opacity: 0, y: 30, filter: 'blur(6px)' }"
+                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :viewport="{ once: true, amount: 0.3 }"
+                :transition="{ type: 'spring', stiffness: 80, damping: 14, delay: 0.15 }"
+            >
                 基於地理位置的智能流量調度，就近接入最優節點
-            </p>
-            
-            <div class="geoip-features scroll-animate">
-                <div class="geoip-card" v-for="(item, i) in geoipFeatures" :key="i">
+            </motion.p>
+
+            <div class="geoip-features">
+                <motion.div class="geoip-card" v-for="(item, i) in geoipFeatures" :key="i"
+                    :initial="{ opacity: 0, y: 30, scale: 0.95 }"
+                    :whileInView="{ opacity: 1, y: 0, scale: 1 }"
+                    :viewport="{ once: true, amount: 0.3 }"
+                    :transition="{ type: 'spring', stiffness: 100, damping: 15, delay: i * 0.1 }"
+                    :whileHover="{ y: -12, scale: 1.08 }"
+                >
                     <div class="geoip-icon">{{ item.icon }}</div>
                     <h4>{{ item.title }}</h4>
                     <p>{{ item.desc }}</p>
-                </div>
+                </motion.div>
             </div>
         </section>
 
         <!-- Multi-Node Management Section -->
         <section class="multinode-section">
-            <h2 class="section-title text-gradient scroll-animate">🏗️ 多節點分散式部署</h2>
-            <p class="section-subtitle scroll-animate">
+            <motion.h2
+                class="section-title text-gradient"
+                :initial="{ opacity: 0, y: 40, filter: 'blur(10px)' }"
+                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :viewport="{ once: true, amount: 0.3 }"
+                :transition="{ type: 'spring', stiffness: 80, damping: 12 }"
+            >🏗️ 多節點分散式部署</motion.h2>
+            <motion.p
+                class="section-subtitle"
+                :initial="{ opacity: 0, y: 30, filter: 'blur(6px)' }"
+                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :viewport="{ once: true, amount: 0.3 }"
+                :transition="{ type: 'spring', stiffness: 80, damping: 14, delay: 0.15 }"
+            >
                 全球多節點部署，集中管理與自動故障切換
-            </p>
-            
-            <div class="node-grid scroll-animate">
-                <div class="node-card" v-for="(node, i) in nodeExamples" :key="i" :class="node.status">
+            </motion.p>
+
+            <div class="node-grid">
+                <motion.div class="node-card" v-for="(node, i) in nodeExamples" :key="i" :class="node.status"
+                    :initial="{ opacity: 0, y: 30, scale: 0.9 }"
+                    :whileInView="{ opacity: 1, y: 0, scale: 1 }"
+                    :viewport="{ once: true, amount: 0.3 }"
+                    :transition="{ type: 'spring', stiffness: 100, damping: 14, delay: i * 0.12 }"
+                    :whileHover="{ y: -12, scale: 1.1 }"
+                >
                     <div class="node-status-dot"></div>
                     <div class="node-icon">🛡️</div>
                     <h4>{{ node.name }}</h4>
                     <span class="node-region">{{ node.region }}</span>
                     <span class="node-latency">{{ node.latency }}</span>
-                </div>
+                </motion.div>
             </div>
         </section>
 
         <!-- ClamAV & Snort Integration Section -->
         <section class="security-engines-section">
-            <h2 class="section-title text-gradient scroll-animate">🔬 進階安全引擎</h2>
-            <p class="section-subtitle scroll-animate">
+            <motion.h2
+                class="section-title text-gradient"
+                :initial="{ opacity: 0, y: 40, filter: 'blur(10px)' }"
+                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :viewport="{ once: true, amount: 0.3 }"
+                :transition="{ type: 'spring', stiffness: 80, damping: 12 }"
+            >🔬 進階安全引擎</motion.h2>
+            <motion.p
+                class="section-subtitle"
+                :initial="{ opacity: 0, y: 30, filter: 'blur(6px)' }"
+                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :viewport="{ once: true, amount: 0.3 }"
+                :transition="{ type: 'spring', stiffness: 80, damping: 14, delay: 0.15 }"
+            >
                 整合 ClamAV 防毒掃描與 Snort 3 深度封包檢測
-            </p>
-            
-            <div class="engines-grid scroll-animate">
+            </motion.p>
+
+            <div class="engines-grid">
                 <div class="engine-highlight-card">
                     <div class="engine-badge">🦠</div>
                     <h3>ClamAV 防毒引擎</h3>
@@ -1119,7 +1494,12 @@
         <!-- RBAC Section -->
         <section class="rbac-section">
             <div class="rbac-container">
-                <div class="rbac-text scroll-animate">
+                <motion.div class="rbac-text"
+                    :initial="{ opacity: 0, x: -40 }"
+                    :whileInView="{ opacity: 1, x: 0 }"
+                    :viewport="{ once: true, amount: 0.3 }"
+                    :transition="{ type: 'spring', stiffness: 70, damping: 18 }"
+                >
                     <h2 class="section-title text-gradient">👥 角色權限管理</h2>
                     <p class="section-lead">精細化的 RBAC 存取控制，讓團隊協作更安全高效</p>
                     <ul class="rbac-features">
@@ -1128,8 +1508,13 @@
                         <li>👁️ 操作日誌完整追蹤</li>
                         <li>🛡️ 最小權限原則</li>
                     </ul>
-                </div>
-                <div class="rbac-visual scroll-animate">
+                </motion.div>
+                <motion.div class="rbac-visual"
+                    :initial="{ opacity: 0, x: 40, scale: 0.9 }"
+                    :whileInView="{ opacity: 1, x: 0, scale: 1 }"
+                    :viewport="{ once: true, amount: 0.3 }"
+                    :transition="{ type: 'spring', stiffness: 70, damping: 18, delay: 0.2 }"
+                >
                     <div class="rbac-diagram">
                         <div class="rbac-role admin">
                             <span class="role-icon">👑</span>
@@ -1144,7 +1529,7 @@
                             <span class="role-name">檢視者</span>
                         </div>
                     </div>
-                </div>
+                </motion.div>
             </div>
         </section>
 
@@ -1163,7 +1548,13 @@
                     </div>
                 </div>
                 <div class="iss-right">
-                    <div class="iss-card" v-for="(cap, i) in inlineStickyCapabilities" :key="i">
+                    <motion.div class="iss-card" v-for="(cap, i) in inlineStickyCapabilities" :key="i"
+                        :initial="{ opacity: 0, x: 40 }"
+                        :whileInView="{ opacity: 1, x: 0 }"
+                        :viewport="{ once: true, amount: 0.3 }"
+                        :transition="{ type: 'spring', stiffness: 80, damping: 18, delay: i * 0.1 }"
+                        :whileHover="{ scale: 1.02, x: -5 }"
+                    >
                         <div class="iss-card-icon">{{ cap.icon }}</div>
                         <div class="iss-card-body">
                             <h3>{{ cap.title }}</h3>
@@ -1175,7 +1566,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </motion.div>
                 </div>
             </div>
         </section>
@@ -1253,12 +1644,29 @@
 
         <!-- Why Choose Us Section -->
         <section class="comparison-section">
-            <h2 class="section-title text-gradient scroll-animate">為什麼選擇 Security One SOC？</h2>
-            <p class="section-subtitle scroll-animate">
+            <motion.h2
+                class="section-title text-gradient"
+                :initial="{ opacity: 0, y: 40, filter: 'blur(10px)' }"
+                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :viewport="{ once: true, amount: 0.3 }"
+                :transition="{ type: 'spring', stiffness: 80, damping: 12 }"
+            >為什麼選擇 Security One SOC？</motion.h2>
+            <motion.p
+                class="section-subtitle"
+                :initial="{ opacity: 0, y: 30, filter: 'blur(6px)' }"
+                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :viewport="{ once: true, amount: 0.3 }"
+                :transition="{ type: 'spring', stiffness: 80, damping: 14, delay: 0.15 }"
+            >
                 相較於傳統 WAF，我們提供更智能、更全面的防護
-            </p>
-            
-            <div class="comparison-table scroll-animate">
+            </motion.p>
+
+            <motion.div class="comparison-table"
+                :initial="{ opacity: 0, y: 60, scale: 0.9, filter: 'blur(10px)' }"
+                :whileInView="{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }"
+                :viewport="{ once: true, amount: 0.1 }"
+                :transition="{ type: 'spring', stiffness: 60, damping: 12, delay: 0.2 }"
+            >
                 <div class="comparison-header">
                     <div class="comparison-feature">功能</div>
                     <div class="comparison-traditional">傳統 WAF</div>
@@ -1273,35 +1681,74 @@
                         <span class="check highlight">✓</span>
                     </div>
                 </div>
-            </div>
+            </motion.div>
         </section>
-        
+
         <!-- FAQ Section -->
         <section class="faq-section">
-            <h2 class="section-title text-gradient scroll-animate">常見問題</h2>
-            
-            <div class="faq-list scroll-animate">
-                <div class="faq-item" v-for="(faq, index) in faqs" :key="index" @click="toggleFaq(index)">
+            <motion.h2
+                class="section-title text-gradient"
+                :initial="{ opacity: 0, y: 40, filter: 'blur(10px)' }"
+                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :viewport="{ once: true, amount: 0.3 }"
+                :transition="{ type: 'spring', stiffness: 80, damping: 12 }"
+            >常見問題</motion.h2>
+
+            <div class="faq-list">
+                <motion.div
+                    class="faq-item"
+                    v-for="(faq, index) in faqs"
+                    :key="index"
+                    :initial="{ opacity: 0, y: 20 }"
+                    :whileInView="{ opacity: 1, y: 0 }"
+                    :viewport="{ once: true, amount: 0.3 }"
+                    :transition="{ type: 'spring', stiffness: 100, damping: 18, delay: index * 0.08 }"
+                    @click="toggleFaq(index)"
+                >
                     <div class="faq-question">
                         <span>{{ faq.q }}</span>
-                        <span class="faq-toggle">{{ activeFaq === index ? '−' : '+' }}</span>
+                        <motion.span
+                            class="faq-toggle"
+                            :animate="{ rotate: activeFaq === index ? 45 : 0 }"
+                            :transition="{ type: 'spring', stiffness: 300, damping: 20 }"
+                        >+</motion.span>
                     </div>
-                    <Transition name="faq">
-                        <div class="faq-answer" v-show="activeFaq === index">
+                    <AnimatePresence>
+                        <motion.div
+                            v-if="activeFaq === index"
+                            class="faq-answer"
+                            :initial="{ opacity: 0, height: 0 }"
+                            :animate="{ opacity: 1, height: 'auto' }"
+                            :exit="{ opacity: 0, height: 0 }"
+                            :transition="{ duration: 0.3, ease: 'easeInOut' }"
+                            style="overflow: hidden"
+                        >
                             {{ faq.a }}
-                        </div>
-                    </Transition>
-                </div>
+                        </motion.div>
+                    </AnimatePresence>
+                </motion.div>
             </div>
         </section>
         
         <!-- WAF Security Test Results -->
         <section class="waf-test-section">
-            <h2 class="section-title text-gradient scroll-animate">📄 WAF 安全測試報告</h2>
-            <p class="section-subtitle scroll-animate">
+            <motion.h2
+                class="section-title text-gradient"
+                :initial="{ opacity: 0, y: 40, filter: 'blur(10px)' }"
+                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :viewport="{ once: true, amount: 0.3 }"
+                :transition="{ type: 'spring', stiffness: 80, damping: 12 }"
+            >📄 WAF 安全測試報告</motion.h2>
+            <motion.p
+                class="section-subtitle"
+                :initial="{ opacity: 0, y: 30, filter: 'blur(6px)' }"
+                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :viewport="{ once: true, amount: 0.3 }"
+                :transition="{ type: 'spring', stiffness: 80, damping: 14, delay: 0.15 }"
+            >
                 經過專業第三方工具 WAF-CHECKER.COM 完整測試，驗證防護效果
-            </p>
-            <div class="waf-test-grid scroll-animate">
+            </motion.p>
+            <div class="waf-test-grid">
                 <div class="waf-test-card">
                     <div class="waf-test-badge malicious">🛡️ 惡意流量測試</div>
                     <img src="/images/waf_malicious_test.png" alt="WAF Malicious Traffic Test" class="waf-test-img" />
@@ -1339,22 +1786,96 @@
                     </div>
                 </div>
             </div>
+
+            <!-- WAF-Checker Detection Profile -->
+            <motion.div
+                class="waf-checker-profile"
+                :initial="{ opacity: 0, y: 30 }"
+                :whileInView="{ opacity: 1, y: 0 }"
+                :viewport="{ once: true, amount: 0.3 }"
+                :transition="{ type: 'spring', stiffness: 100, damping: 20, delay: 0.2 }"
+            >
+                <h3 class="waf-checker-title">🔍 WAF-Checker 檢測設檔</h3>
+                <div class="waf-checker-features">
+                    <div class="waf-feature-item">
+                        <span class="feature-check">✅</span>
+                        <span class="feature-text">Follow 3xx redirects</span>
+                    </div>
+                    <div class="waf-feature-item">
+                        <span class="feature-check">✅</span>
+                        <span class="feature-text">Advanced WAF Bypass Payloads</span>
+                    </div>
+                    <div class="waf-feature-item">
+                        <span class="feature-check">✅</span>
+                        <span class="feature-text">Auto-detect WAF before testing</span>
+                    </div>
+                    <div class="waf-feature-item">
+                        <span class="feature-check">✅</span>
+                        <span class="feature-text">Generate encoding variations</span>
+                    </div>
+                    <div class="waf-feature-item">
+                        <span class="feature-check">✅</span>
+                        <span class="feature-text">Enhanced Payloads (modern bypass)</span>
+                    </div>
+                    <div class="waf-feature-item">
+                        <span class="feature-check">✅</span>
+                        <span class="feature-text">HTTP Protocol Manipulation</span>
+                    </div>
+                    <div class="waf-feature-item">
+                        <span class="feature-check">✅</span>
+                        <span class="feature-text">False Positive Test</span>
+                    </div>
+                    <div class="waf-feature-item">
+                        <span class="feature-check">✅</span>
+                        <span class="feature-text">Case sensitive test</span>
+                    </div>
+                </div>
+            </motion.div>
         </section>
 
         <!-- CTA Section -->
         <section class="cta-section">
-            <div class="cta-content scroll-animate">
-                <h2 class="text-gradient">準備好保護您的網站了嗎？</h2>
-                <p>立即聯繫我們，獲取專屬解決方案</p>
-                <a href="mailto:service@cybersecureone.com?subject=Security One SOC 諮詢" class="btn btn-primary animate-glow">
+            <motion.div class="cta-content"
+                :initial="{ opacity: 0, y: 60, scale: 0.8, filter: 'blur(15px)' }"
+                :whileInView="{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }"
+                :viewport="{ once: true, amount: 0.3 }"
+                :transition="{ type: 'spring', stiffness: 60, damping: 12 }"
+            >
+                <motion.h2 class="text-gradient"
+                    :initial="{ opacity: 0, scale: 0.5, filter: 'blur(10px)' }"
+                    :whileInView="{ opacity: 1, scale: 1, filter: 'blur(0px)' }"
+                    :viewport="{ once: true }"
+                    :transition="{ type: 'spring', stiffness: 80, damping: 10, delay: 0.2 }"
+                >準備好保護您的網站了嗎？</motion.h2>
+                <motion.p
+                    :initial="{ opacity: 0, y: 20 }"
+                    :whileInView="{ opacity: 1, y: 0 }"
+                    :viewport="{ once: true }"
+                    :transition="{ type: 'spring', stiffness: 100, damping: 15, delay: 0.4 }"
+                >立即聯繫我們，獲取專屬解決方案</motion.p>
+                <motion.a
+                    href="mailto:service@cybersecureone.com?subject=Security One SOC 諮詢"
+                    class="btn btn-primary animate-glow"
+                    :initial="{ opacity: 0, scale: 0, y: 30 }"
+                    :whileInView="{ opacity: 1, scale: 1, y: 0 }"
+                    :viewport="{ once: true }"
+                    :transition="{ type: 'spring', stiffness: 150, damping: 8, delay: 0.6 }"
+                    :whileHover="{ scale: 1.2, y: -10 }"
+                    :whilePress="{ scale: 0.85 }"
+                >
                     📧 聯繫我們
-                </a>
-            </div>
+                </motion.a>
+            </motion.div>
         </section>
         
         <!-- Footer -->
         <footer class="footer">
-            <div class="footer-logo text-gradient">Security One SOC</div>
+            <motion.div class="footer-logo text-gradient"
+                :initial="{ opacity: 0, y: 20 }"
+                :whileInView="{ opacity: 1, y: 0 }"
+                :viewport="{ once: true }"
+                :transition="{ type: 'spring', stiffness: 100, damping: 20 }"
+            >Security One SOC</motion.div>
             <p class="footer-text">商業版 統一安全平台</p>
             <div class="footer-links">
                 <a href="mailto:service@cybersecureone.com?subject=Security One SOC 諮詢">聯絡我們</a>
@@ -1376,6 +1897,7 @@
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue';
+import { motion, AnimatePresence, useScroll, useTransform, useMotionValue, useSpring, useMotionTemplate } from 'motion-v';
 import LoadingScreen from '../Components/LoadingScreen.vue';
 import ParticleBackground from '../Components/ParticleBackground.vue';
 import FeatureCard from '../Components/FeatureCard.vue';
@@ -1389,6 +1911,22 @@ const selectedFeature = ref({});
 const heroRef = ref(null);
 const showcaseRef = ref(null);
 const scrollProgress = ref(0);
+
+// Motion-v scroll progress bar
+const { scrollYProgress } = useScroll();
+const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
+
+// Cursor follow gradient for hero
+const cursorX = useMotionValue(0);
+const cursorY = useMotionValue(0);
+const cursorSpringX = useSpring(cursorX, { stiffness: 150, damping: 20 });
+const cursorSpringY = useSpring(cursorY, { stiffness: 150, damping: 20 });
+const heroGradient = useMotionTemplate`radial-gradient(600px circle at ${cursorSpringX}px ${cursorSpringY}px, rgba(0, 212, 255, 0.12), transparent 80%)`;
+
+const handleHeroMouse = (e) => {
+    cursorX.set(e.clientX);
+    cursorY.set(e.clientY);
+};
 const showcaseProgress = ref(0);
 const currentSlide = ref(0);
 const showcaseVisible = ref(false);
@@ -2089,6 +2627,27 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
+/* Scroll Progress Bar */
+.scroll-progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #00d4ff, #8b5cf6, #ff006e);
+    transform-origin: left;
+    z-index: 9999;
+    box-shadow: 0 0 10px rgba(0, 212, 255, 0.5), 0 0 30px rgba(139, 92, 246, 0.3);
+}
+
+/* Hero Cursor Follow Gradient */
+.hero-cursor-gradient {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+}
+
 .app-wrapper {
     position: relative;
     min-height: 100vh;
@@ -3212,6 +3771,7 @@ onUnmounted(() => {
     gap: 2rem;
     max-width: 1200px;
     margin: 0 auto;
+    perspective: 1000px;
 }
 
 .ai-feature-card {
@@ -4298,6 +4858,67 @@ onUnmounted(() => {
 
 @media (max-width: 768px) {
     .waf-test-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* WAF-Checker Detection Profile */
+.waf-checker-profile {
+    max-width: 1100px;
+    margin: 2.5rem auto 0;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(0, 212, 255, 0.15);
+    border-radius: 16px;
+    position: relative;
+    overflow: hidden;
+}
+.waf-checker-profile::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #06b6d4, transparent);
+}
+.waf-checker-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.1rem;
+    color: #06b6d4;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+.waf-checker-features {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem 2rem;
+}
+.waf-feature-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.6rem 1rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+.waf-feature-item:hover {
+    border-color: rgba(0, 212, 255, 0.2);
+    background: rgba(0, 212, 255, 0.03);
+}
+.feature-check {
+    font-size: 1rem;
+    flex-shrink: 0;
+}
+.feature-text {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.85);
+    font-family: 'JetBrains Mono', monospace;
+}
+@media (max-width: 768px) {
+    .waf-checker-features {
         grid-template-columns: 1fr;
     }
 }
