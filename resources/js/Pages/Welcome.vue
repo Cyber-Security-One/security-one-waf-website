@@ -327,99 +327,231 @@
                     <div class="corner-decor bottom-left"></div>
                     <div class="corner-decor bottom-right"></div>
                     
+                    <!-- Header -->
                     <div class="soc-header">
                         <div class="status-indicator">
                             <span class="status-dot"></span>
                             <span class="status-text">SYSTEM ONLINE</span>
                             <span class="status-ping">PING: 12ms</span>
                         </div>
-                        <div class="soc-server-id">SERVER: HK-01-NODE</div>
+                        <div class="soc-header-right">
+                            <span class="soc-server-id">SERVER: TW-01-NODE</span>
+                            <span class="soc-btn">🖥️ FULLSCREEN</span>
+                            <span class="soc-btn">🖥️ 系統狀態</span>
+                            <span class="soc-btn accent-btn">🔐 返回儀表板</span>
+                        </div>
                     </div>
 
                     <div class="soc-layout">
-                        <!-- Left Panel: Radar & Resources -->
+                        <!-- Left Panel -->
                         <div class="soc-panel left">
-                            <div class="panel-box radar-container">
-                                <h3>THREAT RADAR</h3>
-                                <div class="radar-display">
-                                    <div class="radar-circle c1"></div>
-                                    <div class="radar-circle c2"></div>
-                                    <div class="radar-circle c3"></div>
-                                    <div class="radar-sweep"></div>
-                                    <div class="radar-blip b1"></div>
-                                    <div class="radar-blip b2"></div>
+                            <div class="panel-box map-section">
+                                <h3><span class="soc-accent">|</span> ATTACK MAP</h3>
+                                <div class="mini-map-container">
+                                    <!-- World map image background -->
+                                    <img src="/images/world_map.png" class="mini-map-img" alt="World Map">
+                                    <!-- SVG overlay -->
+                                    <svg viewBox="0 0 1000 500" class="mini-map-svg" preserveAspectRatio="xMidYMid meet">
+                                        <!-- Taiwan node marker -->
+                                        <g>
+                                            <circle cx="810" cy="220" r="5" class="target-dot">
+                                                <animate attributeName="r" values="5;12;5" dur="2s" repeatCount="indefinite" />
+                                                <animate attributeName="opacity" values="1;0.5;1" dur="2s" repeatCount="indefinite" />
+                                            </circle>
+                                            <circle cx="810" cy="220" r="15" class="target-ring">
+                                                <animate attributeName="r" values="10;30" dur="2s" repeatCount="indefinite" />
+                                                <animate attributeName="opacity" values="0.8;0" dur="2s" repeatCount="indefinite" />
+                                            </circle>
+                                            <text x="820" y="210" class="node-label">TW-01</text>
+                                        </g>
+
+                                        <!-- Attack line 1: US → TW (SQLI - red) -->
+                                        <path d="M230,180 Q520,80 810,220" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="200" stroke-linecap="round" class="attack-path">
+                                            <animate attributeName="stroke-dashoffset" values="200;0" dur="3s" repeatCount="indefinite" />
+                                        </path>
+                                        <circle cx="230" cy="180" r="5" fill="#ef4444">
+                                            <animate attributeName="opacity" values="1;0.5;1" dur="2s" repeatCount="indefinite" />
+                                        </circle>
+                                        <text x="238" y="172" class="attack-label" fill="#ef4444">45.33.22.11</text>
+
+                                        <!-- Attack line 2: EU → TW (DDoS - purple) -->
+                                        <path d="M480,140 Q650,60 810,220" fill="none" stroke="#e040fb" stroke-width="3" stroke-dasharray="200" stroke-linecap="round" class="attack-path">
+                                            <animate attributeName="stroke-dashoffset" values="200;0" dur="2s" repeatCount="indefinite" />
+                                        </path>
+                                        <!-- DDoS pulsing rings -->
+                                        <circle cx="480" cy="140" r="5" fill="none" stroke="#e040fb" stroke-width="1.5">
+                                            <animate attributeName="r" values="5;18" dur="1.5s" repeatCount="indefinite" />
+                                            <animate attributeName="opacity" values="0.6;0" dur="1.5s" repeatCount="indefinite" />
+                                        </circle>
+                                        <circle cx="480" cy="140" r="6" fill="#e040fb">
+                                            <animate attributeName="opacity" values="1;0.5;1" dur="1.5s" repeatCount="indefinite" />
+                                        </circle>
+                                        <text x="488" y="132" class="attack-label" fill="#e040fb" style="font-weight:700">⚡ 203.0.113.5</text>
+
+                                        <!-- Attack line 3: Asia → TW (SCAN - cyan) -->
+                                        <path d="M680,280 Q750,240 810,220" fill="none" stroke="#06b6d4" stroke-width="1.5" stroke-dasharray="200" stroke-linecap="round" class="attack-path">
+                                            <animate attributeName="stroke-dashoffset" values="200;0" dur="4s" repeatCount="indefinite" />
+                                        </path>
+                                        <circle cx="680" cy="280" r="4" fill="#06b6d4">
+                                            <animate attributeName="opacity" values="1;0.3;1" dur="3s" repeatCount="indefinite" />
+                                        </circle>
+                                        <text x="688" y="272" class="attack-label" fill="#06b6d4">172.16.8.99</text>
+
+                                        <!-- Attack line 4: Russia → TW (blocked - red) -->
+                                        <path d="M550,100 Q680,50 810,220" fill="none" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="200" stroke-linecap="round" class="attack-path" opacity="0.6">
+                                            <animate attributeName="stroke-dashoffset" values="200;0" dur="3.5s" repeatCount="indefinite" />
+                                        </path>
+                                        <circle cx="550" cy="100" r="4" fill="#ef4444" opacity="0.6">
+                                            <animate attributeName="opacity" values="0.8;0.3;0.8" dur="2.5s" repeatCount="indefinite" />
+                                        </circle>
+                                        <text x="558" y="92" class="attack-label" fill="#ef4444">192.168.1.45</text>
+                                    </svg>
                                 </div>
                             </div>
-                            
-                            <div class="panel-box resources">
-                                <h3>SYSTEM RESOURCES</h3>
-                                <div class="res-row">
-                                    <span>CPU</span>
-                                    <div class="res-bar"><div class="res-fill cpu-fill"></div></div>
-                                    <span class="res-val">42%</span>
+
+                            <!-- AI Report -->
+                            <div class="panel-box">
+                                <h3><span class="soc-accent">|</span> AI 報告</h3>
+                                <div class="soc-ai-status-row">✅ 正常運作</div>
+                                <div class="soc-ai-content">
+                                    <div class="soc-ai-text">系統運行穩定，偵測到少量掃描行為，已自動阻擋。建議持續監控。</div>
                                 </div>
-                                <div class="res-row">
-                                    <span>RAM</span>
-                                    <div class="res-bar"><div class="res-fill ram-fill"></div></div>
-                                    <span class="res-val">68%</span>
+                                <div class="soc-ai-btns">
+                                    <span class="soc-mini-btn">📊 生成</span>
+                                    <span class="soc-mini-btn">📧 寄送</span>
                                 </div>
-                                <div class="res-row">
-                                    <span>NET</span>
-                                    <div class="res-bar"><div class="res-fill net-fill"></div></div>
-                                    <span class="res-val">85%</span>
+                            </div>
+
+                            <!-- System Metrics -->
+                            <div class="panel-box">
+                                <h3><span class="soc-accent">|</span> SYSTEM METRICS</h3>
+                                <div class="soc-metrics">
+                                    <div class="soc-metric-row"><span>BLOCK</span><div class="soc-bar"><div class="soc-bar-fill blue" style="width:15%"></div></div><span>15%</span></div>
+                                    <div class="soc-metric-row"><span>LOAD</span><div class="soc-bar"><div class="soc-bar-fill green" style="width:32%"></div></div><span>32%</span></div>
+                                    <div class="soc-metric-row"><span>THREAT</span><div class="soc-bar"><div class="soc-bar-fill orange" style="width:18%"></div></div><span>18%</span></div>
+                                    <div class="soc-metric-row"><span>CONN</span><div class="soc-bar"><div class="soc-bar-fill purple" style="width:24%"></div></div><span>120</span></div>
+                                    <div class="soc-metric-row"><span>QPS</span><div class="soc-bar"><div class="soc-bar-fill cyan" style="width:45%"></div></div><span>45</span></div>
+                                </div>
+                            </div>
+
+                            <!-- Hardware -->
+                            <div class="panel-box">
+                                <h3><span class="soc-accent">|</span> HARDWARE</h3>
+                                <div class="soc-hw-grid">
+                                    <svg viewBox="0 0 80 80" class="soc-hw-gauge">
+                                        <circle cx="40" cy="40" r="32" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="5"/>
+                                        <circle cx="40" cy="40" r="32" fill="none" stroke="#22c55e" stroke-width="5" stroke-linecap="round" stroke-dasharray="201" stroke-dashoffset="117" transform="rotate(-90 40 40)"/>
+                                        <text x="40" y="38" text-anchor="middle" dominant-baseline="middle" fill="white" font-size="14" font-weight="bold" font-family="monospace">42%</text>
+                                        <text x="40" y="54" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="9" font-family="monospace">CPU</text>
+                                    </svg>
+                                    <svg viewBox="0 0 80 80" class="soc-hw-gauge">
+                                        <circle cx="40" cy="40" r="32" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="5"/>
+                                        <circle cx="40" cy="40" r="32" fill="none" stroke="#eab308" stroke-width="5" stroke-linecap="round" stroke-dasharray="201" stroke-dashoffset="63" transform="rotate(-90 40 40)"/>
+                                        <text x="40" y="38" text-anchor="middle" dominant-baseline="middle" fill="white" font-size="14" font-weight="bold" font-family="monospace">68%</text>
+                                        <text x="40" y="54" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="9" font-family="monospace">RAM</text>
+                                    </svg>
+                                    <svg viewBox="0 0 80 80" class="soc-hw-gauge">
+                                        <circle cx="40" cy="40" r="32" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="5"/>
+                                        <circle cx="40" cy="40" r="32" fill="none" stroke="#22c55e" stroke-width="5" stroke-linecap="round" stroke-dasharray="201" stroke-dashoffset="140" transform="rotate(-90 40 40)"/>
+                                        <text x="40" y="38" text-anchor="middle" dominant-baseline="middle" fill="white" font-size="14" font-weight="bold" font-family="monospace">30%</text>
+                                        <text x="40" y="54" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="9" font-family="monospace">DISK</text>
+                                    </svg>
+                                    <svg viewBox="0 0 80 80" class="soc-hw-gauge">
+                                        <circle cx="40" cy="40" r="32" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="5"/>
+                                        <circle cx="40" cy="40" r="32" fill="none" stroke="#22c55e" stroke-width="5" stroke-linecap="round" stroke-dasharray="201" stroke-dashoffset="181" transform="rotate(-90 40 40)"/>
+                                        <text x="40" y="38" text-anchor="middle" dominant-baseline="middle" fill="white" font-size="14" font-weight="bold" font-family="monospace">10%</text>
+                                        <text x="40" y="54" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="9" font-family="monospace">NET</text>
+                                    </svg>
+                                </div>
+                                <div class="soc-net-detail">
+                                    <span>↓ 1.2 MB/s</span>
+                                    <span>↑ 456 KB/s</span>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Center Panel: 3D Globe -->
                         <div class="soc-panel center">
+                            <div class="soc-globe-header">
+                                <span class="status-dot green"></span>
+                                <span>GLOBAL THREAT MONITOR</span>
+                            </div>
                             <div class="globe-3d-container">
                                 <Waf3DVisualizer />
                             </div>
+                            <div class="soc-globe-legend">
+                                <span><span class="legend-dot red"></span>BLOCKED</span>
+                                <span><span class="legend-dot purple"></span>DDoS</span>
+                                <span><span class="legend-dot orange"></span>IDS</span>
+                                <span><span class="legend-dot green"></span>ALLOWED</span>
+                            </div>
                         </div>
 
-                        <!-- Right Panel: Live Logs -->
+                        <!-- Right Panel -->
                         <div class="soc-panel right">
-                            <div class="panel-box log-container">
-                                <h3>LIVE ATTACK FEED</h3>
+                            <!-- Live Attack Feed -->
+                            <div class="panel-box">
+                                <h3><span class="soc-accent">|</span> LIVE ATTACK FEED</h3>
                                 <div class="log-list">
-                                    <div class="log-item critical">
-                                        <span class="log-time">10:42:05</span>
-                                        <span class="log-ip">192.168.1.45</span>
-                                        <span class="log-type">SQLI</span>
-                                    </div>
-                                    <div class="log-item warning">
-                                        <span class="log-time">10:41:58</span>
-                                        <span class="log-ip">10.0.5.122</span>
-                                        <span class="log-type">XSS</span>
-                                    </div>
-                                    <div class="log-item info">
-                                        <span class="log-time">10:41:42</span>
-                                        <span class="log-ip">172.16.8.99</span>
-                                        <span class="log-type">CRAWL</span>
-                                    </div>
-                                    <div class="log-item critical">
-                                        <span class="log-time">10:41:15</span>
-                                        <span class="log-ip">45.33.22.11</span>
-                                        <span class="log-type">DDOS</span>
-                                    </div>
-                                    <div class="log-item info">
-                                        <span class="log-time">10:40:55</span>
-                                        <span class="log-ip">192.168.0.1</span>
-                                        <span class="log-type">SCAN</span>
-                                    </div>
+                                    <div class="log-item"><span class="log-time">14:42:05</span><span class="log-ip">192.168.1.45</span><span class="log-detail">cybersecure..</span><span class="log-type" style="color:#ef4444">SQLI</span></div>
+                                    <div class="log-item"><span class="log-time">14:41:58</span><span class="log-ip">10.0.5.122</span><span class="log-detail">api/v1/user..</span><span class="log-type" style="color:#f97316">XSS</span></div>
+                                    <div class="log-item"><span class="log-time">14:41:42</span><span class="log-ip">45.33.22.11</span><span class="log-detail">target-site</span><span class="log-type" style="color:#e040fb">DDoS</span><span class="log-severity high">高</span></div>
+                                    <div class="log-item"><span class="log-time">14:41:15</span><span class="log-ip">172.16.8.99</span><span class="log-detail">scan /admin</span><span class="log-type" style="color:#06b6d4">SCAN</span></div>
+                                    <div class="log-item"><span class="log-time">14:40:55</span><span class="log-ip">203.0.113.5</span><span class="log-detail">/wp-login</span><span class="log-type" style="color:#f43f5e">BRUTE</span></div>
+                                    <div class="log-item"><span class="log-time">14:40:30</span><span class="log-ip">198.51.100.7</span><span class="log-detail">agent-srv01</span><span class="log-type" style="color:#10b981">IDS</span><span class="log-severity medium">中</span></div>
                                 </div>
                             </div>
-                            
-                            <div class="panel-box ai-status">
-                                <h3>AI SENTINEL</h3>
-                                <div class="ai-core">
-                                    <div class="core-ring"></div>
-                                    <div class="core-center">99%</div>
+
+                            <!-- WAF Security Status -->
+                            <div class="panel-box">
+                                <h3><span class="soc-accent">|</span> WAF 安全狀態</h3>
+                                <div class="soc-security-status">
+                                    <div class="soc-security-circle">
+                                        <svg viewBox="0 0 120 120">
+                                            <circle cx="60" cy="60" r="54" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="4"/>
+                                            <circle cx="60" cy="60" r="54" fill="none" stroke="#22c55e" stroke-width="4" stroke-linecap="round" stroke-dasharray="339.3" stroke-dashoffset="3.4" transform="rotate(-90 60 60)"/>
+                                        </svg>
+                                        <span class="soc-security-value">99%</span>
+                                    </div>
+                                    <span class="soc-security-label" style="color:#22c55e">安全</span>
                                 </div>
-                                <span class="ai-state">ACTIVE ANALYSIS</span>
+                                <div class="soc-security-stats">
+                                    <div class="soc-stat-row"><span>✅ 攻擊偵測</span><span style="color:#22c55e">正常運作</span></div>
+                                    <div class="soc-stat-row"><span>總請求</span><span>5.2M</span></div>
+                                    <div class="soc-stat-row"><span>已阻擋</span><span style="color:#ef4444">12.8k</span></div>
+                                    <div class="soc-stat-row"><span>24h 請求</span><span style="color:#06b6d4">45.2k</span></div>
+                                    <div class="soc-stat-row"><span>24h 阻擋</span><span style="color:#f97316">892</span></div>
+                                </div>
+                            </div>
+
+                            <!-- IDS/IPS Status -->
+                            <div class="panel-box">
+                                <h3><span class="soc-accent">|</span> IDS/IPS 狀態</h3>
+                                <div class="soc-ids-stats">
+                                    <div class="soc-stat-row"><span>🛡️ IDS (偵測)</span><span style="color:#22c55e">啟用</span></div>
+                                    <div class="soc-stat-row"><span>⚔️ IPS (防護)</span><span style="color:#f97316">啟用</span></div>
+                                    <div class="soc-stat-row"><span>🤖 AI 偵測</span><span style="color:#a855f7">啟用</span></div>
+                                    <div class="soc-stat-row"><span>📡 線上 Agent</span><span style="color:#06b6d4">3 / 5</span></div>
+                                    <div class="soc-stat-row"><span>⚠️ 今日警報</span><span style="color:#ef4444">7</span></div>
+                                </div>
+                            </div>
+
+                            <!-- Agent Status -->
+                            <div class="panel-box">
+                                <h3><span class="soc-accent">|</span> Agent 狀態</h3>
+                                <div class="soc-agent-list">
+                                    <div class="soc-agent-item"><span class="agent-dot online"></span><span>srv-web-01</span><span>🐧</span><span class="agent-ip-text">10.0.1.10</span></div>
+                                    <div class="soc-agent-item"><span class="agent-dot online"></span><span>srv-db-01</span><span>🐧</span><span class="agent-ip-text">10.0.1.20</span></div>
+                                    <div class="soc-agent-item"><span class="agent-dot offline"></span><span>srv-backup</span><span>💻</span><span class="agent-ip-text">10.0.1.30</span></div>
+                                </div>
                             </div>
                         </div>
+                    </div>
+
+                    <!-- Footer -->
+                    <div class="soc-footer-bar">
+                        <span class="soc-footer-copy">Protected by <strong>Security One SOC</strong></span>
+                        <span class="soc-footer-time">2026/02/18 14:42:05</span>
                     </div>
                 </div>
             </div>
@@ -5670,12 +5802,31 @@ onUnmounted(() => {
     grid-template-columns: 250px 1fr 250px;
     gap: 1.5rem;
     min-height: 400px;
+    flex: 1;
+    overflow: hidden;
 }
 
 .soc-panel {
     display: flex;
     flex-direction: column;
     gap: 1rem;
+}
+
+.soc-panel.left, .soc-panel.right {
+    overflow-y: auto;
+    max-height: 500px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(6,182,212,0.3) transparent;
+}
+.soc-panel.left::-webkit-scrollbar, .soc-panel.right::-webkit-scrollbar {
+    width: 4px;
+}
+.soc-panel.left::-webkit-scrollbar-thumb, .soc-panel.right::-webkit-scrollbar-thumb {
+    background: rgba(6,182,212,0.3);
+    border-radius: 2px;
+}
+.soc-panel.left::-webkit-scrollbar-track, .soc-panel.right::-webkit-scrollbar-track {
+    background: transparent;
 }
 
 .panel-box {
@@ -5692,6 +5843,51 @@ onUnmounted(() => {
     margin-bottom: 1rem;
     border-left: 2px solid #00d4ff;
     padding-left: 0.5rem;
+}
+
+/* Real Mini Map */
+.mini-map-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 2 / 1;
+    border-radius: 6px;
+    overflow: hidden;
+    background: #0a0e17;
+}
+.mini-map-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    opacity: 0.7;
+    filter: brightness(1.2);
+}
+.mini-map-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+.target-dot {
+    fill: #06b6d4;
+}
+.target-ring {
+    fill: none;
+    stroke: #06b6d4;
+    stroke-width: 1;
+}
+.node-label {
+    fill: #06b6d4;
+    font-size: 12px;
+    font-family: monospace;
+}
+.attack-label {
+    font-size: 10px;
+    font-family: monospace;
 }
 
 /* Radar */
@@ -5796,6 +5992,288 @@ onUnmounted(() => {
 .soc-panel.center {
     justify-content: center;
     align-items: stretch;
+    display: flex;
+    flex-direction: column;
+}
+
+/* SOC Header Right */
+.soc-header-right {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+.soc-btn {
+    font-size: 0.55rem;
+    padding: 0.2rem 0.5rem;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 4px;
+    color: rgba(255,255,255,0.7);
+    cursor: pointer;
+    font-family: monospace;
+}
+.soc-btn.accent-btn {
+    border-color: rgba(6,182,212,0.3);
+    color: #06b6d4;
+}
+
+/* SOC Accent */
+.soc-accent {
+    color: #06b6d4;
+    font-weight: bold;
+    margin-right: 0.25rem;
+}
+
+/* Attack Map */
+.soc-map-container {
+    width: 100%;
+    aspect-ratio: 2/1;
+    border-radius: 4px;
+    overflow: hidden;
+}
+.soc-minimap {
+    width: 100%;
+    height: 100%;
+}
+
+/* AI Report */
+.soc-ai-status-row {
+    font-size: 0.65rem;
+    color: #22c55e;
+    margin-bottom: 0.3rem;
+}
+.soc-ai-content {
+    background: rgba(255,255,255,0.03);
+    border-radius: 4px;
+    padding: 0.4rem;
+    margin-bottom: 0.3rem;
+}
+.soc-ai-text {
+    font-size: 0.55rem;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.4;
+}
+.soc-ai-btns {
+    display: flex;
+    gap: 0.3rem;
+}
+.soc-mini-btn {
+    font-size: 0.5rem;
+    padding: 0.15rem 0.4rem;
+    background: rgba(6,182,212,0.1);
+    border: 1px solid rgba(6,182,212,0.3);
+    border-radius: 3px;
+    color: #06b6d4;
+    font-family: monospace;
+}
+
+/* System Metrics */
+.soc-metrics {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+.soc-metric-row {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.55rem;
+    color: rgba(255,255,255,0.7);
+    font-family: monospace;
+}
+.soc-metric-row > span:first-child {
+    width: 40px;
+    flex-shrink: 0;
+}
+.soc-metric-row > span:last-child {
+    width: 30px;
+    text-align: right;
+    flex-shrink: 0;
+}
+.soc-bar {
+    flex: 1;
+    height: 4px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 2px;
+    overflow: hidden;
+}
+.soc-bar-fill {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 0.6s ease;
+}
+.soc-bar-fill.blue { background: #3b82f6; }
+.soc-bar-fill.green { background: #22c55e; }
+.soc-bar-fill.orange { background: #f97316; }
+.soc-bar-fill.purple { background: #8b5cf6; }
+.soc-bar-fill.cyan { background: #06b6d4; }
+
+/* Hardware Gauges */
+.soc-hw-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.25rem;
+    justify-items: center;
+}
+.soc-hw-gauge {
+    width: 50px;
+    height: 50px;
+}
+.soc-net-detail {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-top: 0.3rem;
+    font-size: 0.5rem;
+    color: rgba(255,255,255,0.5);
+    font-family: monospace;
+}
+
+/* Globe Header & Legend */
+.soc-globe-header {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.65rem;
+    color: rgba(255,255,255,0.8);
+    font-family: monospace;
+    padding: 0.3rem 0;
+}
+.status-dot.green { background: #22c55e; box-shadow: 0 0 6px #22c55e; }
+.soc-globe-legend {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    padding: 0.3rem 0;
+    font-size: 0.55rem;
+    color: rgba(255,255,255,0.6);
+    font-family: monospace;
+}
+.legend-dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    margin-right: 0.25rem;
+    vertical-align: middle;
+}
+.legend-dot.red { background: #ef4444; box-shadow: 0 0 4px #ef4444; }
+.legend-dot.purple { background: #e040fb; box-shadow: 0 0 4px #e040fb; }
+.legend-dot.orange { background: #f97316; box-shadow: 0 0 4px #f97316; }
+.legend-dot.green { background: #22c55e; box-shadow: 0 0 4px #22c55e; }
+
+/* Attack Feed - updated */
+.log-item {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+.log-detail {
+    flex: 1;
+    font-size: 0.5rem;
+    color: rgba(255,255,255,0.4);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.log-severity {
+    font-size: 0.45rem;
+    padding: 0.05rem 0.2rem;
+    border-radius: 2px;
+    font-weight: bold;
+}
+.log-severity.high { background: rgba(239,68,68,0.2); color: #ef4444; }
+.log-severity.medium { background: rgba(249,115,22,0.2); color: #f97316; }
+
+/* WAF Security Status */
+.soc-security-status {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+    margin-bottom: 0.3rem;
+}
+.soc-security-circle {
+    position: relative;
+    width: 60px;
+    height: 60px;
+}
+.soc-security-circle svg {
+    width: 100%;
+    height: 100%;
+}
+.soc-security-value {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 0.85rem;
+    font-weight: bold;
+    color: #22c55e;
+    font-family: monospace;
+}
+.soc-security-label {
+    font-size: 0.65rem;
+    font-weight: bold;
+    font-family: monospace;
+}
+.soc-security-stats, .soc-ids-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+.soc-stat-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.55rem;
+    color: rgba(255,255,255,0.7);
+    font-family: monospace;
+}
+
+/* Agent Status */
+.soc-agent-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+.soc-agent-item {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.55rem;
+    color: rgba(255,255,255,0.7);
+    font-family: monospace;
+}
+.agent-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+.agent-dot.online { background: #22c55e; box-shadow: 0 0 4px #22c55e; }
+.agent-dot.offline { background: #6b7280; }
+.agent-ip-text {
+    margin-left: auto;
+    color: rgba(255,255,255,0.4);
+}
+
+/* SOC Footer Bar */
+.soc-footer-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.3rem 0.75rem;
+    font-size: 0.5rem;
+    color: rgba(255,255,255,0.4);
+    font-family: monospace;
+    border-top: 1px solid rgba(6,182,212,0.15);
+    background: rgba(10,14,23,0.5);
+}
+.soc-footer-copy strong {
+    color: #06b6d4;
+}
+.soc-footer-time {
+    color: rgba(255,255,255,0.5);
 }
 
 .globe-3d-container {
