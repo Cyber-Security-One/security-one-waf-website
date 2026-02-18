@@ -1371,20 +1371,49 @@ const features = [
 ];
 
 // Attack Types Data
-const attackTypes = [
-    { icon: '💉', name: 'SQL Injection', desc: 'SQL 關鍵字、函數、語法結構偵測', targets: ['URL', 'Body', 'Header'] },
-    { icon: '📜', name: 'XSS', desc: 'Script 標籤、事件處理器、協議繞過', targets: ['URL', 'Body'] },
-    { icon: '⚙️', name: 'RCE', desc: 'Shell 命令注入、反向 Shell 嘗試', targets: ['URL', 'Body'] },
-    { icon: '📁', name: 'Path Traversal', desc: '目錄跳轉序列、敏感檔案存取', targets: ['URL'] },
-    { icon: '🔍', name: 'Scanner', desc: '已知掃描器特徵、自動化工具識別', targets: ['User-Agent'] },
-    { icon: '☕', name: 'OGNL Injection', desc: 'Struts2 相關漏洞特徵', targets: ['URL', 'Body'] },
-    { icon: '📦', name: 'Java Deser', desc: '序列化魔術位元組、Gadget Chain', targets: ['Body', 'Header'] },
-    { icon: '🌐', name: 'SSRF', desc: '內網 IP 存取、雲端元數據 URL 偵測', targets: ['URL', 'Body'] },
-    { icon: '📄', name: 'XXE', desc: 'XML 外部實體注入、DTD 宣告偵測', targets: ['Body', 'Header'] },
-    { icon: '🔥', name: 'Log4Shell', desc: 'JNDI 注入模式、Log4j 漏洞偵測', targets: ['URL', 'Body', 'Header'] },
-    { icon: '🕷️', name: 'WebShell', desc: '後門特徵碼、惡意執行函數偵測', targets: ['URL', 'Body'] },
-    { icon: '🐘', name: 'PHP Injection', desc: 'PHP 函數注入、include/require 偵測', targets: ['URL', 'Body'] },
-    { icon: '🔨', name: 'Brute Force', desc: '登入失敗頻率、暴力破解行為偵測', targets: ['Behavior'] }
+const wafProtectionRules = [
+    {
+        icon: '💉',
+        name: '注入攻擊防護',
+        rules: [
+            { name: 'SQL 注入防護', severity: 'high', desc: '攔截 SQL Injection 攻擊 (含進階繞過、時間盲注)' },
+            { name: 'XSS 跨站腳本防護', severity: 'high', desc: '攔截 Cross-Site Scripting 攻擊 (含現代繞過向量)' },
+            { name: 'NoSQL 注入防護', severity: 'high', desc: '攔截 NoSQL Injection 攻擊 (MongoDB $ne/$gt 等)' },
+            { name: 'LDAP 注入防護', severity: 'high', desc: '攔截 LDAP Injection 攻擊' },
+            { name: 'OGNL 注入防護', severity: 'high', desc: '攔截 Apache Struts2 OGNL Injection 攻擊' }
+        ]
+    },
+    {
+        icon: '⚡',
+        name: '遠程執行防護',
+        rules: [
+            { name: 'RCE 遠程代碼執行防護', severity: 'high', desc: '攔截 Remote Code Execution 攻擊 (含編碼繞過)' },
+            { name: 'SSTI 模板注入防護', severity: 'high', desc: '攔截 Server-Side Template Injection (含框架特定攻擊)' },
+            { name: 'Java 反序列化防護', severity: 'high', desc: '攔截 Java Deserialization 漏洞攻擊' },
+            { name: 'XXE 外部實體注入防護', severity: 'high', desc: '攔截 XML External Entity 攻擊 (含進階向量)' }
+        ]
+    },
+    {
+        icon: '🌐',
+        name: '協議與重定向防護',
+        rules: [
+            { name: 'SSRF 伺服器端請求偽造防護', severity: 'high', desc: '攔截 Server-Side Request Forgery (含協議走私)' },
+            { name: 'CRLF 注入防護', severity: 'high', desc: '攔截 HTTP Header CRLF Injection 攻擊' },
+            { name: '開放重定向防護', severity: 'high', desc: '攔截 Open Redirect 攻擊嘗試' },
+            { name: 'HTTP 請求走私防護', severity: 'high', desc: '攔截 HTTP Request Smuggling (CL/TE 衝突)' },
+            { name: 'HTTP 標頭注入防護', severity: 'high', desc: '攔截 HTTP Header Injection 攻擊' }
+        ]
+    },
+    {
+        icon: '🔍',
+        name: '偵測與存取防護',
+        rules: [
+            { name: '路徑遍歷防護', severity: 'high', desc: '攔截 Path Traversal 與編碼繞過嘗試' },
+            { name: '本地文件包含防護', severity: 'high', desc: '攔截 Local File Inclusion (LFI) 攻擊' },
+            { name: '敏感文件存取防護', severity: 'high', desc: '攔截 .env / .git / 設定檔等敏感文件存取' },
+            { name: '掃描器偵測', severity: 'high', desc: '攔截常見漏洞掃描器 (SQLMap, Nikto, etc.) 與惡意 User-Agent' }
+        ]
+    }
 ];
 
 // IDS Agents Data
@@ -3702,60 +3731,149 @@ onUnmounted(() => {
     background: linear-gradient(180deg, transparent 0%, rgba(255, 107, 107, 0.03) 50%, transparent 100%);
 }
 
-.attack-types-grid {
+.waf-rules-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
     max-width: 1200px;
     margin: 0 auto;
 }
 
-.attack-type-card {
-    background: rgba(255, 107, 107, 0.1);
-    border: 1px solid rgba(255, 107, 107, 0.3);
-    border-radius: 12px;
-    padding: 1.5rem;
-    text-align: center;
+.waf-category {
+    background: rgba(15, 15, 30, 0.8);
+    border: 1px solid rgba(255, 107, 107, 0.2);
+    border-radius: 16px;
+    overflow: hidden;
     transition: all 0.3s ease;
 }
 
-.attack-type-card:hover {
-    transform: translateY(-5px);
-    border-color: #ff6b6b;
-    box-shadow: 0 0 30px rgba(255, 107, 107, 0.2);
+.waf-category:hover {
+    border-color: rgba(255, 107, 107, 0.5);
+    box-shadow: 0 0 30px rgba(255, 107, 107, 0.1);
 }
 
-.attack-icon {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-}
-
-.attack-name {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 0.9rem;
-    color: #ff6b6b;
-    margin-bottom: 0.5rem;
-}
-
-.attack-desc {
-    font-size: 0.75rem;
-    color: rgba(255, 255, 255, 0.6);
-    margin-bottom: 0.75rem;
-}
-
-.attack-targets {
+.waf-category-header {
     display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    justify-content: center;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1.25rem 1.5rem;
+    background: rgba(255, 107, 107, 0.1);
+    border-bottom: 1px solid rgba(255, 107, 107, 0.15);
 }
 
-.attack-targets span {
-    font-size: 0.65rem;
-    padding: 0.25rem 0.5rem;
-    background: rgba(255, 107, 107, 0.2);
-    border-radius: 50px;
+.waf-category-header .cat-icon {
+    font-size: 1.5rem;
+}
+
+.waf-category-header h3 {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
     color: #ff6b6b;
+    margin: 0;
+}
+
+.waf-rules-list {
+    padding: 0.5rem;
+}
+
+.waf-rule-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.85rem 1rem;
+    border-radius: 10px;
+    transition: background 0.2s ease;
+}
+
+.waf-rule-item:hover {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.rule-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.rule-title-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.25rem;
+}
+
+.rule-name {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.95);
+}
+
+.rule-severity {
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    padding: 0.15rem 0.5rem;
+    border-radius: 50px;
+    text-transform: uppercase;
+}
+
+.rule-severity.high {
+    background: rgba(255, 59, 48, 0.2);
+    color: #ff3b30;
+    border: 1px solid rgba(255, 59, 48, 0.3);
+}
+
+.rule-desc {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.45);
+    margin: 0;
+    line-height: 1.4;
+}
+
+.rule-levels {
+    display: flex;
+    gap: 0.3rem;
+    flex-shrink: 0;
+    margin-left: 1rem;
+}
+
+.level-btn {
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    padding: 0.3rem 0.55rem;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: all 0.2s ease;
+}
+
+.level-btn.inactive {
+    opacity: 0.6;
+}
+
+.level-btn.active.high {
+    background: rgba(0, 212, 255, 0.15);
+    color: #00d4ff;
+    border-color: rgba(0, 212, 255, 0.4);
+    box-shadow: 0 0 10px rgba(0, 212, 255, 0.15);
+}
+
+@media (max-width: 768px) {
+    .waf-rules-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .waf-rule-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .rule-levels {
+        margin-left: 0;
+    }
 }
 
 /* IDS/IPS Section */
