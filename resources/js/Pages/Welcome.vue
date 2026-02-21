@@ -1,4 +1,5 @@
 <template>
+    <Head title="Security One SOC — 次世代 WAF / AI 威脅偵測 / DDoS 防護統一安全平台" />
     <div class="app-wrapper" @mousemove="handleHeroMouse">
         <!-- Scroll Progress Bar -->
         <motion.div
@@ -6,22 +7,27 @@
             :style="{ scaleX }"
         />
 
-        <!-- Login Button (Fixed Top Right) -->
-        <motion.a
-            href="https://security-one-soc.vito1317.com"
-            class="login-btn"
-            target="_blank"
-            rel="noopener noreferrer"
-            :initial="{ opacity: 0, x: 30 }"
-            :animate="!isLoading ? { opacity: 1, x: 0 } : { opacity: 0, x: 30 }"
-            :transition="{ type: 'spring', stiffness: 200, damping: 20, delay: 1.5 }"
-            :whileHover="{ scale: 1.08, y: -2 }"
-            :whilePress="{ scale: 0.95 }"
+
+        <!-- Top Navigation Bar -->
+        <motion.nav
+            class="top-navbar"
+            :initial="{ opacity: 0, y: -40 }"
+            :animate="!isLoading ? { opacity: 1, y: 0 } : { opacity: 0, y: -40 }"
+            :transition="{ type: 'spring', stiffness: 120, damping: 18, delay: 1.2 }"
         >
-            <span class="login-icon">🔐</span>
-            <span class="login-text">登入</span>
-        </motion.a>
-        
+            <div class="nav-inner">
+                <a href="#" class="nav-brand text-gradient">Security One</a>
+                <div class="nav-links">
+                    <a href="#features" class="nav-link">功能</a>
+                    <a href="#ai-features" class="nav-link">AI</a>
+                    <a href="#soc-dashboard" class="nav-link">SOC</a>
+                    <a href="#waf-test" class="nav-link">WAF 測試</a>
+                    <a href="#comparison" class="nav-link">比較</a>
+                    <a href="#cta" class="nav-link nav-link-cta">聯繫我們</a>
+                </div>
+            </div>
+        </motion.nav>
+
         <!-- Loading Screen -->
         <LoadingScreen v-if="isLoading" @complete="onLoadingComplete" />
         
@@ -528,7 +534,7 @@
         </section>
 
         <!-- SOC Command Center Section -->
-        <section class="soc-section">
+        <section id="soc-dashboard" class="soc-section">
             <div class="soc-bg-grid"></div>
             <motion.h2
                 class="section-title text-gradient"
@@ -1642,96 +1648,8 @@
             </div>
         </div>
 
-        <!-- Why Choose Us Section -->
-        <section class="comparison-section">
-            <motion.h2
-                class="section-title text-gradient"
-                :initial="{ opacity: 0, y: 40 }"
-                :whileInView="{ opacity: 1, y: 0 }"
-                :viewport="{ once: true, amount: 0.3 }"
-                :transition="{ type: 'spring', stiffness: 80, damping: 12 }"
-            >為什麼選擇 Security One SOC？</motion.h2>
-            <motion.p
-                class="section-subtitle"
-                :initial="{ opacity: 0, y: 30 }"
-                :whileInView="{ opacity: 1, y: 0 }"
-                :viewport="{ once: true, amount: 0.3 }"
-                :transition="{ type: 'spring', stiffness: 80, damping: 14, delay: 0.15 }"
-            >
-                相較於傳統 WAF，我們提供更智能、更全面的防護
-            </motion.p>
-
-            <motion.div class="comparison-table"
-                :initial="{ opacity: 0, y: 60, scale: 0.9 }"
-                :whileInView="{ opacity: 1, y: 0, scale: 1 }"
-                :viewport="{ once: true, amount: 0.1 }"
-                :transition="{ type: 'spring', stiffness: 60, damping: 12, delay: 0.2 }"
-            >
-                <div class="comparison-header">
-                    <div class="comparison-feature">功能</div>
-                    <div class="comparison-traditional">傳統 WAF</div>
-                    <div class="comparison-vito">Security One SOC</div>
-                </div>
-                <div class="comparison-row" v-for="(item, index) in comparison" :key="index">
-                    <div class="comparison-feature">{{ item.feature }}</div>
-                    <div class="comparison-traditional">
-                        <span :class="item.traditional ? 'check' : 'cross'">{{ item.traditional ? '✓' : '✗' }}</span>
-                    </div>
-                    <div class="comparison-vito">
-                        <span class="check highlight">✓</span>
-                    </div>
-                </div>
-            </motion.div>
-        </section>
-
-        <!-- FAQ Section -->
-        <section class="faq-section">
-            <motion.h2
-                class="section-title text-gradient"
-                :initial="{ opacity: 0, y: 40 }"
-                :whileInView="{ opacity: 1, y: 0 }"
-                :viewport="{ once: true, amount: 0.3 }"
-                :transition="{ type: 'spring', stiffness: 80, damping: 12 }"
-            >常見問題</motion.h2>
-
-            <div class="faq-list">
-                <motion.div
-                    class="faq-item"
-                    v-for="(faq, index) in faqs"
-                    :key="index"
-                    :initial="{ opacity: 0, y: 20 }"
-                    :whileInView="{ opacity: 1, y: 0 }"
-                    :viewport="{ once: true, amount: 0.3 }"
-                    :transition="{ type: 'spring', stiffness: 100, damping: 18, delay: index * 0.08 }"
-                    @click="toggleFaq(index)"
-                >
-                    <div class="faq-question">
-                        <span>{{ faq.q }}</span>
-                        <motion.span
-                            class="faq-toggle"
-                            :animate="{ rotate: activeFaq === index ? 45 : 0 }"
-                            :transition="{ type: 'spring', stiffness: 300, damping: 20 }"
-                        >+</motion.span>
-                    </div>
-                    <AnimatePresence>
-                        <motion.div
-                            v-if="activeFaq === index"
-                            class="faq-answer"
-                            :initial="{ opacity: 0, height: 0 }"
-                            :animate="{ opacity: 1, height: 'auto' }"
-                            :exit="{ opacity: 0, height: 0 }"
-                            :transition="{ duration: 0.3, ease: 'easeInOut' }"
-                            style="overflow: hidden"
-                        >
-                            {{ faq.a }}
-                        </motion.div>
-                    </AnimatePresence>
-                </motion.div>
-            </div>
-        </section>
-        
         <!-- WAF Security Test Results -->
-        <section class="waf-test-section">
+        <section id="waf-test" class="waf-test-section">
             <motion.h2
                 class="section-title text-gradient"
                 :initial="{ opacity: 0, y: 40 }"
@@ -1982,8 +1900,96 @@
             </motion.div>
         </section>
 
+        <!-- FAQ Section -->
+        <section class="faq-section">
+            <motion.h2
+                class="section-title text-gradient"
+                :initial="{ opacity: 0, y: 40 }"
+                :whileInView="{ opacity: 1, y: 0 }"
+                :viewport="{ once: true, amount: 0.3 }"
+                :transition="{ type: 'spring', stiffness: 80, damping: 12 }"
+            >常見問題</motion.h2>
+
+            <div class="faq-list">
+                <motion.div
+                    class="faq-item"
+                    v-for="(faq, index) in faqs"
+                    :key="index"
+                    :initial="{ opacity: 0, y: 20 }"
+                    :whileInView="{ opacity: 1, y: 0 }"
+                    :viewport="{ once: true, amount: 0.3 }"
+                    :transition="{ type: 'spring', stiffness: 100, damping: 18, delay: index * 0.08 }"
+                    @click="toggleFaq(index)"
+                >
+                    <div class="faq-question">
+                        <span>{{ faq.q }}</span>
+                        <motion.span
+                            class="faq-toggle"
+                            :animate="{ rotate: activeFaq === index ? 45 : 0 }"
+                            :transition="{ type: 'spring', stiffness: 300, damping: 20 }"
+                        >+</motion.span>
+                    </div>
+                    <AnimatePresence>
+                        <motion.div
+                            v-if="activeFaq === index"
+                            class="faq-answer"
+                            :initial="{ opacity: 0, height: 0 }"
+                            :animate="{ opacity: 1, height: 'auto' }"
+                            :exit="{ opacity: 0, height: 0 }"
+                            :transition="{ duration: 0.3, ease: 'easeInOut' }"
+                            style="overflow: hidden"
+                        >
+                            {{ faq.a }}
+                        </motion.div>
+                    </AnimatePresence>
+                </motion.div>
+            </div>
+        </section>
+        
+        <!-- Why Choose Us Section -->
+        <section id="comparison" class="comparison-section">
+            <motion.h2
+                class="section-title text-gradient"
+                :initial="{ opacity: 0, y: 40 }"
+                :whileInView="{ opacity: 1, y: 0 }"
+                :viewport="{ once: true, amount: 0.3 }"
+                :transition="{ type: 'spring', stiffness: 80, damping: 12 }"
+            >為什麼選擇 Security One SOC？</motion.h2>
+            <motion.p
+                class="section-subtitle"
+                :initial="{ opacity: 0, y: 30 }"
+                :whileInView="{ opacity: 1, y: 0 }"
+                :viewport="{ once: true, amount: 0.3 }"
+                :transition="{ type: 'spring', stiffness: 80, damping: 14, delay: 0.15 }"
+            >
+                相較於傳統 WAF，我們提供更智能、更全面的防護
+            </motion.p>
+
+            <motion.div class="comparison-table"
+                :initial="{ opacity: 0, y: 60, scale: 0.9 }"
+                :whileInView="{ opacity: 1, y: 0, scale: 1 }"
+                :viewport="{ once: true, amount: 0.1 }"
+                :transition="{ type: 'spring', stiffness: 60, damping: 12, delay: 0.2 }"
+            >
+                <div class="comparison-header">
+                    <div class="comparison-feature">功能</div>
+                    <div class="comparison-traditional">傳統 WAF</div>
+                    <div class="comparison-vito">Security One SOC</div>
+                </div>
+                <div class="comparison-row" v-for="(item, index) in comparison" :key="index">
+                    <div class="comparison-feature">{{ item.feature }}</div>
+                    <div class="comparison-traditional">
+                        <span :class="item.traditional ? 'check' : 'cross'">{{ item.traditional ? '✓' : '✗' }}</span>
+                    </div>
+                    <div class="comparison-vito">
+                        <span class="check highlight">✓</span>
+                    </div>
+                </div>
+            </motion.div>
+        </section>
+
         <!-- CTA Section -->
-        <section class="cta-section">
+        <section id="cta" class="cta-section">
             <motion.div class="cta-content"
                 :initial="{ opacity: 0, y: 60, scale: 0.8 }"
                 :whileInView="{ opacity: 1, y: 0, scale: 1 }"
@@ -2018,21 +2024,40 @@
         </section>
         
         <!-- Footer -->
-        <footer class="footer">
-            <motion.div class="footer-logo text-gradient"
-                :initial="{ opacity: 0, y: 20 }"
-                :whileInView="{ opacity: 1, y: 0 }"
-                :viewport="{ once: true }"
-                :transition="{ type: 'spring', stiffness: 100, damping: 20 }"
-            >Security One SOC</motion.div>
-            <p class="footer-text">商業版 統一安全平台</p>
-            <div class="footer-links">
-                <a href="mailto:service@cybersecureone.com?subject=Security One SOC 諮詢">聯絡我們</a>
-                <a href="mailto:service@cybersecureone.com?subject=Security One SOC 文檔請求">文檔</a>
+        <footer class="site-footer">
+            <div class="footer-content">
+                <div class="footer-col footer-brand">
+                    <motion.div class="footer-logo text-gradient"
+                        :initial="{ opacity: 0, y: 20 }"
+                        :whileInView="{ opacity: 1, y: 0 }"
+                        :viewport="{ once: true }"
+                        :transition="{ type: 'spring', stiffness: 100, damping: 20 }"
+                    >Security One</motion.div>
+                    <p class="footer-tagline">商業版 統一安全平台</p>
+                    <p class="footer-desc">整合 WAF、IDS/IPS、AI 分析、DDoS 防護、CDN 加速、GeoIP 路由於一體的次世代資安解決方案。</p>
+                </div>
+                <div class="footer-col">
+                    <h4 class="footer-col-title">快速導覽</h4>
+                    <ul class="footer-nav">
+                        <li><a href="#features">核心功能</a></li>
+                        <li><a href="#waf-protection">WAF 防護</a></li>
+                        <li><a href="#ai-features">AI 功能</a></li>
+                        <li><a href="#soc-dashboard">SOC 儀表板</a></li>
+                        <li><a href="#comparison">為什麼選擇我們</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4 class="footer-col-title">聯絡我們</h4>
+                    <ul class="footer-contact">
+                        <li><span class="contact-icon">📧</span><a href="mailto:service@cybersecureone.com">service@cybersecureone.com</a></li>
+                        <li><span class="contact-icon">🌐</span><a href="https://cybersecureone.com" target="_blank" rel="noopener">cybersecureone.com</a></li>
+                    </ul>
+                </div>
             </div>
-            <p class="footer-text" style="margin-top: 2rem;">
-                © {{ new Date().getFullYear() }} Security One SOC. MIT License.
-            </p>
+            <div class="footer-bottom">
+                <p class="footer-copyright">© {{ new Date().getFullYear() }} Security One. All rights reserved.</p>
+                <p class="footer-credit">Made by <a href="https://vito1317.com" target="_blank" rel="noopener">vito1317</a></p>
+            </div>
         </footer>
         
         <!-- Feature Modal -->
@@ -2046,6 +2071,7 @@
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue';
+import { Head } from '@inertiajs/vue3';
 import { motion, AnimatePresence, useScroll, useTransform, useMotionValue, useSpring, useMotionTemplate } from 'motion-v';
 import LoadingScreen from '../Components/LoadingScreen.vue';
 import ParticleBackground from '../Components/ParticleBackground.vue';
@@ -2819,45 +2845,78 @@ onUnmounted(() => {
     overflow-x: hidden;
 }
 
-/* Login Button - Fixed Top Right */
-.login-btn {
+
+/* Top Navigation Bar */
+.top-navbar {
     position: fixed;
-    top: 1.5rem;
-    right: 1.5rem;
+    top: 0;
+    left: 0;
+    right: 0;
     z-index: 1000;
+    padding: 0 2rem;
+    background: rgba(8, 10, 25, 0.75);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+.nav-inner {
+    max-width: 1200px;
+    margin: 0 auto;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.75rem 1.25rem;
-    background: rgba(10, 15, 30, 0.7);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(0, 212, 255, 0.3);
-    border-radius: 50px;
-    color: #fff;
+    justify-content: space-between;
+    height: 56px;
+}
+.nav-brand {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
     text-decoration: none;
-    font-weight: 500;
-    font-size: 0.9rem;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    letter-spacing: 0.02em;
+}
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+.nav-link {
+    color: rgba(255, 255, 255, 0.6);
+    text-decoration: none;
+    font-size: 0.82rem;
+    padding: 0.4rem 0.75rem;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+.nav-link:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.06);
+}
+.nav-link-cta {
+    color: #00e5ff;
+    border: 1px solid rgba(0, 229, 255, 0.25);
+    margin-left: 0.5rem;
+}
+.nav-link-cta:hover {
+    background: rgba(0, 229, 255, 0.1);
+    border-color: rgba(0, 229, 255, 0.5);
+    color: #00e5ff;
 }
 
-.login-btn:hover {
-    background: rgba(0, 212, 255, 0.15);
-    border-color: rgba(0, 212, 255, 0.6);
-    box-shadow: 0 4px 30px rgba(0, 212, 255, 0.3);
-    transform: translateY(-2px);
+@media (max-width: 768px) {
+    .top-navbar {
+        padding: 0 1rem;
+    }
+    .nav-inner {
+        height: 48px;
+    }
+    .nav-links {
+        display: none;
+    }
+    .nav-brand {
+        font-size: 0.95rem;
+    }
 }
 
-.login-icon {
-    font-size: 1rem;
-}
-
-.login-text {
-    background: linear-gradient(135deg, #00d4ff, #8b5cf6);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
 
 /* Hero Parallax Wrapper */
 .hero-wrapper {
@@ -2897,8 +2956,10 @@ onUnmounted(() => {
 .scroll-indicator {
     position: absolute;
     bottom: 3rem;
-    left: 50%;
-    transform: translateX(-50%);
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    width: fit-content;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -2906,6 +2967,7 @@ onUnmounted(() => {
     color: rgba(255, 255, 255, 0.5);
     font-size: 0.875rem;
     transition: opacity 0.3s ease;
+    text-align: center;
 }
 
 .scroll-arrow {
@@ -3795,14 +3857,7 @@ onUnmounted(() => {
     /* Sticky Scroll sections */
     .sticky-spacer { height: 350vh; }
     
-    /* Login button - smaller and hide behind fixed overlays */
-    .login-btn { 
-        padding: 0.5rem 0.8rem; 
-        font-size: 0.75rem; 
-        top: 0.75rem; 
-        right: 0.75rem; 
-        z-index: 90;
-    }
+
     
     /* Sticky indicators - hide on mobile to avoid overlap */
     .sticky-indicators { display: none; }
@@ -3892,8 +3947,8 @@ onUnmounted(() => {
     /* CTA */
     .cta-buttons { flex-direction: column; gap: 1rem; }
     
-    /* Footer */
-    .footer-content { flex-direction: column; text-align: center; gap: 1.5rem; }
+    
+
 }
 
 /* Small mobile: <= 480px */
@@ -5990,6 +6045,135 @@ onUnmounted(() => {
     .timeline-time {
         width: 40px;
         font-size: 0.75rem;
+    }
+}
+
+/* Site Footer */
+.site-footer {
+    position: relative;
+    z-index: 1;
+    padding: 4rem 2rem 0;
+    background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.4) 30%);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+.footer-content {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1.5fr;
+    gap: 3rem;
+    padding-bottom: 3rem;
+}
+.footer-col {}
+.footer-brand .footer-logo {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+.footer-tagline {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 0.75rem;
+}
+.footer-desc {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.4);
+    line-height: 1.6;
+}
+.footer-col-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.8rem;
+    color: #00e5ff;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 1rem;
+}
+.footer-nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.footer-nav a {
+    color: rgba(255, 255, 255, 0.55);
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: color 0.2s;
+}
+.footer-nav a:hover {
+    color: #00e5ff;
+}
+.footer-contact {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+}
+.footer-contact li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.contact-icon {
+    font-size: 0.9rem;
+}
+.footer-contact a {
+    color: rgba(255, 255, 255, 0.55);
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: color 0.2s;
+    word-break: break-all;
+}
+.footer-contact a:hover {
+    color: #00e5ff;
+}
+.footer-bottom {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 1.5rem 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.footer-copyright {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.3);
+}
+.footer-credit {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.3);
+}
+.footer-credit a {
+    color: #00e5ff;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+.footer-credit a:hover {
+    color: #8b5cf6;
+}
+
+@media (max-width: 768px) {
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        text-align: center;
+    }
+    .footer-contact li {
+        justify-content: center;
+    }
+    .footer-nav {
+        align-items: center;
+    }
+    .footer-bottom {
+        flex-direction: column;
+        gap: 0.5rem;
+        text-align: center;
     }
 }
 
