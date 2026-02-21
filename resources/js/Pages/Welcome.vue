@@ -40,24 +40,24 @@
             <section class="hero hero-fixed" ref="heroRef" :style="heroStyle">
                 <motion.span
                     class="hero-badge animate-pulse-border"
-                    :initial="{ opacity: 0, y: -50, scale: 0.5, filter: 'blur(10px)' }"
-                    :animate="!isLoading ? { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' } : { opacity: 0, y: -50, scale: 0.5, filter: 'blur(10px)' }"
+                    :initial="{ opacity: 0, y: -50, scale: 0.5 }"
+                    :animate="!isLoading ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: -50, scale: 0.5 }"
                     :transition="{ type: 'spring', stiffness: 150, damping: 12, delay: 0.2 }"
                 >
                     🛡️ AI-Powered Security Operations Center
                 </motion.span>
                 <motion.h1
                     class="hero-title text-gradient"
-                    :initial="{ opacity: 0, scale: 0.3, filter: 'blur(20px)' }"
-                    :animate="!isLoading ? { opacity: 1, scale: 1, filter: 'blur(0px)' } : { opacity: 0, scale: 0.3, filter: 'blur(20px)' }"
+                    :initial="{ opacity: 0, scale: 0.3 }"
+                    :animate="!isLoading ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.3 }"
                     :transition="{ type: 'spring', stiffness: 80, damping: 10, delay: 0.5 }"
                 >
                     <span class="title-brand">Security One</span> <span class="title-product">SOC</span>
                 </motion.h1>
                 <motion.p
                     class="hero-subtitle"
-                    :initial="{ opacity: 0, y: 60, filter: 'blur(8px)' }"
-                    :animate="!isLoading ? { opacity: 1, y: 0, filter: 'blur(0px)' } : { opacity: 0, y: 60, filter: 'blur(8px)' }"
+                    :initial="{ opacity: 0, y: 60 }"
+                    :animate="!isLoading ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }"
                     :transition="{ type: 'spring', stiffness: 60, damping: 12, delay: 0.9 }"
                 >
                     智能 統一安全平台，結合 AI 威脅偵測與 CVE 資料庫即時更新，為您的網站提供最先進的自動化防護
@@ -97,31 +97,31 @@
         <section id="features" class="features">
             <motion.h2
                 class="section-title text-gradient"
-                :initial="{ opacity: 0, y: 40, filter: 'blur(10px)' }"
-                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :initial="{ opacity: 0, y: 40 }"
+                :whileInView="{ opacity: 1, y: 0 }"
                 :viewport="{ once: true, amount: 0.3 }"
                 :transition="{ type: 'spring', stiffness: 80, damping: 12 }"
             >核心功能</motion.h2>
             <motion.p
                 class="section-subtitle"
-                :initial="{ opacity: 0, y: 30, filter: 'blur(6px)' }"
-                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :initial="{ opacity: 0, y: 30 }"
+                :whileInView="{ opacity: 1, y: 0 }"
                 :viewport="{ once: true, amount: 0.3 }"
                 :transition="{ type: 'spring', stiffness: 80, damping: 14, delay: 0.15 }"
             >
                 完整的 WAF 解決方案，從防護到監控一應俱全
             </motion.p>
 
-            <div class="features-grid" style="perspective: 1000px;">
+            <div class="features-grid" :style="isMobile ? {} : { perspective: '1000px' }">
                 <motion.div
                     v-for="(feature, index) in features"
                     :key="index"
-                    :initial="{ opacity: 0, y: 80, scale: 0.6, rotateX: 45, filter: 'blur(10px)' }"
-                    :whileInView="{ opacity: 1, y: 0, scale: 1, rotateX: 0, filter: 'blur(0px)' }"
+                    :initial="isMobile ? { opacity: 0, y: 40, scale: 0.85 } : { opacity: 0, y: 80, scale: 0.6, rotateX: 45 }"
+                    :whileInView="isMobile ? { opacity: 1, y: 0, scale: 1 } : { opacity: 1, y: 0, scale: 1, rotateX: 0 }"
                     :viewport="{ once: true, amount: 0.1 }"
                     :transition="{ type: 'spring', stiffness: 70, damping: 12, delay: (index % 4) * 0.1 }"
-                    :whileHover="{ scale: 1.08, y: -12, rotateY: 5 }"
-                    style="transform-style: preserve-3d;"
+                    :whileHover="isMobile ? undefined : { scale: 1.08, y: -12, rotateY: 5 }"
+                    :style="isMobile ? {} : { transformStyle: 'preserve-3d' }"
                 >
                     <FeatureCard
                         :icon="feature.icon"
@@ -138,25 +138,25 @@
         <section class="attack-protection-section">
             <motion.h2
                 class="section-title text-gradient"
-                :initial="{ opacity: 0, y: 40, filter: 'blur(10px)' }"
-                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :initial="{ opacity: 0, y: 40 }"
+                :whileInView="{ opacity: 1, y: 0 }"
                 :viewport="{ once: true, amount: 0.3 }"
                 :transition="{ type: 'spring', stiffness: 80, damping: 12 }"
             >🛡️ 核心攻擊防護</motion.h2>
             <motion.p
                 class="section-subtitle"
-                :initial="{ opacity: 0, y: 30, filter: 'blur(6px)' }"
-                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :initial="{ opacity: 0, y: 30 }"
+                :whileInView="{ opacity: 1, y: 0 }"
                 :viewport="{ once: true, amount: 0.3 }"
                 :transition="{ type: 'spring', stiffness: 80, damping: 14, delay: 0.15 }"
             >
                 18 種攻擊類型全方位防護，多層級安全等級控制
             </motion.p>
 
-            <div class="waf-rules-container scroll-animate stagger-children">
+            <div class="waf-rules-container">
                 <motion.div class="waf-category" v-for="(category, catIndex) in wafProtectionRules" :key="catIndex"
-                    :initial="{ opacity: 0, x: -60, scale: 0.9, filter: 'blur(8px)' }"
-                    :whileInView="{ opacity: 1, x: 0, scale: 1, filter: 'blur(0px)' }"
+                    :initial="isMobile ? { opacity: 0, y: 30, scale: 0.95 } : { opacity: 0, x: -60, scale: 0.9 }"
+                    :whileInView="isMobile ? { opacity: 1, y: 0, scale: 1 } : { opacity: 1, x: 0, scale: 1 }"
                     :viewport="{ once: true, amount: 0.1 }"
                     :transition="{ type: 'spring', stiffness: 60, damping: 12, delay: catIndex * 0.2 }"
                 >
@@ -189,15 +189,15 @@
         <section class="ids-section">
             <motion.h2
                 class="section-title text-gradient"
-                :initial="{ opacity: 0, y: 40, filter: 'blur(10px)' }"
-                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :initial="{ opacity: 0, y: 40 }"
+                :whileInView="{ opacity: 1, y: 0 }"
                 :viewport="{ once: true, amount: 0.3 }"
                 :transition="{ type: 'spring', stiffness: 80, damping: 12 }"
             >🔗 IDS/IPS 分散式防禦</motion.h2>
             <motion.p
                 class="section-subtitle"
-                :initial="{ opacity: 0, y: 30, filter: 'blur(6px)' }"
-                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :initial="{ opacity: 0, y: 30 }"
+                :whileInView="{ opacity: 1, y: 0 }"
                 :viewport="{ once: true, amount: 0.3 }"
                 :transition="{ type: 'spring', stiffness: 80, damping: 14, delay: 0.15 }"
             >
@@ -235,11 +235,11 @@
             
             <div class="ids-engines">
                 <motion.div class="engine-card" v-for="(engine, ei) in idsEngines" :key="engine.name"
-                    :initial="{ opacity: 0, y: 40, rotateX: 15 }"
-                    :whileInView="{ opacity: 1, y: 0, rotateX: 0 }"
+                    :initial="isMobile ? { opacity: 0, y: 30 } : { opacity: 0, y: 40, rotateX: 15 }"
+                    :whileInView="isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0, rotateX: 0 }"
                     :viewport="{ once: true, amount: 0.3 }"
                     :transition="{ type: 'spring', stiffness: 80, damping: 15, delay: ei * 0.12 }"
-                    :whileHover="{ y: -12, scale: 1.08, rotateX: -5 }"
+                    :whileHover="isMobile ? undefined : { y: -12, scale: 1.08, rotateX: -5 }"
                 >
                     <div class="engine-icon">{{ engine.icon }}</div>
                     <h4>{{ engine.name }}</h4>
@@ -255,15 +255,15 @@
         <section class="traffic-section">
             <motion.h2
                 class="section-title text-gradient"
-                :initial="{ opacity: 0, y: 40, filter: 'blur(10px)' }"
-                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :initial="{ opacity: 0, y: 40 }"
+                :whileInView="{ opacity: 1, y: 0 }"
                 :viewport="{ once: true, amount: 0.3 }"
                 :transition="{ type: 'spring', stiffness: 80, damping: 12 }"
             >⚡ 流量控制與防護</motion.h2>
             <motion.p
                 class="section-subtitle"
-                :initial="{ opacity: 0, y: 30, filter: 'blur(6px)' }"
-                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :initial="{ opacity: 0, y: 30 }"
+                :whileInView="{ opacity: 1, y: 0 }"
                 :viewport="{ once: true, amount: 0.3 }"
                 :transition="{ type: 'spring', stiffness: 80, damping: 14, delay: 0.15 }"
             >
@@ -289,15 +289,15 @@
         <section class="rules-section">
             <motion.h2
                 class="section-title text-gradient"
-                :initial="{ opacity: 0, y: 40, filter: 'blur(10px)' }"
-                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :initial="{ opacity: 0, y: 40 }"
+                :whileInView="{ opacity: 1, y: 0 }"
                 :viewport="{ once: true, amount: 0.3 }"
                 :transition="{ type: 'spring', stiffness: 80, damping: 12 }"
             >📋 規則管理</motion.h2>
             <motion.p
                 class="section-subtitle"
-                :initial="{ opacity: 0, y: 30, filter: 'blur(6px)' }"
-                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :initial="{ opacity: 0, y: 30 }"
+                :whileInView="{ opacity: 1, y: 0 }"
                 :viewport="{ once: true, amount: 0.3 }"
                 :transition="{ type: 'spring', stiffness: 80, damping: 14, delay: 0.15 }"
             >
@@ -326,8 +326,8 @@
                     class="stat-item"
                     v-for="(stat, index) in stats"
                     :key="index"
-                    :initial="{ opacity: 0, scale: 0, y: 60, filter: 'blur(10px)' }"
-                    :whileInView="{ opacity: 1, scale: 1, y: 0, filter: 'blur(0px)' }"
+                    :initial="{ opacity: 0, scale: 0, y: 60 }"
+                    :whileInView="{ opacity: 1, scale: 1, y: 0 }"
                     :viewport="{ once: true, amount: 0.3 }"
                     :transition="{ type: 'spring', stiffness: 150, damping: 8, delay: index * 0.15 }"
                     :whileHover="{ scale: 1.15, y: -10 }"
@@ -396,15 +396,15 @@
         <section id="ai-features" class="ai-section">
             <motion.h2
                 class="section-title text-gradient"
-                :initial="{ opacity: 0, y: 40, filter: 'blur(10px)' }"
-                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :initial="{ opacity: 0, y: 40 }"
+                :whileInView="{ opacity: 1, y: 0 }"
                 :viewport="{ once: true, amount: 0.3 }"
                 :transition="{ type: 'spring', stiffness: 80, damping: 12 }"
             >🤖 AI 智能防禦</motion.h2>
             <motion.p
                 class="section-subtitle"
-                :initial="{ opacity: 0, y: 30, filter: 'blur(6px)' }"
-                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :initial="{ opacity: 0, y: 30 }"
+                :whileInView="{ opacity: 1, y: 0 }"
                 :viewport="{ once: true, amount: 0.3 }"
                 :transition="{ type: 'spring', stiffness: 80, damping: 14, delay: 0.15 }"
             >
@@ -416,11 +416,11 @@
                     class="ai-feature-card"
                     v-for="(feature, index) in aiFeatures"
                     :key="index"
-                    :initial="{ opacity: 0, y: 100, scale: 0.5, rotateY: -30, filter: 'blur(15px)' }"
-                    :whileInView="{ opacity: 1, y: 0, scale: 1, rotateY: 0, filter: 'blur(0px)' }"
+                    :initial="isMobile ? { opacity: 0, y: 40, scale: 0.9 } : { opacity: 0, y: 100, scale: 0.5, rotateY: -30 }"
+                    :whileInView="isMobile ? { opacity: 1, y: 0, scale: 1 } : { opacity: 1, y: 0, scale: 1, rotateY: 0 }"
                     :viewport="{ once: true, amount: 0.1 }"
-                    :transition="{ type: 'spring', stiffness: 60, damping: 10, delay: index * 0.25 }"
-                    :whileHover="{ y: -15, scale: 1.06, rotateY: 5 }"
+                    :transition="{ type: 'spring', stiffness: 60, damping: 10, delay: isMobile ? index * 0.1 : index * 0.25 }"
+                    :whileHover="isMobile ? undefined : { y: -15, scale: 1.06, rotateY: 5 }"
                     @click="openModal(feature)"
                 >
                     <div class="ai-feature-icon animate-float">{{ feature.icon }}</div>
@@ -438,15 +438,15 @@
         <section class="cve-section">
             <motion.h2
                 class="section-title text-gradient"
-                :initial="{ opacity: 0, y: 40, filter: 'blur(10px)' }"
-                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :initial="{ opacity: 0, y: 40 }"
+                :whileInView="{ opacity: 1, y: 0 }"
                 :viewport="{ once: true, amount: 0.3 }"
                 :transition="{ type: 'spring', stiffness: 80, damping: 12 }"
             >📡 CVE 資料庫即時更新</motion.h2>
             <motion.p
                 class="section-subtitle"
-                :initial="{ opacity: 0, y: 30, filter: 'blur(6px)' }"
-                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :initial="{ opacity: 0, y: 30 }"
+                :whileInView="{ opacity: 1, y: 0 }"
                 :viewport="{ once: true, amount: 0.3 }"
                 :transition="{ type: 'spring', stiffness: 80, damping: 14, delay: 0.15 }"
             >
@@ -455,8 +455,8 @@
 
             <div class="cve-flow">
                 <motion.div class="cve-step" v-for="(step, index) in cveSteps" :key="index"
-                    :initial="{ opacity: 0, x: -40 }"
-                    :whileInView="{ opacity: 1, x: 0 }"
+                    :initial="isMobile ? { opacity: 0, y: 20 } : { opacity: 0, x: -40 }"
+                    :whileInView="isMobile ? { opacity: 1, y: 0 } : { opacity: 1, x: 0 }"
                     :viewport="{ once: true, amount: 0.3 }"
                     :transition="{ type: 'spring', stiffness: 80, damping: 15, delay: index * 0.15 }"
                     :whileHover="{ y: -5, scale: 1.05 }"
@@ -495,15 +495,15 @@
         <section class="demo-section">
             <motion.h2
                 class="section-title text-gradient"
-                :initial="{ opacity: 0, y: 40, filter: 'blur(10px)' }"
-                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :initial="{ opacity: 0, y: 40 }"
+                :whileInView="{ opacity: 1, y: 0 }"
                 :viewport="{ once: true, amount: 0.3 }"
                 :transition="{ type: 'spring', stiffness: 80, damping: 12 }"
             >攻擊偵測流程</motion.h2>
             <motion.p
                 class="section-subtitle"
-                :initial="{ opacity: 0, y: 30, filter: 'blur(6px)' }"
-                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :initial="{ opacity: 0, y: 30 }"
+                :whileInView="{ opacity: 1, y: 0 }"
                 :viewport="{ once: true, amount: 0.3 }"
                 :transition="{ type: 'spring', stiffness: 80, damping: 14, delay: 0.15 }"
             >
@@ -532,15 +532,15 @@
             <div class="soc-bg-grid"></div>
             <motion.h2
                 class="section-title text-gradient"
-                :initial="{ opacity: 0, y: 40, filter: 'blur(10px)' }"
-                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :initial="{ opacity: 0, y: 40 }"
+                :whileInView="{ opacity: 1, y: 0 }"
                 :viewport="{ once: true, amount: 0.3 }"
                 :transition="{ type: 'spring', stiffness: 80, damping: 12 }"
             >👁️ SOC 戰情中心</motion.h2>
             <motion.p
                 class="section-subtitle"
-                :initial="{ opacity: 0, y: 30, filter: 'blur(6px)' }"
-                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :initial="{ opacity: 0, y: 30 }"
+                :whileInView="{ opacity: 1, y: 0 }"
                 :viewport="{ once: true, amount: 0.3 }"
                 :transition="{ type: 'spring', stiffness: 80, damping: 14, delay: 0.15 }"
             >
@@ -548,8 +548,8 @@
             </motion.p>
 
             <motion.div class="soc-dashboard"
-                :initial="{ opacity: 0, scale: 0.6, y: 80, filter: 'blur(20px)' }"
-                :whileInView="{ opacity: 1, scale: 1, y: 0, filter: 'blur(0px)' }"
+                :initial="isMobile ? { opacity: 0, y: 30 } : { opacity: 0, scale: 0.6, y: 80 }"
+                :whileInView="isMobile ? { opacity: 1, y: 0 } : { opacity: 1, scale: 1, y: 0 }"
                 :viewport="{ once: true, amount: 0.05 }"
                 :transition="{ type: 'spring', stiffness: 40, damping: 12, delay: 0.2 }"
             >
@@ -900,8 +900,8 @@
         <section class="passkey-section">
             <div class="passkey-container">
                 <motion.div class="passkey-text"
-                    :initial="{ opacity: 0, x: -60 }"
-                    :whileInView="{ opacity: 1, x: 0 }"
+                    :initial="isMobile ? { opacity: 0, y: 30 } : { opacity: 0, x: -60 }"
+                    :whileInView="isMobile ? { opacity: 1, y: 0 } : { opacity: 1, x: 0 }"
                     :viewport="{ once: true, amount: 0.3 }"
                     :transition="{ type: 'spring', stiffness: 70, damping: 18 }"
                 >
@@ -915,8 +915,8 @@
                     </ul>
                 </motion.div>
                 <motion.div class="passkey-visual"
-                    :initial="{ opacity: 0, x: 60, scale: 0.9 }"
-                    :whileInView="{ opacity: 1, x: 0, scale: 1 }"
+                    :initial="isMobile ? { opacity: 0, y: 30 } : { opacity: 0, x: 60, scale: 0.9 }"
+                    :whileInView="isMobile ? { opacity: 1, y: 0 } : { opacity: 1, x: 0, scale: 1 }"
                     :viewport="{ once: true, amount: 0.3 }"
                     :transition="{ type: 'spring', stiffness: 70, damping: 18, delay: 0.2 }"
                 >
@@ -937,8 +937,8 @@
         <section class="report-section">
             <div class="report-container">
                 <motion.div class="report-visual"
-                    :initial="{ opacity: 0, x: -60, rotateY: 15 }"
-                    :whileInView="{ opacity: 1, x: 0, rotateY: 0 }"
+                    :initial="isMobile ? { opacity: 0, y: 30 } : { opacity: 0, x: -60, rotateY: 15 }"
+                    :whileInView="isMobile ? { opacity: 1, y: 0 } : { opacity: 1, x: 0, rotateY: 0 }"
                     :viewport="{ once: true, amount: 0.3 }"
                     :transition="{ type: 'spring', stiffness: 70, damping: 18 }"
                 >
@@ -955,8 +955,8 @@
                     </div>
                 </motion.div>
                 <motion.div class="report-text"
-                    :initial="{ opacity: 0, x: 60 }"
-                    :whileInView="{ opacity: 1, x: 0 }"
+                    :initial="isMobile ? { opacity: 0, y: 30 } : { opacity: 0, x: 60 }"
+                    :whileInView="isMobile ? { opacity: 1, y: 0 } : { opacity: 1, x: 0 }"
                     :viewport="{ once: true, amount: 0.3 }"
                     :transition="{ type: 'spring', stiffness: 70, damping: 18, delay: 0.2 }"
                 >
@@ -971,15 +971,15 @@
         <section class="lb-section">
             <motion.h2
                 class="section-title text-gradient"
-                :initial="{ opacity: 0, y: 40, filter: 'blur(10px)' }"
-                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :initial="{ opacity: 0, y: 40 }"
+                :whileInView="{ opacity: 1, y: 0 }"
                 :viewport="{ once: true, amount: 0.3 }"
                 :transition="{ type: 'spring', stiffness: 80, damping: 12 }"
             >⚖️ 智能負載均衡</motion.h2>
             <motion.p
                 class="section-subtitle"
-                :initial="{ opacity: 0, y: 30, filter: 'blur(6px)' }"
-                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :initial="{ opacity: 0, y: 30 }"
+                :whileInView="{ opacity: 1, y: 0 }"
                 :viewport="{ once: true, amount: 0.3 }"
                 :transition="{ type: 'spring', stiffness: 80, damping: 14, delay: 0.15 }"
             >
@@ -1160,15 +1160,15 @@
         <section class="cdn-section">
             <motion.h2
                 class="section-title text-gradient"
-                :initial="{ opacity: 0, y: 40, filter: 'blur(10px)' }"
-                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :initial="{ opacity: 0, y: 40 }"
+                :whileInView="{ opacity: 1, y: 0 }"
                 :viewport="{ once: true, amount: 0.3 }"
                 :transition="{ type: 'spring', stiffness: 80, damping: 12 }"
             >🚀 CDN 全球加速網路</motion.h2>
             <motion.p
                 class="section-subtitle"
-                :initial="{ opacity: 0, y: 30, filter: 'blur(6px)' }"
-                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :initial="{ opacity: 0, y: 30 }"
+                :whileInView="{ opacity: 1, y: 0 }"
                 :viewport="{ once: true, amount: 0.3 }"
                 :transition="{ type: 'spring', stiffness: 80, damping: 14, delay: 0.15 }"
             >
@@ -1277,15 +1277,15 @@
         <section class="ddos-section">
             <motion.h2
                 class="section-title text-gradient"
-                :initial="{ opacity: 0, y: 40, filter: 'blur(10px)' }"
-                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :initial="{ opacity: 0, y: 40 }"
+                :whileInView="{ opacity: 1, y: 0 }"
                 :viewport="{ once: true, amount: 0.3 }"
                 :transition="{ type: 'spring', stiffness: 80, damping: 12 }"
             >🌊 DDoS 流量清洗中心</motion.h2>
             <motion.p
                 class="section-subtitle"
-                :initial="{ opacity: 0, y: 30, filter: 'blur(6px)' }"
-                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :initial="{ opacity: 0, y: 30 }"
+                :whileInView="{ opacity: 1, y: 0 }"
                 :viewport="{ once: true, amount: 0.3 }"
                 :transition="{ type: 'spring', stiffness: 80, damping: 14, delay: 0.15 }"
             >
@@ -1295,8 +1295,8 @@
             <!-- DDoS Stats Dashboard -->
             <div class="ddos-stats-dashboard">
                 <motion.div class="ddos-stat-card"
-                    :initial="{ opacity: 0, y: 50, scale: 0, filter: 'blur(10px)' }"
-                    :whileInView="{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }"
+                    :initial="{ opacity: 0, y: 50, scale: 0 }"
+                    :whileInView="{ opacity: 1, y: 0, scale: 1 }"
                     :viewport="{ once: true, amount: 0.2 }"
                     :transition="{ type: 'spring', stiffness: 150, damping: 8 }"
                 >
@@ -1380,15 +1380,15 @@
         <section class="geoip-section">
             <motion.h2
                 class="section-title text-gradient"
-                :initial="{ opacity: 0, y: 40, filter: 'blur(10px)' }"
-                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :initial="{ opacity: 0, y: 40 }"
+                :whileInView="{ opacity: 1, y: 0 }"
                 :viewport="{ once: true, amount: 0.3 }"
                 :transition="{ type: 'spring', stiffness: 80, damping: 12 }"
             >🗺️ GeoIP 智能路由</motion.h2>
             <motion.p
                 class="section-subtitle"
-                :initial="{ opacity: 0, y: 30, filter: 'blur(6px)' }"
-                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :initial="{ opacity: 0, y: 30 }"
+                :whileInView="{ opacity: 1, y: 0 }"
                 :viewport="{ once: true, amount: 0.3 }"
                 :transition="{ type: 'spring', stiffness: 80, damping: 14, delay: 0.15 }"
             >
@@ -1414,15 +1414,15 @@
         <section class="multinode-section">
             <motion.h2
                 class="section-title text-gradient"
-                :initial="{ opacity: 0, y: 40, filter: 'blur(10px)' }"
-                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :initial="{ opacity: 0, y: 40 }"
+                :whileInView="{ opacity: 1, y: 0 }"
                 :viewport="{ once: true, amount: 0.3 }"
                 :transition="{ type: 'spring', stiffness: 80, damping: 12 }"
             >🏗️ 多節點分散式部署</motion.h2>
             <motion.p
                 class="section-subtitle"
-                :initial="{ opacity: 0, y: 30, filter: 'blur(6px)' }"
-                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :initial="{ opacity: 0, y: 30 }"
+                :whileInView="{ opacity: 1, y: 0 }"
                 :viewport="{ once: true, amount: 0.3 }"
                 :transition="{ type: 'spring', stiffness: 80, damping: 14, delay: 0.15 }"
             >
@@ -1450,15 +1450,15 @@
         <section class="security-engines-section">
             <motion.h2
                 class="section-title text-gradient"
-                :initial="{ opacity: 0, y: 40, filter: 'blur(10px)' }"
-                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :initial="{ opacity: 0, y: 40 }"
+                :whileInView="{ opacity: 1, y: 0 }"
                 :viewport="{ once: true, amount: 0.3 }"
                 :transition="{ type: 'spring', stiffness: 80, damping: 12 }"
             >🔬 進階安全引擎</motion.h2>
             <motion.p
                 class="section-subtitle"
-                :initial="{ opacity: 0, y: 30, filter: 'blur(6px)' }"
-                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :initial="{ opacity: 0, y: 30 }"
+                :whileInView="{ opacity: 1, y: 0 }"
                 :viewport="{ once: true, amount: 0.3 }"
                 :transition="{ type: 'spring', stiffness: 80, damping: 14, delay: 0.15 }"
             >
@@ -1495,8 +1495,8 @@
         <section class="rbac-section">
             <div class="rbac-container">
                 <motion.div class="rbac-text"
-                    :initial="{ opacity: 0, x: -40 }"
-                    :whileInView="{ opacity: 1, x: 0 }"
+                    :initial="isMobile ? { opacity: 0, y: 20 } : { opacity: 0, x: -40 }"
+                    :whileInView="isMobile ? { opacity: 1, y: 0 } : { opacity: 1, x: 0 }"
                     :viewport="{ once: true, amount: 0.3 }"
                     :transition="{ type: 'spring', stiffness: 70, damping: 18 }"
                 >
@@ -1510,8 +1510,8 @@
                     </ul>
                 </motion.div>
                 <motion.div class="rbac-visual"
-                    :initial="{ opacity: 0, x: 40, scale: 0.9 }"
-                    :whileInView="{ opacity: 1, x: 0, scale: 1 }"
+                    :initial="isMobile ? { opacity: 0, y: 20 } : { opacity: 0, x: 40, scale: 0.9 }"
+                    :whileInView="isMobile ? { opacity: 1, y: 0 } : { opacity: 1, x: 0, scale: 1 }"
                     :viewport="{ once: true, amount: 0.3 }"
                     :transition="{ type: 'spring', stiffness: 70, damping: 18, delay: 0.2 }"
                 >
@@ -1549,11 +1549,11 @@
                 </div>
                 <div class="iss-right">
                     <motion.div class="iss-card" v-for="(cap, i) in inlineStickyCapabilities" :key="i"
-                        :initial="{ opacity: 0, x: 40 }"
-                        :whileInView="{ opacity: 1, x: 0 }"
+                        :initial="isMobile ? { opacity: 0, y: 20 } : { opacity: 0, x: 40 }"
+                        :whileInView="isMobile ? { opacity: 1, y: 0 } : { opacity: 1, x: 0 }"
                         :viewport="{ once: true, amount: 0.3 }"
                         :transition="{ type: 'spring', stiffness: 80, damping: 18, delay: i * 0.1 }"
-                        :whileHover="{ scale: 1.02, x: -5 }"
+                        :whileHover="isMobile ? undefined : { scale: 1.02, x: -5 }"
                     >
                         <div class="iss-card-icon">{{ cap.icon }}</div>
                         <div class="iss-card-body">
@@ -1646,15 +1646,15 @@
         <section class="comparison-section">
             <motion.h2
                 class="section-title text-gradient"
-                :initial="{ opacity: 0, y: 40, filter: 'blur(10px)' }"
-                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :initial="{ opacity: 0, y: 40 }"
+                :whileInView="{ opacity: 1, y: 0 }"
                 :viewport="{ once: true, amount: 0.3 }"
                 :transition="{ type: 'spring', stiffness: 80, damping: 12 }"
             >為什麼選擇 Security One SOC？</motion.h2>
             <motion.p
                 class="section-subtitle"
-                :initial="{ opacity: 0, y: 30, filter: 'blur(6px)' }"
-                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :initial="{ opacity: 0, y: 30 }"
+                :whileInView="{ opacity: 1, y: 0 }"
                 :viewport="{ once: true, amount: 0.3 }"
                 :transition="{ type: 'spring', stiffness: 80, damping: 14, delay: 0.15 }"
             >
@@ -1662,8 +1662,8 @@
             </motion.p>
 
             <motion.div class="comparison-table"
-                :initial="{ opacity: 0, y: 60, scale: 0.9, filter: 'blur(10px)' }"
-                :whileInView="{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }"
+                :initial="{ opacity: 0, y: 60, scale: 0.9 }"
+                :whileInView="{ opacity: 1, y: 0, scale: 1 }"
                 :viewport="{ once: true, amount: 0.1 }"
                 :transition="{ type: 'spring', stiffness: 60, damping: 12, delay: 0.2 }"
             >
@@ -1688,8 +1688,8 @@
         <section class="faq-section">
             <motion.h2
                 class="section-title text-gradient"
-                :initial="{ opacity: 0, y: 40, filter: 'blur(10px)' }"
-                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :initial="{ opacity: 0, y: 40 }"
+                :whileInView="{ opacity: 1, y: 0 }"
                 :viewport="{ once: true, amount: 0.3 }"
                 :transition="{ type: 'spring', stiffness: 80, damping: 12 }"
             >常見問題</motion.h2>
@@ -1734,15 +1734,15 @@
         <section class="waf-test-section">
             <motion.h2
                 class="section-title text-gradient"
-                :initial="{ opacity: 0, y: 40, filter: 'blur(10px)' }"
-                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :initial="{ opacity: 0, y: 40 }"
+                :whileInView="{ opacity: 1, y: 0 }"
                 :viewport="{ once: true, amount: 0.3 }"
                 :transition="{ type: 'spring', stiffness: 80, damping: 12 }"
             >📄 WAF 安全測試報告</motion.h2>
             <motion.p
                 class="section-subtitle"
-                :initial="{ opacity: 0, y: 30, filter: 'blur(6px)' }"
-                :whileInView="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+                :initial="{ opacity: 0, y: 30 }"
+                :whileInView="{ opacity: 1, y: 0 }"
                 :viewport="{ once: true, amount: 0.3 }"
                 :transition="{ type: 'spring', stiffness: 80, damping: 14, delay: 0.15 }"
             >
@@ -1754,25 +1754,26 @@
                     <img src="/images/waf_malicious_test.png" alt="WAF Malicious Traffic Test" class="waf-test-img" />
                     <div class="waf-test-stats">
                         <div class="waf-test-stat">
-                            <span class="stat-value text-gradient">99.98%</span>
+                            <span class="stat-value text-gradient">99.94%</span>
                             <span class="stat-label">WAF 有效率</span>
                         </div>
                         <div class="waf-test-stat">
-                            <span class="stat-value text-gradient">6,377</span>
+                            <span class="stat-value text-gradient">6,381</span>
                             <span class="stat-label">總測試數</span>
                         </div>
                         <div class="waf-test-stat">
-                            <span class="stat-value text-gradient">1</span>
-                            <span class="stat-label">僅 Bypass</span>
+                            <span class="stat-value text-gradient">4</span>
+                            <span class="stat-label">Bypass</span>
                         </div>
                     </div>
+                    <a href="/reports/waf_malicious_report.json" download class="report-download-btn">📥 下載完整報告 (JSON)</a>
                 </div>
                 <div class="waf-test-card">
                     <div class="waf-test-badge fp">✅ 誤報率測試 (FP)</div>
                     <img src="/images/waf_fp_test.png" alt="WAF False Positive Test" class="waf-test-img" />
                     <div class="waf-test-stats">
                         <div class="waf-test-stat">
-                            <span class="stat-value text-gradient">100%</span>
+                            <span class="stat-value text-gradient">99.94%</span>
                             <span class="stat-label">WAF 準確率</span>
                         </div>
                         <div class="waf-test-stat">
@@ -1780,10 +1781,11 @@
                             <span class="stat-label">總測試數</span>
                         </div>
                         <div class="waf-test-stat">
-                            <span class="stat-value text-gradient">0</span>
+                            <span class="stat-value text-gradient">2</span>
                             <span class="stat-label">誤報數</span>
                         </div>
                     </div>
+                    <a href="/reports/waf_fp_report.json" download class="report-download-btn">📥 下載完整報告 (JSON)</a>
                 </div>
             </div>
 
@@ -1831,19 +1833,166 @@
                     </div>
                 </div>
             </motion.div>
+
+            <!-- Bypass Explanation -->
+            <motion.div
+                class="waf-bypass-explanation"
+                :initial="{ opacity: 0, y: 30 }"
+                :whileInView="{ opacity: 1, y: 0 }"
+                :viewport="{ once: true, amount: 0.3 }"
+                :transition="{ type: 'spring', stiffness: 80, damping: 14, delay: 0.3 }"
+            >
+                <h3 class="bypass-title">⚠️ Bypass 說明 — 架構限制，非安全漏洞</h3>
+                <p class="bypass-desc">以下 4 項 Bypass 均為標準 HTTP 協定行為或測試工具本身的限制，屬於架構設計上無法避免的情況：</p>
+                <div class="bypass-items">
+                    <div class="bypass-item">
+                        <span class="bypass-num">1</span>
+                        <div class="bypass-content">
+                            <span class="bypass-header-name">Cache-Control: no-cache</span>
+                            <span class="bypass-reason">標準 HTTP header，所有瀏覽器都會發送此請求標頭，無法封鎖</span>
+                        </div>
+                    </div>
+                    <div class="bypass-item">
+                        <span class="bypass-num">2</span>
+                        <div class="bypass-content">
+                            <span class="bypass-header-name">X-Forwarded-Proto: https</span>
+                            <span class="bypass-reason">標準 CDN / Reverse Proxy header，用於標識原始請求協定</span>
+                        </div>
+                    </div>
+                    <div class="bypass-item">
+                        <span class="bypass-num">3</span>
+                        <div class="bypass-content">
+                            <span class="bypass-header-name">X-Forwarded-Port: 443</span>
+                            <span class="bypass-reason">標準 CDN / Reverse Proxy header，用於標識原始請求連接埠</span>
+                        </div>
+                    </div>
+                    <div class="bypass-item">
+                        <span class="bypass-num">4</span>
+                        <div class="bypass-content">
+                            <span class="bypass-header-name">Empty User-Agent</span>
+                            <span class="bypass-reason">FP 掃描器本身不送 User-Agent，封鎖空 UA 會導致 False Positive 測試本身無法完成</span>
+                        </div>
+                    </div>
+                </div>
+            </motion.div>
+
+            <!-- Category Analysis Tables -->
+            <motion.div
+                class="waf-category-analysis"
+                :initial="{ opacity: 0, y: 30 }"
+                :whileInView="{ opacity: 1, y: 0 }"
+                :viewport="{ once: true, amount: 0.2 }"
+                :transition="{ type: 'spring', stiffness: 80, damping: 14, delay: 0.2 }"
+            >
+                <h3 class="category-analysis-title">📊 分類分析報告</h3>
+                <div class="category-tables-grid">
+                    <!-- Malicious Test Categories -->
+                    <div class="category-table-card">
+                        <h4 class="table-card-title malicious">🛡️ 惡意流量測試 — 分類結果</h4>
+                        <div class="category-table-wrap">
+                            <table class="category-table">
+                                <thead>
+                                    <tr>
+                                        <th>攻擊分類</th>
+                                        <th>嚴重度</th>
+                                        <th>分數</th>
+                                        <th>Bypass 率</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>Web Cache Poisoning</td><td><span class="severity low">Low</span></td><td>12/100</td><td class="bypass-rate warn">7.5%</td></tr>
+                                    <tr><td>User-Agent</td><td><span class="severity low">Low</span></td><td>3/100</td><td class="bypass-rate warn">1.79%</td></tr>
+                                    <tr><td>SQL Injection</td><td><span class="severity low">Low</span></td><td>0/100</td><td class="bypass-rate safe">0%</td></tr>
+                                    <tr><td>XSS</td><td><span class="severity low">Low</span></td><td>0/100</td><td class="bypass-rate safe">0%</td></tr>
+                                    <tr><td>Path Traversal</td><td><span class="severity low">Low</span></td><td>0/100</td><td class="bypass-rate safe">0%</td></tr>
+                                    <tr><td>Command Injection</td><td><span class="severity low">Low</span></td><td>0/100</td><td class="bypass-rate safe">0%</td></tr>
+                                    <tr><td>SSRF</td><td><span class="severity low">Low</span></td><td>0/100</td><td class="bypass-rate safe">0%</td></tr>
+                                    <tr><td>NoSQL Injection</td><td><span class="severity low">Low</span></td><td>0/100</td><td class="bypass-rate safe">0%</td></tr>
+                                    <tr><td>Local File Inclusion</td><td><span class="severity low">Low</span></td><td>0/100</td><td class="bypass-rate safe">0%</td></tr>
+                                    <tr><td>LDAP Injection</td><td><span class="severity low">Low</span></td><td>0/100</td><td class="bypass-rate safe">0%</td></tr>
+                                    <tr><td>HTTP Request Smuggling</td><td><span class="severity low">Low</span></td><td>0/100</td><td class="bypass-rate safe">0%</td></tr>
+                                    <tr><td>Open Redirect</td><td><span class="severity low">Low</span></td><td>0/100</td><td class="bypass-rate safe">0%</td></tr>
+                                    <tr><td>Sensitive Files</td><td><span class="severity low">Low</span></td><td>0/100</td><td class="bypass-rate safe">0%</td></tr>
+                                    <tr><td>CRLF Injection</td><td><span class="severity low">Low</span></td><td>0/100</td><td class="bypass-rate safe">0%</td></tr>
+                                    <tr><td>UTF8/Unicode Bypass</td><td><span class="severity low">Low</span></td><td>0/100</td><td class="bypass-rate safe">0%</td></tr>
+                                    <tr><td>XXE</td><td><span class="severity low">Low</span></td><td>0/100</td><td class="bypass-rate safe">0%</td></tr>
+                                    <tr><td>SSTI</td><td><span class="severity low">Low</span></td><td>0/100</td><td class="bypass-rate safe">0%</td></tr>
+                                    <tr><td>HTTP Parameter Pollution</td><td><span class="severity low">Low</span></td><td>0/100</td><td class="bypass-rate safe">0%</td></tr>
+                                    <tr><td>IP Bypass</td><td><span class="severity low">Low</span></td><td>0/100</td><td class="bypass-rate safe">0%</td></tr>
+                                    <tr><td>SQL Injection - Advanced</td><td><span class="severity low">Low</span></td><td>0/100</td><td class="bypass-rate safe">0%</td></tr>
+                                    <tr><td>XSS - Modern Bypasses</td><td><span class="severity low">Low</span></td><td>0/100</td><td class="bypass-rate safe">0%</td></tr>
+                                    <tr><td>HTTP Header Injection</td><td><span class="severity low">Low</span></td><td>0/100</td><td class="bypass-rate safe">0%</td></tr>
+                                    <tr><td>Path Traversal - Encoded</td><td><span class="severity low">Low</span></td><td>0/100</td><td class="bypass-rate safe">0%</td></tr>
+                                    <tr><td>SSRF - Protocol Smuggling</td><td><span class="severity low">Low</span></td><td>0/100</td><td class="bypass-rate safe">0%</td></tr>
+                                    <tr><td>XXE - Advanced</td><td><span class="severity low">Low</span></td><td>0/100</td><td class="bypass-rate safe">0%</td></tr>
+                                    <tr><td>SSTI - Framework Specific</td><td><span class="severity low">Low</span></td><td>0/100</td><td class="bypass-rate safe">0%</td></tr>
+                                    <tr><td>NoSQL Injection - Advanced</td><td><span class="severity low">Low</span></td><td>0/100</td><td class="bypass-rate safe">0%</td></tr>
+                                    <tr><td>Command Injection - Encoded</td><td><span class="severity low">Low</span></td><td>0/100</td><td class="bypass-rate safe">0%</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- FP Test Categories -->
+                    <div class="category-table-card">
+                        <h4 class="table-card-title fp">✅ 誤報率測試 — 分類結果</h4>
+                        <div class="category-table-wrap">
+                            <table class="category-table">
+                                <thead>
+                                    <tr>
+                                        <th>測試分類</th>
+                                        <th>嚴重度</th>
+                                        <th>分數</th>
+                                        <th>FP 率</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>Sensitive Files</td><td><span class="severity low">Low</span></td><td>18/100</td><td class="bypass-rate warn">11.11%</td></tr>
+                                    <tr><td>Web Cache Poisoning</td><td><span class="severity low">Low</span></td><td>4/100</td><td class="bypass-rate warn">2.5%</td></tr>
+                                    <tr><td>SQL Injection</td><td><span class="severity low">Low</span></td><td>0/100</td><td class="bypass-rate safe">0%</td></tr>
+                                    <tr><td>XSS</td><td><span class="severity low">Low</span></td><td>0/100</td><td class="bypass-rate safe">0%</td></tr>
+                                    <tr><td>Path Traversal</td><td><span class="severity low">Low</span></td><td>0/100</td><td class="bypass-rate safe">0%</td></tr>
+                                    <tr><td>Command Injection</td><td><span class="severity low">Low</span></td><td>0/100</td><td class="bypass-rate safe">0%</td></tr>
+                                    <tr><td>SSRF</td><td><span class="severity low">Low</span></td><td>0/100</td><td class="bypass-rate safe">0%</td></tr>
+                                    <tr><td>NoSQL Injection</td><td><span class="severity low">Low</span></td><td>0/100</td><td class="bypass-rate safe">0%</td></tr>
+                                    <tr><td>LDAP Injection</td><td><span class="severity low">Low</span></td><td>0/100</td><td class="bypass-rate safe">0%</td></tr>
+                                    <tr><td>HTTP Request Smuggling</td><td><span class="severity low">Low</span></td><td>0/100</td><td class="bypass-rate safe">0%</td></tr>
+                                    <tr><td>Open Redirect</td><td><span class="severity low">Low</span></td><td>0/100</td><td class="bypass-rate safe">0%</td></tr>
+                                    <tr><td>CRLF Injection</td><td><span class="severity low">Low</span></td><td>0/100</td><td class="bypass-rate safe">0%</td></tr>
+                                    <tr><td>UTF8/Unicode Bypass</td><td><span class="severity low">Low</span></td><td>0/100</td><td class="bypass-rate safe">0%</td></tr>
+                                    <tr><td>XXE</td><td><span class="severity low">Low</span></td><td>0/100</td><td class="bypass-rate safe">0%</td></tr>
+                                    <tr><td>SSTI</td><td><span class="severity low">Low</span></td><td>0/100</td><td class="bypass-rate safe">0%</td></tr>
+                                    <tr><td>HTTP Parameter Pollution</td><td><span class="severity low">Low</span></td><td>0/100</td><td class="bypass-rate safe">0%</td></tr>
+                                    <tr><td>IP Bypass</td><td><span class="severity low">Low</span></td><td>0/100</td><td class="bypass-rate safe">0%</td></tr>
+                                    <tr><td>User-Agent</td><td><span class="severity low">Low</span></td><td>0/100</td><td class="bypass-rate safe">0%</td></tr>
+                                    <tr><td>SQL Injection - Advanced</td><td><span class="severity low">Low</span></td><td>0/100</td><td class="bypass-rate safe">0%</td></tr>
+                                    <tr><td>XSS - Modern Bypasses</td><td><span class="severity low">Low</span></td><td>0/100</td><td class="bypass-rate safe">0%</td></tr>
+                                    <tr><td>HTTP Header Injection</td><td><span class="severity low">Low</span></td><td>0/100</td><td class="bypass-rate safe">0%</td></tr>
+                                    <tr><td>Path Traversal - Encoded</td><td><span class="severity low">Low</span></td><td>0/100</td><td class="bypass-rate safe">0%</td></tr>
+                                    <tr><td>SSRF - Protocol Smuggling</td><td><span class="severity low">Low</span></td><td>0/100</td><td class="bypass-rate safe">0%</td></tr>
+                                    <tr><td>XXE - Advanced</td><td><span class="severity low">Low</span></td><td>0/100</td><td class="bypass-rate safe">0%</td></tr>
+                                    <tr><td>SSTI - Framework Specific</td><td><span class="severity low">Low</span></td><td>0/100</td><td class="bypass-rate safe">0%</td></tr>
+                                    <tr><td>NoSQL Injection - Advanced</td><td><span class="severity low">Low</span></td><td>0/100</td><td class="bypass-rate safe">0%</td></tr>
+                                    <tr><td>Command Injection - Encoded</td><td><span class="severity low">Low</span></td><td>0/100</td><td class="bypass-rate safe">0%</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <p class="report-timestamp">報告生成時間：2026/02/19 00:00 (UTC+8) — 由 WAF-CHECKER.COM 提供</p>
+            </motion.div>
         </section>
 
         <!-- CTA Section -->
         <section class="cta-section">
             <motion.div class="cta-content"
-                :initial="{ opacity: 0, y: 60, scale: 0.8, filter: 'blur(15px)' }"
-                :whileInView="{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }"
+                :initial="{ opacity: 0, y: 60, scale: 0.8 }"
+                :whileInView="{ opacity: 1, y: 0, scale: 1 }"
                 :viewport="{ once: true, amount: 0.3 }"
                 :transition="{ type: 'spring', stiffness: 60, damping: 12 }"
             >
                 <motion.h2 class="text-gradient"
-                    :initial="{ opacity: 0, scale: 0.5, filter: 'blur(10px)' }"
-                    :whileInView="{ opacity: 1, scale: 1, filter: 'blur(0px)' }"
+                    :initial="{ opacity: 0, scale: 0.5 }"
+                    :whileInView="{ opacity: 1, scale: 1 }"
                     :viewport="{ once: true }"
                     :transition="{ type: 'spring', stiffness: 80, damping: 10, delay: 0.2 }"
                 >準備好保護您的網站了嗎？</motion.h2>
@@ -1911,6 +2060,10 @@ const selectedFeature = ref({});
 const heroRef = ref(null);
 const showcaseRef = ref(null);
 const scrollProgress = ref(0);
+
+// Responsive animation detection - must be set BEFORE first render
+const isMobile = ref(typeof window !== 'undefined' && window.innerWidth <= 768);
+const checkMobile = () => { isMobile.value = window.innerWidth <= 768; };
 
 // Motion-v scroll progress bar
 const { scrollYProgress } = useScroll();
@@ -2603,10 +2756,14 @@ const onLoadingComplete = () => {
 };
 
 onMounted(() => {
+    // Mobile detection
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+
     // Parallax scroll listener
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll(); // Initial call
-    
+
     // Scroll animation observer
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -2615,7 +2772,7 @@ onMounted(() => {
             }
         });
     }, { threshold: 0.1 });
-    
+
     document.querySelectorAll('.scroll-animate').forEach(el => {
         observer.observe(el);
     });
@@ -2623,6 +2780,7 @@ onMounted(() => {
 
 onUnmounted(() => {
     window.removeEventListener('scroll', handleScroll);
+    window.removeEventListener('resize', checkMobile);
 });
 </script>
 
@@ -2646,6 +2804,12 @@ onUnmounted(() => {
     inset: 0;
     z-index: 0;
     pointer-events: none;
+}
+
+@media (max-width: 768px) {
+    .hero-cursor-gradient {
+        display: none;
+    }
 }
 
 .app-wrapper {
@@ -3578,12 +3742,13 @@ onUnmounted(() => {
     .hero-stats { gap: 1.5rem; flex-wrap: wrap; justify-content: center; }
     
     /* Features */
-    .features-grid { grid-template-columns: 1fr; gap: 1rem; padding: 0 1rem; }
+    .features-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 0.75rem !important; padding: 0 0.5rem !important; }
     
     /* WAF Rules */
-    .waf-rules-container { grid-template-columns: 1fr; gap: 1rem; }
+    .waf-rules-container { grid-template-columns: 1fr !important; gap: 1rem !important; width: 100% !important; max-width: 100% !important; margin: 0 auto !important; }
     .waf-category { padding: 1rem; }
-    .waf-rule-item { flex-direction: column; gap: 0.5rem; }
+    .attack-protection-section { padding: 3rem 1rem !important; overflow-x: hidden !important; }
+    .waf-rule-item { flex-direction: column; gap: 0.5rem; align-items: center; text-align: center; }
     .rule-levels { justify-content: flex-start; }
     
     /* IDS Architecture */
@@ -3604,8 +3769,8 @@ onUnmounted(() => {
     
     /* Product Showcase */
     .showcase-spacer { height: 250vh; }
-    .showcase-slide { padding: 1rem; }
-    .showcase-image-wrapper { max-height: 40vh; }
+    .showcase-slide { padding: 0.5rem; }
+    .showcase-image-wrapper { max-height: 50vh; width: 100%; }
     
     /* AI Features */
     .ai-features-grid { grid-template-columns: 1fr; gap: 1.5rem; }
@@ -4001,7 +4166,7 @@ onUnmounted(() => {
 .showcase-slide {
     position: absolute;
     width: 100%;
-    max-width: 950px;
+    max-width: 100%;
     max-height: 90vh;
     padding: 1.5rem;
     text-align: center;
@@ -4023,8 +4188,9 @@ onUnmounted(() => {
 .showcase-image-wrapper {
     position: relative;
     margin: 1rem auto;
-    max-width: 800px;
-    max-height: 55vh;
+    width: 100%;
+    max-width: 100%;
+    max-height: 60vh;
     border-radius: 12px;
     overflow: hidden;
 }
@@ -4032,7 +4198,7 @@ onUnmounted(() => {
 .showcase-image-wrapper img {
     width: 100%;
     height: auto;
-    max-height: 55vh;
+    max-height: 60vh;
     object-fit: contain;
     display: block;
     border-radius: 12px;
@@ -4920,6 +5086,214 @@ onUnmounted(() => {
 @media (max-width: 768px) {
     .waf-checker-features {
         grid-template-columns: 1fr;
+    }
+}
+
+/* Bypass Explanation */
+.waf-bypass-explanation {
+    max-width: 1100px;
+    margin: 1.5rem auto 0;
+    padding: 1.5rem 2rem;
+    background: rgba(245, 158, 11, 0.03);
+    border: 1px solid rgba(245, 158, 11, 0.15);
+    border-radius: 12px;
+    position: relative;
+}
+.bypass-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1rem;
+    color: #f59e0b;
+    margin-bottom: 0.5rem;
+}
+.bypass-desc {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 1.2rem;
+    line-height: 1.5;
+}
+.bypass-items {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+.bypass-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.6rem 0.8rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+}
+.bypass-num {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    border-radius: 50%;
+    background: rgba(245, 158, 11, 0.15);
+    color: #f59e0b;
+    font-size: 0.75rem;
+    font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+}
+.bypass-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+.bypass-header-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    color: #f59e0b;
+    font-weight: 600;
+}
+.bypass-reason {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.55);
+    line-height: 1.4;
+}
+
+/* Report Download Button */
+.report-download-btn {
+    display: inline-block;
+    margin-top: 0.75rem;
+    padding: 0.5rem 1.2rem;
+    background: rgba(0, 255, 255, 0.06);
+    border: 1px solid rgba(0, 255, 255, 0.2);
+    border-radius: 8px;
+    color: #00e5ff;
+    font-size: 0.8rem;
+    font-family: 'JetBrains Mono', monospace;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+.report-download-btn:hover {
+    background: rgba(0, 255, 255, 0.12);
+    border-color: rgba(0, 255, 255, 0.4);
+    transform: translateY(-1px);
+}
+
+/* Category Analysis */
+.waf-category-analysis {
+    max-width: 1200px;
+    margin: 2rem auto 0;
+}
+.category-analysis-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.1rem;
+    color: #00e5ff;
+    margin-bottom: 1.2rem;
+    text-align: center;
+}
+.category-tables-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+.category-table-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    overflow: hidden;
+}
+.table-card-title {
+    padding: 0.75rem 1rem;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.85rem;
+    margin: 0;
+}
+.table-card-title.malicious {
+    background: rgba(0, 255, 255, 0.04);
+    color: #00e5ff;
+    border-bottom: 1px solid rgba(0, 255, 255, 0.1);
+}
+.table-card-title.fp {
+    background: rgba(16, 185, 129, 0.04);
+    color: #10b981;
+    border-bottom: 1px solid rgba(16, 185, 129, 0.1);
+}
+.category-table-wrap {
+    max-height: 500px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.1) transparent;
+}
+.category-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.78rem;
+}
+.category-table thead {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+.category-table th {
+    padding: 0.5rem 0.75rem;
+    background: rgba(0, 0, 0, 0.5);
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.65rem;
+    letter-spacing: 0.05em;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+.category-table td {
+    padding: 0.45rem 0.75rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    color: rgba(255, 255, 255, 0.75);
+}
+.category-table tbody tr:hover {
+    background: rgba(255, 255, 255, 0.02);
+}
+.severity {
+    display: inline-block;
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 600;
+}
+.severity.low {
+    background: rgba(16, 185, 129, 0.15);
+    color: #10b981;
+}
+.severity.medium {
+    background: rgba(245, 158, 11, 0.15);
+    color: #f59e0b;
+}
+.severity.high {
+    background: rgba(239, 68, 68, 0.15);
+    color: #ef4444;
+}
+.bypass-rate.safe {
+    color: #10b981;
+    font-weight: 600;
+    font-family: 'JetBrains Mono', monospace;
+}
+.bypass-rate.warn {
+    color: #f59e0b;
+    font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+}
+.report-timestamp {
+    text-align: center;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.35);
+    margin-top: 1rem;
+    font-style: italic;
+}
+
+@media (max-width: 768px) {
+    .category-tables-grid {
+        grid-template-columns: 1fr;
+    }
+    .category-table-wrap {
+        max-height: 350px;
     }
 }
 
@@ -5896,6 +6270,7 @@ onUnmounted(() => {
     padding: 6rem 2rem;
     position: relative;
     z-index: 1;
+    text-align: center;
     background: linear-gradient(180deg, transparent 0%, rgba(255, 107, 107, 0.03) 50%, transparent 100%);
 }
 
@@ -5913,6 +6288,7 @@ onUnmounted(() => {
     border-radius: 16px;
     overflow: hidden;
     transition: all 0.3s ease;
+    text-align: left;
 }
 
 .waf-category:hover {
@@ -5923,6 +6299,7 @@ onUnmounted(() => {
 .waf-category-header {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 0.75rem;
     padding: 1.25rem 1.5rem;
     background: rgba(255, 107, 107, 0.1);
@@ -7418,15 +7795,24 @@ onUnmounted(() => {
         grid-template-columns: 1fr !important;
     }
 
-    /* All fixed containers: allow vertical scroll */
-    .showcase-fixed-container,
+    /* Showcase: keep fixed scroll, fix image sizing */
+    .showcase-slide {
+        max-width: 100% !important;
+        padding: 1rem !important;
+    }
+    .showcase-image-wrapper {
+        width: 100% !important;
+        max-width: 100% !important;
+        max-height: 50vh !important;
+    }
+    .showcase-image-wrapper img {
+        width: 100% !important;
+    }
+
+    /* Other fixed containers */
     .sticky-fixed-container,
     .cdn-map-fixed-container {
         overflow-y: auto !important;
-    }
-    .showcase-slide {
-        position: relative !important;
-        max-height: none !important;
     }
 }
 </style>

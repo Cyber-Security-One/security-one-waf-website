@@ -1,6 +1,6 @@
 <template>
     <div 
-        class="feature-card scroll-animate" 
+        class="feature-card"
         :style="{ animationDelay: delay + 's' }"
         @mouseenter="onMouseEnter"
         @mouseleave="onMouseLeave"
@@ -264,5 +264,27 @@ const onMouseLeave = () => {
     right: 8px;
     border-bottom-width: 2px;
     border-right-width: 2px;
+}
+
+@media (max-width: 768px) {
+    .feature-card {
+        padding: 1rem;
+    }
+    .feature-icon {
+        font-size: 2rem;
+    }
+    .feature-icon-wrapper {
+        margin-bottom: 0.4rem;
+    }
+    .feature-title {
+        font-size: 1rem;
+    }
+    .feature-description {
+        font-size: 0.8rem;
+        line-height: 1.4;
+    }
+    .click-hint {
+        display: none;
+    }
 }
 </style>
