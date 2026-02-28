@@ -2394,10 +2394,10 @@ const cdnNodes = [
     { name: '美西 (LA)', left: 11.8, top: 32.8, latency: '~3ms', primary: true },
     { name: '香港', left: 80.5, top: 41.6, latency: '~2ms', primary: false },
     { name: '東京', left: 88.1, top: 31.6, latency: '~3ms', primary: false },
-    { name: '法蘭克福', left: 49.3, top: 20.8, latency: '~4ms', primary: false },
-    { name: '美東 (NY)', left: 24.9, top: 27.8, latency: '~5ms', primary: false },
+    { name: '法蘭克福', left: 49.3, top: 20.8, latency: '~2ms', primary: true },
+    { name: '美東 (NY)', left: 24.9, top: 27.8, latency: '~3ms', primary: false },
     { name: '聖保羅', left: 29.0, top: 75.7, latency: '~5ms', primary: false },
-    { name: '約翰內斯堡', left: 55.0, top: 77.8, latency: '~4ms', primary: false },
+    { name: '約翰內斯堡', left: 55.0, top: 77.8, latency: '~3ms', primary: false },
     { name: '雪梨', left: 91.5, top: 83.5, latency: '~3ms', primary: false }
 ];
 
