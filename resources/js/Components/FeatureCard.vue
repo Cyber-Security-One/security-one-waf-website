@@ -110,6 +110,8 @@ const onMouseLeave = () => {
 .feature-card:focus-visible {
     border-color: #00d4ff;
     box-shadow:
+        0 20px 40px rgba(0, 0, 0, 0.3),
+        0 0 30px rgba(0, 212, 255, 0.2),
         0 0 0 2px rgba(15, 15, 30, 0.8),
         0 0 0 4px #00d4ff;
 }
