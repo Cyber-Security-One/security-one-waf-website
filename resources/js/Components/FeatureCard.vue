@@ -1,10 +1,17 @@
 <template>
     <div 
         class="feature-card"
+        role="button"
+        tabindex="0"
+        :aria-label="'查看 ' + title + ' 的詳細資訊'"
         :style="{ animationDelay: delay + 's' }"
         @mouseenter="onMouseEnter"
         @mouseleave="onMouseLeave"
+        @focus="onMouseEnter"
+        @blur="onMouseLeave"
         @click="$emit('click')"
+        @keydown.enter.prevent="$emit('click')"
+        @keydown.space.prevent="$emit('click')"
     >
         <!-- Icon with Animation -->
         <div class="feature-icon-wrapper">
@@ -90,15 +97,25 @@ const onMouseLeave = () => {
     transition: transform 0.4s ease;
 }
 
-.feature-card:hover {
+.feature-card:hover,
+.feature-card:focus-visible {
     transform: translateY(-10px) perspective(1000px) rotateX(5deg);
     border-color: rgba(0, 212, 255, 0.5);
     box-shadow: 
         0 20px 40px rgba(0, 0, 0, 0.3),
         0 0 30px rgba(0, 212, 255, 0.2);
+    outline: none;
 }
 
-.feature-card:hover::before {
+.feature-card:focus-visible {
+    border-color: #00d4ff;
+    box-shadow:
+        0 0 0 2px rgba(15, 15, 30, 0.8),
+        0 0 0 4px #00d4ff;
+}
+
+.feature-card:hover::before,
+.feature-card:focus-visible::before {
     transform: scaleX(1);
 }
 
@@ -158,7 +175,8 @@ const onMouseLeave = () => {
     transition: color 0.3s ease;
 }
 
-.feature-card:hover .feature-title {
+.feature-card:hover .feature-title,
+.feature-card:focus-visible .feature-title {
     color: #00d4ff;
 }
 
@@ -234,7 +252,8 @@ const onMouseLeave = () => {
     transition: all 0.3s ease;
 }
 
-.feature-card:hover .card-corner {
+.feature-card:hover .card-corner,
+.feature-card:focus-visible .card-corner {
     opacity: 1;
 }
 
